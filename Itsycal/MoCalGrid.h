@@ -16,7 +16,11 @@
 @property (nonatomic, readonly) NSArray<MoCalCell *> *cells;
 @property (nonatomic, readonly) NSUInteger rows;
 
+@property (nonatomic, assign) Boolean isDate;
+
 - (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)cols horizontalMargin:(NSUInteger)hMargin verticalMargin:(NSUInteger)vMargin;
+
+- (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)cols horizontalMargin:(NSUInteger)hMargin verticalMargin:(NSUInteger)vMargin isDate:(Boolean)isDate;
 
 //
 // Add a new row of cells to the bottom of the grid.
