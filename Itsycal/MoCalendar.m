@@ -17,6 +17,13 @@
 
 NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 
+@interface MoCalendar ()
+
+@property (strong, nonatomic) NSCalendar *chineseCalendar;
+@property (strong, nonatomic) NSArray<NSString *> *lunarChars;
+
+@end
+
 @implementation MoCalendar
 {
     NSDateFormatter *_formatter;
@@ -57,6 +64,9 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 
 - (void)commonInitForMoCalendar
 {
+    _chineseCalendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierChinese];
+    _lunarChars = @[@"初一",@"初二",@"初三",@"初四",@"初五",@"初六",@"初七",@"初八",@"初九",@"初十",@"十一",@"十二",@"十三",@"十四",@"十五",@"十六",@"十七",@"十八",@"十九",@"二十",@"二一",@"二二",@"二三",@"二四",@"二五",@"二六",@"二七",@"二八",@"二九",@"三十"];
+    
     _formatter = [NSDateFormatter new];
     _tooltipWC = [MoCalToolTipWC new];
 
@@ -325,11 +335,13 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     // Get the date for the first column of the monthly calendar.
     MoDate date = AddDaysToDate(-monthStartColumn, firstOfMonth);
     
+    NSInteger lunarDay = [self.chineseCalendar component:NSCalendarUnitDay fromDate:[NSDate date]];
+    
     // Fill in the calendar grid sequentially.
     for (NSInteger row = 0; row < _dateGrid.rows; row++) {
         for (NSInteger col = 0; col < 7; col++) {
             MoCalCell *cell = _dateGrid.cells[row * 7 + col];
-            cell.textField.integerValue = date.day;
+            cell.textField.stringValue = [NSString stringWithFormat:@"%d%@",date.day, self.lunarChars[lunarDay-1]]; 
             cell.date = date;
             cell.isToday = CompareDates(date, self.todayDate) == 0;
             cell.isHighlighted = [self columnIsMemberOfHighlightedDOWs:col];
