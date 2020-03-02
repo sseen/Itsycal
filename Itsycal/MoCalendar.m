@@ -14,6 +14,7 @@
 #import "MoCalResizeHandle.h"
 #import "Themer.h"
 #import "Sizer.h"
+#import "MoDate.h"
 
 NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 
@@ -335,15 +336,16 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     // Get the date for the first column of the monthly calendar.
     MoDate date = AddDaysToDate(-monthStartColumn, firstOfMonth);
     
-    // chinese lunar text
-    NSInteger lunarDay = [self.chineseCalendar component:NSCalendarUnitDay fromDate:[NSDate date]];
-    
     // Fill in the calendar grid sequentially.
     for (NSInteger row = 0; row < _dateGrid.rows; row++) {
         for (NSInteger col = 0; col < 7; col++) {
             MoCalCell *cell = _dateGrid.cells[row * 7 + col];
+            
             // chinese lunar text
             //
+            NSDate *lunarDate = MakeNSDateWithDate(date, [NSCalendar autoupdatingCurrentCalendar]);
+            NSInteger lunarDay = [self.chineseCalendar component:NSCalendarUnitDay fromDate:lunarDate];
+            
             NSString *lunarContent = [NSString stringWithFormat:@"%@", self.lunarChars[lunarDay-1]];
             NSMutableString *lunarWithNewLine = [NSMutableString stringWithFormat:@"%ld\n",date.day];
             for (int i=0; i<lunarContent.length; i++) {
