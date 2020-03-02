@@ -343,13 +343,13 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             MoCalCell *cell = _dateGrid.cells[row * 7 + col];
             // chinese lunar text
             //
-            NSString *lunarContent = [NSString stringWithFormat:@"%ld%@",date.day, self.lunarChars[lunarDay-1]];
-            NSMutableString *lunarWithNewLine = [NSMutableString string];
-            [lunarContent enumerateSubstringsInRange:NSMakeRange(0, lunarContent.length) options:NSStringEnumerationByWords usingBlock:^(NSString * _Nullable substring, NSRange substringRange, NSRange enclosingRange, BOOL * _Nonnull stop) {
-                [lunarWithNewLine appendString:[NSString stringWithFormat:@"%@\n",substring]];
-            }];
+            NSString *lunarContent = [NSString stringWithFormat:@"%@", self.lunarChars[lunarDay-1]];
+            NSMutableString *lunarWithNewLine = [NSMutableString stringWithFormat:@"%ld\n",date.day];
+            for (int i=0; i<lunarContent.length; i++) {
+                NSString *oneWord = [lunarContent substringWithRange:NSMakeRange(i, 1)];
+                [lunarWithNewLine appendString:[NSString stringWithFormat:@"%@\n",oneWord]];
+            }
             cell.textField.stringValue = lunarWithNewLine;
-            
             
             cell.date = date;
             cell.isToday = CompareDates(date, self.todayDate) == 0;
