@@ -335,6 +335,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     // Get the date for the first column of the monthly calendar.
     MoDate date = AddDaysToDate(-monthStartColumn, firstOfMonth);
     
+    // chinese lunar text
     NSInteger lunarDay = [self.chineseCalendar component:NSCalendarUnitDay fromDate:[NSDate date]];
     
     // Fill in the calendar grid sequentially.
