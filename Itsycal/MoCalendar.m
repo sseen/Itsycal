@@ -348,10 +348,12 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             
             NSString *lunarContent = [NSString stringWithFormat:@"%@", self.lunarChars[lunarDay-1]];
             NSMutableString *lunarWithNewLine = [NSMutableString stringWithFormat:@"%ld\n",date.day];
-            for (int i=0; i<lunarContent.length; i++) {
-                NSString *oneWord = [lunarContent substringWithRange:NSMakeRange(i, 1)];
-                [lunarWithNewLine appendString:[NSString stringWithFormat:@"%@\n",oneWord]];
-            }
+            // 窄模式
+            // for (int i=0; i<lunarContent.length; i++) {
+            //     NSString *oneWord = [lunarContent substringWithRange:NSMakeRange(i, 1)];
+            //     [lunarWithNewLine appendString:[NSString stringWithFormat:@"%@\n",oneWord]];
+            // }
+            [lunarWithNewLine appendString:[NSString stringWithFormat:@"%@\n",lunarContent]];
             cell.textField.stringValue = lunarWithNewLine;
             
             cell.date = date;

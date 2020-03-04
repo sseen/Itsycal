@@ -157,7 +157,8 @@
 }
 
 - (CGFloat)getCellSize {
-    return  [[Sizer shared] cellSize];
+    // return  [[Sizer shared] cellSize];
+    return [self getDateSize];
 }
 
 - (CGFloat)getDateSize {
