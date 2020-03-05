@@ -15,8 +15,8 @@
     NSUInteger _rows, _cols, _hMargin, _vMargin;
 }
 
-- (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)cols horizontalMargin:(NSUInteger)hMargin verticalMargin:(NSUInteger)vMargin isDate:(Boolean)isDate {
-    self.isDate = isDate;
+- (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)cols horizontalMargin:(NSUInteger)hMargin verticalMargin:(NSUInteger)vMargin cellType:(CalCell)cellType {
+    self.cellType = CalCellDate;
     return [self initWithRows:rows columns:cols horizontalMargin:hMargin verticalMargin:vMargin];
 }
 
@@ -24,8 +24,14 @@
 {
     self = [super initWithFrame:NSZeroRect];
     if (self) {
-        CGFloat sz = [self getCellSize];
-        CGFloat heightDate = [self getDateSize];
+        CGFloat sz = [self getDateSize];
+        CGFloat heightDate = sz;
+        if (_cellType == CalCellDow) {
+            heightDate = heightDate / 2;
+        }else if (_cellType == CalCellWeek) {
+            sz = sz / 2;
+        }
+        
         NSMutableArray *cells = [NSMutableArray new];
         for (NSUInteger row = 0; row < rows; row++) {
             for (NSUInteger col = 0; col < cols; col++) {
@@ -64,7 +70,7 @@
     }
 
     // Add new row of cells.
-    CGFloat sz = [self getCellSize];
+    CGFloat sz = [self getDateSize];
     CGFloat heightDate = [self getDateSize];
     for (NSUInteger col = 0; col < _cols; col++) {
         CGFloat x = sz * col + _hMargin;
@@ -106,7 +112,7 @@
 
 - (MoCalCell *)cellAtPoint:(NSPoint)point
 {
-    CGFloat sz = [self getCellSize];
+    CGFloat sz = [self getDateSize];
     CGFloat heightDate = [self getDateSize];
     NSInteger col = floorf((point.x - _hMargin) / sz);
     NSInteger row = floorf((point.y - _vMargin) / heightDate);
@@ -134,7 +140,7 @@
 
 - (NSSize)intrinsicContentSize
 {
-    CGFloat sz = [self getCellSize];
+    CGFloat sz = [self getDateSize];
     CGFloat heightDate = [self getDateSize];
     CGFloat width  = sz  * _cols + 2 * _hMargin;
     CGFloat height = heightDate * _rows + 2 * _vMargin;
@@ -143,7 +149,7 @@
 
 - (void)sizeChanged:(id)sender
 {
-    CGFloat sz = [self getCellSize];
+    CGFloat sz = [self getDateSize];
     CGFloat heightDate = [self getDateSize];
     for (NSUInteger row = 0; row < _rows; row++) {
         for (NSUInteger col = 0; col < _cols; col++) {
@@ -157,13 +163,11 @@
 }
 
 - (CGFloat)getCellSize {
-    // return  [[Sizer shared] cellSize];
-    return [self getDateSize];
+    return  [[Sizer shared] cellSize];
 }
 
 - (CGFloat)getDateSize {
-    CGFloat height = [[Sizer shared] cellSize];
-    return _isDate ? 2*height : height ;
+    return [self getCellSize] * 2;
 }
 
 @end
