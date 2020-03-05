@@ -347,19 +347,17 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             MoCalCell *cell = _dateGrid.cells[row * 7 + col];
             
             // chinese lunar text
-            //
             NSDate *lunarDate = MakeNSDateWithDate(date, [NSCalendar autoupdatingCurrentCalendar]);
             NSInteger lunarDay = [self.chineseCalendar component:NSCalendarUnitDay fromDate:lunarDate];
-            
             NSString *lunarContent = [NSString stringWithFormat:@"%@", self.lunarChars[lunarDay-1]];
-            NSMutableString *lunarWithNewLine = [NSMutableString stringWithFormat:@"%ld\n",date.day];
-            // 窄模式
-            // for (int i=0; i<lunarContent.length; i++) {
-            //     NSString *oneWord = [lunarContent substringWithRange:NSMakeRange(i, 1)];
-            //     [lunarWithNewLine appendString:[NSString stringWithFormat:@"%@\n",oneWord]];
-            // }
-            [lunarWithNewLine appendString:[NSString stringWithFormat:@"%@\n",lunarContent]];
-            cell.textField.stringValue = lunarWithNewLine;
+            NSString *dateString = [NSString stringWithFormat:@"%ld",date.day];
+            NSString *lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
+            // attributed string
+            NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithString: lunarWithNewLine];
+            [colorTitle addAttribute:NSFontAttributeName value:[NSFont systemFontOfSize:[[Sizer shared] fontSize] weight:NSFontWeightBold] range:NSMakeRange(0, dateString.length)];
+            [colorTitle addAttribute:NSFontAttributeName value:[NSFont systemFontOfSize:[[Sizer shared] fontSize]-2 weight:NSFontWeightRegular] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
+            [colorTitle setAlignment:NSTextAlignmentCenter range:NSMakeRange(0, lunarWithNewLine.length)];
+            cell.textField.attributedStringValue = colorTitle;
             
             cell.date = date;
             cell.isToday = CompareDates(date, self.todayDate) == 0;
