@@ -79,6 +79,11 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
         frameView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
         [super setContentView:frameView];
     }
+    // blur
+    NSVisualEffectView *vibrant=[[NSVisualEffectView alloc] initWithFrame:frameView.bounds];
+    [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+    [vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+    [frameView addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
     if (_childContentView) {
         [_childContentView removeFromSuperview];
         _childContentView = nil;
@@ -91,6 +96,12 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     [frameView addSubview:_childContentView];
     [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(m)-[_childContentView]-(m)-|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_childContentView)]];
     [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(tm)-[_childContentView]-(bm)-|" options:0 metrics:@{ @"tm" : @(kWindowTopMargin), @"bm" : @(kWindowBottomMargin) } views:NSDictionaryOfVariableBindings(_childContentView)]];
+    
+//     NSVisualEffectView *vibrant=[[NSVisualEffectView alloc] initWithFrame:self.contentView.bounds];
+//     [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+//     [vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+//     [self.contentView addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
+
 }
 
 - (NSView *)contentView
