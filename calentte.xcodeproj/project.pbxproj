@@ -45,6 +45,10 @@
 		929223EB1E2D6E0900F1A119 /* HighlightPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 929223EA1E2D6E0800F1A119 /* HighlightPicker.m */; };
 		92B28CCF210BD17500485AE2 /* Sizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B28CCE210BD17500485AE2 /* Sizer.m */; };
 		92CDDE7B1A955D7F00D7675C /* AgendaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CDDE7A1A955D7F00D7675C /* AgendaViewController.m */; };
+		F80B46F32412010900A72DCF /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80B46EF2412010900A72DCF /* AppCenterCrashes.framework */; };
+		F80B46F42412010900A72DCF /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80B46F02412010900A72DCF /* AppCenter.framework */; };
+		F80B46F52412010900A72DCF /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80B46F12412010900A72DCF /* AppCenterAnalytics.framework */; };
+		F80B46F62412010900A72DCF /* AppCenterPush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80B46F22412010900A72DCF /* AppCenterPush.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -142,6 +146,10 @@
 		92B28CCE210BD17500485AE2 /* Sizer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Sizer.m; sourceTree = "<group>"; };
 		92CDDE791A955D7F00D7675C /* AgendaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgendaViewController.h; sourceTree = "<group>"; };
 		92CDDE7A1A955D7F00D7675C /* AgendaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AgendaViewController.m; sourceTree = "<group>"; };
+		F80B46EF2412010900A72DCF /* AppCenterCrashes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterCrashes.framework; path = _frameworks/AppCenterCrashes.framework; sourceTree = "<group>"; };
+		F80B46F02412010900A72DCF /* AppCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenter.framework; path = _frameworks/AppCenter.framework; sourceTree = "<group>"; };
+		F80B46F12412010900A72DCF /* AppCenterAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterAnalytics.framework; path = _frameworks/AppCenterAnalytics.framework; sourceTree = "<group>"; };
+		F80B46F22412010900A72DCF /* AppCenterPush.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterPush.framework; path = _frameworks/AppCenterPush.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,7 +158,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				923E78E21D385FD80012979B /* MASShortcut.framework in Frameworks */,
+				F80B46F42412010900A72DCF /* AppCenter.framework in Frameworks */,
+				F80B46F62412010900A72DCF /* AppCenterPush.framework in Frameworks */,
+				F80B46F32412010900A72DCF /* AppCenterCrashes.framework in Frameworks */,
 				922A06611DFB3CC700706C1E /* MoLoginItem.framework in Frameworks */,
+				F80B46F52412010900A72DCF /* AppCenterAnalytics.framework in Frameworks */,
 				923E78E31D385FDB0012979B /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,6 +188,10 @@
 		923E78DB1D385CD80012979B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F80B46F02412010900A72DCF /* AppCenter.framework */,
+				F80B46F12412010900A72DCF /* AppCenterAnalytics.framework */,
+				F80B46EF2412010900A72DCF /* AppCenterCrashes.framework */,
+				F80B46F22412010900A72DCF /* AppCenterPush.framework */,
 				922A065F1DFB3C9600706C1E /* MoLoginItem.framework */,
 				923E78DC1D385CF60012979B /* MASShortcut.framework */,
 				923E78DD1D385CF60012979B /* Sparkle.framework */,

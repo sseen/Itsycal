@@ -15,6 +15,9 @@
 #import "MASShortcut/MASShortcutBinder.h"
 #import "MASShortcut/MASShortcutMonitor.h"
 #import "MoUtils.h"
+@import AppCenter;
+@import AppCenterAnalytics;
+@import AppCenterCrashes;
 
 @implementation AppDelegate
 {
@@ -56,6 +59,12 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    // app center init
+    [MSAppCenter start:@"28ac792f-9fcb-42ec-b902-8c44a4511602" withServices:@[
+      [MSAnalytics class],
+      [MSCrashes class]
+    ]];
+    
     // Ensure the user has moved Itsycal to the /Applications folder.
     // Having the user manually move Itsycal to /Applications turns off
     // Gatekeeper Path Randomization (introduced in 10.12) and allows
