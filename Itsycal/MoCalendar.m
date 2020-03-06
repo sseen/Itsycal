@@ -139,10 +139,11 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     _todayDate    = MakeDate(1986, 10, 12); // so calendar will draw on first display
     [self setMonthDate:_todayDate selectedDate:_todayDate];
     
-    NSVisualEffectView *vibrant=[[NSVisualEffectView alloc] initWithFrame:self.bounds];
-    [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
-    [vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
-    [self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
+//    // blur
+//    NSVisualEffectView *vibrant=[[NSVisualEffectView alloc] initWithFrame:self.bounds];
+//    [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+//    [vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+//    [self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
     
     REGISTER_FOR_SIZE_CHANGE;
 }
