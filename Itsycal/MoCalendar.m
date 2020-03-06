@@ -844,11 +844,11 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
         [highlightPath fill];
     }
 
-    NSBezierPath *outlinePath = [self bezierPathWithStartCell:_monthStartCell endCell:_monthEndCell radius:radius inset:0 useRects:NO];
-    
-    [Theme.currentMonthOutlineColor set];
-    [outlinePath setLineWidth:2];
-    [outlinePath stroke];
+//    NSBezierPath *outlinePath = [self bezierPathWithStartCell:_monthStartCell endCell:_monthEndCell radius:radius inset:0 useRects:NO];
+//    
+//    [Theme.currentMonthOutlineColor set];
+//    [outlinePath setLineWidth:2];
+//    [outlinePath stroke];
 }
 
 - (NSBezierPath *)bezierPathWithStartCell:(MoCalCell *)startCell endCell:(MoCalCell *)endCell radius:(CGFloat)r inset:(CGFloat)inset useRects:(BOOL)useRects
