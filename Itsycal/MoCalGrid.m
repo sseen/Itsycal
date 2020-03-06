@@ -10,6 +10,8 @@
 #import "MoCalCell.h"
 #import "Sizer.h"
 
+#define calcellSizeScaleFact  1.5;
+
 @implementation MoCalGrid
 {
     NSUInteger _rows, _cols, _hMargin, _vMargin;
@@ -143,9 +145,9 @@
     CGFloat sz = [self getDateSize];
     CGFloat heightDate = sz;
     if (_cellType == CalCellDow) {
-        heightDate = heightDate / 2;
+        heightDate = heightDate * 0.5;
     }else if (_cellType == CalCellWeek) {
-        sz = sz / 2;
+        sz = sz * 0.5;
     }
     CGFloat width  = sz  * _cols + 2 * _hMargin;
     CGFloat height = heightDate * _rows + 2 * _vMargin;
@@ -157,9 +159,9 @@
     CGFloat sz = [self getDateSize];
     CGFloat heightDate = sz;
     if (_cellType == CalCellDow) {
-        heightDate = heightDate / 2;
+        heightDate = heightDate * 0.5;
     }else if (_cellType == CalCellWeek) {
-        sz = sz / 2;
+        sz = sz * 0.5;
     }
     
     for (NSUInteger row = 0; row < _rows; row++) {
@@ -178,7 +180,7 @@
 }
 
 - (CGFloat)getDateSize {
-    return [self getCellSize] * 2;
+    return [self getCellSize] * calcellSizeScaleFact;
 }
 
 @end
