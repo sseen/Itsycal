@@ -100,7 +100,7 @@
 		922D9B251DC7A1C90050AB2F /* MoUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoUtils.m; sourceTree = "<group>"; };
 		923E78DC1D385CF60012979B /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = _frameworks/MASShortcut.framework; sourceTree = "<group>"; };
 		923E78DD1D385CF60012979B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = _frameworks/Sparkle.framework; sourceTree = "<group>"; };
-		9242A55C1A82A136005AA4B3 /* Itsycal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Itsycal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9242A55C1A82A136005AA4B3 /* calentte.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = calentte.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9242A5601A82A136005AA4B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9242A5611A82A136005AA4B3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9242A5621A82A136005AA4B3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -194,7 +194,7 @@
 		9242A55D1A82A136005AA4B3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9242A55C1A82A136005AA4B3 /* Itsycal.app */,
+				9242A55C1A82A136005AA4B3 /* calentte.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -289,9 +289,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9242A55B1A82A136005AA4B3 /* Itsycal */ = {
+		9242A55B1A82A136005AA4B3 /* calentte */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9242A5791A82A136005AA4B3 /* Build configuration list for PBXNativeTarget "Itsycal" */;
+			buildConfigurationList = 9242A5791A82A136005AA4B3 /* Build configuration list for PBXNativeTarget "calentte" */;
 			buildPhases = (
 				9242A5581A82A136005AA4B3 /* Sources */,
 				9242A5591A82A136005AA4B3 /* Frameworks */,
@@ -303,9 +303,9 @@
 			);
 			dependencies = (
 			);
-			name = Itsycal;
+			name = calentte;
 			productName = Moon;
-			productReference = 9242A55C1A82A136005AA4B3 /* Itsycal.app */;
+			productReference = 9242A55C1A82A136005AA4B3 /* calentte.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -329,7 +329,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9242A5571A82A136005AA4B3 /* Build configuration list for PBXProject "Itsycal" */;
+			buildConfigurationList = 9242A5571A82A136005AA4B3 /* Build configuration list for PBXProject "calentte" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -347,7 +347,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9242A55B1A82A136005AA4B3 /* Itsycal */,
+				9242A55B1A82A136005AA4B3 /* calentte */,
 			);
 		};
 /* End PBXProject section */
@@ -583,7 +583,7 @@
 				INFOPLIST_FILE = Itsycal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.mowglii.ItsycalApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -607,7 +607,7 @@
 				INFOPLIST_FILE = Itsycal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.mowglii.ItsycalApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -616,7 +616,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9242A5571A82A136005AA4B3 /* Build configuration list for PBXProject "Itsycal" */ = {
+		9242A5571A82A136005AA4B3 /* Build configuration list for PBXProject "calentte" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9242A5771A82A136005AA4B3 /* Debug */,
@@ -625,7 +625,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9242A5791A82A136005AA4B3 /* Build configuration list for PBXNativeTarget "Itsycal" */ = {
+		9242A5791A82A136005AA4B3 /* Build configuration list for PBXNativeTarget "calentte" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9242A57A1A82A136005AA4B3 /* Debug */,
