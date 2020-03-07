@@ -10,7 +10,7 @@
 #import "MoLoginItem/MoLoginItem.h"
 #import "MoVFLHelper.h"
 #import "EventCenter.h"
-#import "Sparkle/SUUpdater.h"
+// #import "Sparkle/SUUpdater.h"
 
 static NSString * const kSourceCellId = @"SourceCell";
 static NSString * const kCalendarCellId = @"CalendarCell";
@@ -137,7 +137,7 @@ static NSString * const kCalendarCellId = @"CalendarCell";
     [v addConstraint:[NSLayoutConstraint constraintWithItem:shortcutLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:v attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
 
     // Binding for Sparkle automatic update checks
-    [_checkUpdates bind:@"value" toObject:[SUUpdater sharedUpdater] withKeyPath:@"automaticallyChecksForUpdates" options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
+//    [_checkUpdates bind:@"value" toObject:[SUUpdater sharedUpdater] withKeyPath:@"automaticallyChecksForUpdates" options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
     
     // Bindings for first day of week
     [_firstDayPopup bind:@"selectedIndex" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kWeekStartDOW] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];

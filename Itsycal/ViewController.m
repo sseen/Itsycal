@@ -19,7 +19,6 @@
 #import "MoButton.h"
 #import "MoVFLHelper.h"
 #import "MoUtils.h"
-#import "Sparkle/SUUpdater.h"
 
 @implementation ViewController
 {
@@ -389,7 +388,7 @@
 
 - (void)checkForUpdates:(id)sender
 {
-    [[SUUpdater sharedUpdater] checkForUpdates:self];
+    // [[SUUpdater sharedUpdater] checkForUpdates:self];
 }
 
 - (void)openDateAndTimePrefs:(id)sender
