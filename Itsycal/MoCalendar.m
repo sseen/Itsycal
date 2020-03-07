@@ -98,7 +98,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     NSInteger numRows = [[NSUserDefaults standardUserDefaults] integerForKey:kMoCalendarNumRows];
     numRows = MIN(MAX(numRows, 6), 10);
     
-    _dateGrid = [[MoCalGrid alloc] initWithRows:numRows columns:7 horizontalMargin:6 verticalMargin:6 cellType:CalCellDate];
+    _dateGrid = [[MoCalGrid alloc] initWithRows:numRows columns:7 horizontalMargin:6 verticalMargin:10 cellType:CalCellDate];
     _weekGrid = [[MoCalGrid alloc] initWithRows:numRows columns:1 horizontalMargin:0 verticalMargin:6 cellType:CalCellWeek];
     _dowGrid  = [[MoCalGrid alloc] initWithRows:1 columns:7 horizontalMargin:6 verticalMargin:0 cellType:CalCellDow];
 

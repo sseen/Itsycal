@@ -10,7 +10,7 @@
 #import "MoCalCell.h"
 #import "Sizer.h"
 
-#define calcellSizeScaleFact  1.5;
+#define calcellSizeScaleFact  1.7;
 
 @implementation MoCalGrid
 {
