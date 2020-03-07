@@ -30,12 +30,17 @@
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>LSUIElement</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSAppleEventsUsageDescription</key>
 	<string>Itsycal uses AppleEvents to open your calendar app to the selected day. You can change this setting in System Preferences › Security &amp; Privacy › Privacy</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Itsycal is more useful when it can display events from your calendars. You can change this setting in System Preferences › Security &amp; Privacy › Privacy</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>© 2012 − 2019 mowglii.com</string>
+	<string>© 2020</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -48,5 +53,7 @@
 	<string>https://s3.amazonaws.com/itsycal/itsycal.xml</string>
 	<key>SUScheduledCheckInterval</key>
 	<integer>86400</integer>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
 </dict>
 </plist>

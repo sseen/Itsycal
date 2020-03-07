@@ -20,10 +20,8 @@
 		922B6BBE1A87EDBD00DEA9CD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 922B6BC01A87EDBD00DEA9CD /* Localizable.strings */; };
 		922B6BC41A87EDBE00DEA9CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 922B6BC61A87EDBE00DEA9CD /* InfoPlist.strings */; };
 		922D9B261DC7A1CA0050AB2F /* MoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 922D9B251DC7A1C90050AB2F /* MoUtils.m */; };
-		923E78E01D385D480012979B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 923E78DD1D385CF60012979B /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		923E78E11D385D4F0012979B /* MASShortcut.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 923E78DC1D385CF60012979B /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		923E78E21D385FD80012979B /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 923E78DC1D385CF60012979B /* MASShortcut.framework */; };
-		923E78E31D385FDB0012979B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 923E78DD1D385CF60012979B /* Sparkle.framework */; };
 		9242A5631A82A136005AA4B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9242A5621A82A136005AA4B3 /* AppDelegate.m */; };
 		9242A5651A82A136005AA4B3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9242A5641A82A136005AA4B3 /* main.m */; };
 		9242A5671A82A136005AA4B3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9242A5661A82A136005AA4B3 /* Images.xcassets */; };
@@ -58,7 +56,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				923E78E01D385D480012979B /* Sparkle.framework in CopyFiles */,
 				923E78E11D385D4F0012979B /* MASShortcut.framework in CopyFiles */,
 				922A06621DFB3CC700706C1E /* MoLoginItem.framework in CopyFiles */,
 			);
@@ -103,7 +100,6 @@
 		922D9B241DC7A1C90050AB2F /* MoUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoUtils.h; sourceTree = "<group>"; };
 		922D9B251DC7A1C90050AB2F /* MoUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoUtils.m; sourceTree = "<group>"; };
 		923E78DC1D385CF60012979B /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = _frameworks/MASShortcut.framework; sourceTree = "<group>"; };
-		923E78DD1D385CF60012979B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = _frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		9242A55C1A82A136005AA4B3 /* calentte.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = calentte.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9242A5601A82A136005AA4B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9242A5611A82A136005AA4B3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -163,7 +159,6 @@
 				F80B46F32412010900A72DCF /* AppCenterCrashes.framework in Frameworks */,
 				922A06611DFB3CC700706C1E /* MoLoginItem.framework in Frameworks */,
 				F80B46F52412010900A72DCF /* AppCenterAnalytics.framework in Frameworks */,
-				923E78E31D385FDB0012979B /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,7 +189,6 @@
 				F80B46F22412010900A72DCF /* AppCenterPush.framework */,
 				922A065F1DFB3C9600706C1E /* MoLoginItem.framework */,
 				923E78DC1D385CF60012979B /* MASShortcut.framework */,
-				923E78DD1D385CF60012979B /* Sparkle.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -313,7 +307,6 @@
 				9242A5591A82A136005AA4B3 /* Frameworks */,
 				9242A55A1A82A136005AA4B3 /* Resources */,
 				9252DF361AFD3557007B079F /* CopyFiles */,
-				921949F4225D287F00223258 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -382,26 +375,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		921949F4225D287F00223258 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# For notarization we need to deep codesign Sparkle.\n# github.com/sparkle-project/Sparkle/issues/1266#issuecomment-421182578\nLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"${CODE_SIGN_IDENTITY}\"\ncodesign --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$LOCATION/Sparkle.framework/Versions/A/Resources/AutoUpdate.app\"\ncodesign --verbose --force -o runtime --sign \"$IDENTITY\" \"$LOCATION/Sparkle.framework/Versions/A\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9242A5581A82A136005AA4B3 /* Sources */ = {
