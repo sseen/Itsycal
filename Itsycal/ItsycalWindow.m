@@ -210,7 +210,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
         [rectPath appendBezierPath:arrowPath];
     }
     [Theme.windowBorderColor setStroke];
-    [rectPath setLineWidth:2*kBorderWidth];
+    [rectPath setLineWidth:1*kBorderWidth];
     [rectPath stroke];
     [Theme.mainBackgroundColor setFill];
     [rectPath fill];

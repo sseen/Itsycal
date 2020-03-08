@@ -347,10 +347,19 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
         for (NSInteger col = 0; col < 7; col++) {
             MoCalCell *cell = _dateGrid.cells[row * 7 + col];
             
+            cell.isToday = CompareDates(date, self.todayDate) == 0;
             // chinese lunar text
             NSDate *lunarDate = MakeNSDateWithDate(date, [NSCalendar autoupdatingCurrentCalendar]);
+            
+            unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay;
+            NSDateComponents *comps = [_chineseCalendar components:unitFlags fromDate:lunarDate];
+
+
             NSInteger lunarDay = [self.chineseCalendar component:NSCalendarUnitDay fromDate:lunarDate];
             NSString *lunarContent = [NSString stringWithFormat:@"%@", self.lunarChars[lunarDay-1]];
+            if (!cell.isToday) {
+                lunarContent = @" ";
+            }
             NSString *dateString = [NSString stringWithFormat:@"%ld",date.day];
             NSString *lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
             // attributed string
@@ -361,7 +370,6 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             cell.textField.attributedStringValue = colorTitle;
             
             cell.date = date;
-            cell.isToday = CompareDates(date, self.todayDate) == 0;
             cell.isHighlighted = [self columnIsMemberOfHighlightedDOWs:col];
             cell.isInCurrentMonth = (date.month == self.monthDate.month);
             if (date.month == self.monthDate.month) {

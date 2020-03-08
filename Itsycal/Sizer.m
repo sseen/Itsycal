@@ -32,7 +32,7 @@ NSString * const kSizeDidChangeNotification = @"SizeDidChangeNotification";
 }
 
 - (CGFloat)calendarTitleFontSize {
-    return SMALL_OR_BIG(14, 16);
+    return SMALL_OR_BIG(16, 18);
 }
 
 - (CGFloat)cellSize {
