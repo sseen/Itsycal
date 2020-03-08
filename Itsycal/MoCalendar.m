@@ -358,16 +358,9 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay;
             NSDateComponents *comps = [_chineseCalendar components:unitFlags fromDate:lunarDate];
 
-            NSInteger lunarDay = [self.chineseCalendar component:NSCalendarUnitDay fromDate:lunarDate];
+            NSInteger lunarDay = comps.day;
             NSString *lunarContent = [NSString stringWithFormat:@"%@", self.lunarChars[lunarDay-1]];
-            if (!cell.isToday) {
-                lunarContent = @" ";
-            }
-            if (lunarDay == 1 ) {
-                lunarContent = _lunarMonthChars[comps.month - 1];
-            } else if (lunarDay == 15) {
-                lunarContent = self.lunarChars[comps.day - 1];
-            }
+            
             NSString *dateString = [NSString stringWithFormat:@"%ld",date.day];
             NSString *lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
             // attributed string
