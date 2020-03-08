@@ -360,7 +360,10 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 
             NSInteger lunarDay = comps.day;
             NSString *lunarContent = [NSString stringWithFormat:@"%@", self.lunarChars[lunarDay-1]];
-            
+            // 农历初一显示为月份
+            if (lunarDay == 1 ) {
+                lunarContent = _lunarMonthChars[comps.month - 1];
+            }
             NSString *dateString = [NSString stringWithFormat:@"%ld",date.day];
             NSString *lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
             // attributed string
