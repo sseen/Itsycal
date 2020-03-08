@@ -950,4 +950,8 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     return p;
 }
 
+- (void)getLunarString {
+    // https://www.jianshu.com/p/513cf0ddc89d
+}
+
 @end
