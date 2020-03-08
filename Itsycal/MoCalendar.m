@@ -1046,7 +1046,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     }
 
     // 完整日期
-    NSString *lunarDate = [NSString stringWithFormat:@"%@ %@月 %@",szNongli,szNongliDay,(NSString *)[cDayName objectAtIndex:wCurDay]];
+    NSString *lunarDate __attribute__((unused)) = [NSString stringWithFormat:@"%@ %@月 %@",szNongli,szNongliDay,(NSString *)[cDayName objectAtIndex:wCurDay]];
 
     NSString *lunarDate1 = [NSString stringWithFormat:@"%@",(NSString *)[cDayName objectAtIndex:wCurDay]];
 
