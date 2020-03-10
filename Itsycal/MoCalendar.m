@@ -326,7 +326,8 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
         NSString *dow = [NSString stringWithFormat:@"%@", dows[COL_DOW(self.weekStartDOW, col)]];
         [[_dowGrid.cells[col] textField] setStringValue:dow];
         NSColor *dowColor = Theme.DOWTextColor;
-        if (col > 4) {
+        // dow weekend font color
+        if (col == 0 || col == 6) {
             dowColor = Theme.DOWWeekEndTextColor;
         }
         [[_dowGrid.cells[col] textField] setTextColor:dowColor];
@@ -369,6 +370,11 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             // attributed string
             // date number big font, lunar string small font
             NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithString: lunarWithNewLine];
+            // weekend color
+            if (col == 0 || col == 6) {
+                [colorTitle addAttribute:NSForegroundColorAttributeName value:[Theme currentMonthWeekEndText] range:NSMakeRange(0, dateString.length)];
+                [colorTitle addAttribute:NSForegroundColorAttributeName value:[Theme lunarWeekEndTextColor] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
+            }
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateFont] range:NSMakeRange(0, dateString.length)];
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateLunarFont] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
             [colorTitle setAlignment:NSTextAlignmentCenter range:NSMakeRange(0, lunarWithNewLine.length)];

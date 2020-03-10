@@ -83,10 +83,6 @@ Themer *Theme = nil;
     return [NSColor colorWithWhite:0.53 alpha:1];
 }
 
-- (NSColor *)currentMonthTextColor {
-    return [NSColor colorNamed:@"currentMonthText"];
-}
-
 - (NSColor *)DOWTextColor {
     return [self currentMonthTextColor];
 }
@@ -114,8 +110,22 @@ Themer *Theme = nil;
     return NSColor.labelColor;
 }
 
+- (NSColor *)currentMonthTextColor {
+    return [NSColor colorNamed:@"currentMonthText"];
+}
 - (NSColor *)noncurrentMonthTextColor {
     return [NSColor colorNamed:@"noncurrentMonthText"];
+}
+- (NSColor *)currentMonthWeekEndText {
+    return [NSColor colorNamed:@"currentMonthWeekEndText"];
+}
+
+
+- (NSColor *)lunarTextColor {
+    return [NSColor colorNamed:@"lunarTextColor"];
+}
+- (NSColor *)lunarWeekEndTextColor {
+    return [NSColor colorNamed:@"lunarWeekEndText"];
 }
 
 - (NSColor *)resizeHandleBackgroundColor {
@@ -145,5 +155,6 @@ Themer *Theme = nil;
 - (NSColor *)windowBorderColor {
     return [NSColor colorNamed:@"WindowBorderColor"];
 }
+
 
 @end
