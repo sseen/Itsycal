@@ -11,6 +11,8 @@
 #import "Sizer.h"
 
 #define calcellSizeScaleFact  1.7;
+CGFloat dateHPadding = 11;
+CGFloat dateVPadding = 6;
 
 @implementation MoCalGrid
 {
@@ -180,7 +182,7 @@
 }
 
 - (CGFloat)getDateSize {
-    return [self getCellSize] * calcellSizeScaleFact;
+    return [self getCellSize] ;
 }
 
 @end

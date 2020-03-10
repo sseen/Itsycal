@@ -28,7 +28,7 @@ NSString * const kSizeDidChangeNotification = @"SizeDidChangeNotification";
 }
 
 - (CGFloat)fontSize {
-    return SMALL_OR_BIG(13, 15);
+    return SMALL_OR_BIG(14, 16);
 }
 
 - (CGFloat)calendarTitleFontSize {
@@ -36,7 +36,7 @@ NSString * const kSizeDidChangeNotification = @"SizeDidChangeNotification";
 }
 
 - (CGFloat)cellSize {
-    return SMALL_OR_BIG(23, 28);
+    return SMALL_OR_BIG(34, 39);
 }
 
 - (CGFloat)cellTextFieldVerticalSpace {
