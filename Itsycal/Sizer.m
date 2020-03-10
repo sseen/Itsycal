@@ -29,11 +29,11 @@ NSString * const kSizeDidChangeNotification = @"SizeDidChangeNotification";
 }
 
 - (CGFloat)dowFontSize {
-    return SMALL_OR_BIG(12, 14);
+    return SMALL_OR_BIG(14, 16);
 }
 
 - (CGFloat)weekFontSize {
-    return SMALL_OR_BIG(14, 16);
+    return SMALL_OR_BIG(12, 14);
 }
 
 - (CGFloat)fontSize {

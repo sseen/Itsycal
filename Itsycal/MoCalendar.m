@@ -102,7 +102,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     NSInteger numRows = [[NSUserDefaults standardUserDefaults] integerForKey:kMoCalendarNumRows];
     numRows = MIN(MAX(numRows, 6), 10);
     
-    _dateGrid = [[MoCalGrid alloc] initWithRows:numRows columns:7 horizontalMargin:6 verticalMargin:10 cellType:CalCellDate];
+    _dateGrid = [[MoCalGrid alloc] initWithRows:numRows columns:7 horizontalMargin:6 verticalMargin:16 cellType:CalCellDate];
     _weekGrid = [[MoCalGrid alloc] initWithRows:numRows columns:1 horizontalMargin:0 verticalMargin:6 cellType:CalCellWeek];
     _dowGrid  = [[MoCalGrid alloc] initWithRows:1 columns:7 horizontalMargin:6 verticalMargin:0 cellType:CalCellDow];
 
@@ -351,10 +351,8 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             cell.isToday = CompareDates(date, self.todayDate) == 0;
             // chinese lunar text
             NSDate *lunarDate = MakeNSDateWithDate(date, [NSCalendar autoupdatingCurrentCalendar]);
-            
             unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay;
             NSDateComponents *comps = [_chineseCalendar components:unitFlags fromDate:lunarDate];
-
             NSInteger lunarDay = comps.day;
             NSString *lunarContent = [NSString stringWithFormat:@"%@", self.lunarChars[lunarDay-1]];
             // 农历初一显示为月份
@@ -364,6 +362,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             NSString *dateString = [NSString stringWithFormat:@"%ld",date.day];
             NSString *lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
             // attributed string
+            // date number big font, lunar string small font
             NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithString: lunarWithNewLine];
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateFont] range:NSMakeRange(0, dateString.length)];
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateLunarFont] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];

@@ -10,7 +10,7 @@
 #import "MoCalCell.h"
 #import "Sizer.h"
 
-CGFloat dateHPadding = 11;
+CGFloat dateHPadding = 8;
 CGFloat dateVPadding = 6;
 
 @implementation MoCalGrid
@@ -38,8 +38,8 @@ CGFloat dateVPadding = 6;
         NSMutableArray *cells = [NSMutableArray new];
         for (NSUInteger row = 0; row < rows; row++) {
             for (NSUInteger col = 0; col < cols; col++) {
-                CGFloat x = sz * col + hMargin;
-                CGFloat y = heightDate * rows - heightDate * (row + 1) + vMargin;
+                CGFloat x = (sz + dateHPadding) * col + hMargin;
+                CGFloat y = (heightDate + dateVPadding) * rows - (heightDate + dateVPadding) * (row + 1) + vMargin;
                 MoCalCell *cell = [MoCalCell new];
                 [cell setFrame:NSMakeRect(x, y, sz, heightDate)];
                 [self addSubview:cell];
@@ -83,8 +83,8 @@ CGFloat dateVPadding = 6;
     CGFloat sz = [self getCellSize];
     CGFloat heightDate = [self getCellSize];
     for (NSUInteger col = 0; col < _cols; col++) {
-        CGFloat x = sz * col + _hMargin;
-        CGFloat y = heightDate * (_rows + 1) - heightDate * (_rows + 1) + _vMargin;
+        CGFloat x = (sz + dateHPadding) * col + _hMargin;
+        CGFloat y = (heightDate + dateVPadding) * (_rows + 1) - (heightDate + dateVPadding) * (_rows + 1) + _vMargin;
         MoCalCell *cell = [MoCalCell new];
         [cell setFrame:NSMakeRect(x, y, sz, sz)];
         [self addSubview:cell];
@@ -124,8 +124,8 @@ CGFloat dateVPadding = 6;
 {
     CGFloat sz = [self getCellSize];
     CGFloat heightDate = [self getCellSize];
-    NSInteger col = floorf((point.x - _hMargin) / sz);
-    NSInteger row = floorf((point.y - _vMargin) / heightDate);
+    NSInteger col = floorf((point.x - _hMargin + dateHPadding) / (sz + dateHPadding));
+    NSInteger row = floorf((point.y - _vMargin + dateVPadding) / (heightDate + dateVPadding));
     row = _rows - row - 1; // flip row coordinate
     if (col < 0 || row < 0 || col >= _cols || row >= _rows) {
         return nil;
@@ -157,8 +157,8 @@ CGFloat dateVPadding = 6;
     }else if (_cellType == CalCellWeek) {
         sz = sz * 0.5;
     }
-    CGFloat width  = sz  * _cols + 2 * _hMargin;
-    CGFloat height = heightDate * _rows + 2 * _vMargin;
+    CGFloat width  = (sz + dateHPadding) * _cols + 2 * _hMargin - dateHPadding;
+    CGFloat height = (heightDate + dateVPadding) * _rows + 2 * _vMargin - dateVPadding ;
     return NSMakeSize(width, height);
 }
 
@@ -174,8 +174,8 @@ CGFloat dateVPadding = 6;
     
     for (NSUInteger row = 0; row < _rows; row++) {
         for (NSUInteger col = 0; col < _cols; col++) {
-            CGFloat x = sz * col + _hMargin;
-            CGFloat y = heightDate * _rows - heightDate * (row + 1) + _vMargin;
+            CGFloat x = (sz + dateHPadding) * col + _hMargin;
+            CGFloat y = (heightDate + dateVPadding) * _rows - (heightDate + dateVPadding) * (row + 1) + _vMargin;
             MoCalCell *cell = _cells[row*_cols + col];
             [cell setFrame:NSMakeRect(x, y, sz, heightDate)];
         }
