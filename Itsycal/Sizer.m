@@ -77,7 +77,7 @@ NSString * const kSizeDidChangeNotification = @"SizeDidChangeNotification";
 }
 
 - (NSFont *)weekFont {
-    return [self arialWithSize:[self weekFontSize]];
+    return [NSFont systemFontOfSize:[self weekFontSize] weight:NSFontWeightMedium];
 }
 
 - (NSFont *)dateFont {

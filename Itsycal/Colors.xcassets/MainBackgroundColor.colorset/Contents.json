@@ -7,12 +7,12 @@
     {
       "idiom" : "mac",
       "color" : {
-        "color-space" : "srgb",
+        "color-space" : "display-p3",
         "components" : {
-          "red" : "1.000",
+          "red" : "0xFA",
           "alpha" : "1.000",
-          "blue" : "1.000",
-          "green" : "1.000"
+          "blue" : "0xFF",
+          "green" : "0xFB"
         }
       }
     },
@@ -25,12 +25,12 @@
         }
       ],
       "color" : {
-        "color-space" : "srgb",
+        "color-space" : "display-p3",
         "components" : {
-          "red" : "0.150",
+          "red" : "0x30",
           "alpha" : "1.000",
-          "blue" : "0.170",
-          "green" : "0.160"
+          "blue" : "0x34",
+          "green" : "0x31"
         }
       }
     }

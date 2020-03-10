@@ -84,7 +84,7 @@ Themer *Theme = nil;
 }
 
 - (NSColor *)currentMonthTextColor {
-    return NSColor.labelColor;
+    return [NSColor colorNamed:@"currentMonthText"];
 }
 
 - (NSColor *)DOWTextColor {
@@ -112,7 +112,7 @@ Themer *Theme = nil;
 }
 
 - (NSColor *)noncurrentMonthTextColor {
-    return NSColor.disabledControlTextColor;
+    return [NSColor colorNamed:@"noncurrentMonthText"];
 }
 
 - (NSColor *)resizeHandleBackgroundColor {

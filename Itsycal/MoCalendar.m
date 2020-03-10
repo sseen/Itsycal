@@ -310,7 +310,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 {
     // Month/year and DOW labels
     NSArray *months = [_formatter shortMonthSymbols];
-    NSArray *dows = [_formatter veryShortWeekdaySymbols];
+    NSArray *dows = [_formatter shortWeekdaySymbols];
     NSString *month = [NSString stringWithFormat:@"%@ %zd", months[self.monthDate.month], self.monthDate.year];
     [_monthLabel setStringValue:month];
     // Make French dow strings lowercase because that is the convention

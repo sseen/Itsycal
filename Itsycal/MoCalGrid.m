@@ -47,7 +47,6 @@ CGFloat dateVPadding = 6;
                 // dow's font and week's font smaller
                 if (_cellType == CalCellDow) {
                     cell.textField.font = [[Sizer shared] dowFont];
-                    //[NSFont fontWithName:@"Arial" size:[[Sizer shared] dowFontSize]];
                 }else if (_cellType == CalCellWeek) {
                     cell.textField.font = [[Sizer shared] weekFont];
                 }
