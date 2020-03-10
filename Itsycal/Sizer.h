@@ -2,6 +2,7 @@
 // Copyright (c) 2018 mowglii.com
 
 #import <Foundation/Foundation.h>
+@class NSFont;
 
 // NSUserDefaults key
 extern NSString * const kSizePreference;
@@ -23,7 +24,13 @@ typedef enum : NSInteger {
 
 @interface Sizer : NSObject
 
+@property (nonatomic, readonly) NSFont* dowFont;
+@property (nonatomic, readonly) NSFont* weekFont;
+@property (nonatomic, readonly) NSFont* dateFont;
+@property (nonatomic, readonly) NSFont* dateLunarFont;
 @property (nonatomic) SizePreference sizePreference;
+@property (nonatomic, readonly) CGFloat dowFontSize;
+@property (nonatomic, readonly) CGFloat weekFontSize;
 @property (nonatomic, readonly) CGFloat fontSize;
 @property (nonatomic, readonly) CGFloat calendarTitleFontSize;
 @property (nonatomic, readonly) CGFloat cellSize;

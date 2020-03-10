@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F0018AD2417F3B400562B73 /* Fonter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0018AC2417F3B400562B73 /* Fonter.m */; };
 		921181C722E0192A00591FDA /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 921181C622E0192A00591FDA /* Colors.xcassets */; };
 		9215AD4C1E3AECA700317FAE /* MoVFLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9215AD4B1E3AECA700317FAE /* MoVFLHelper.m */; };
 		921E62CD1E26B3EA007B029F /* PrefsGeneralVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 921E62C11E26B3EA007B029F /* PrefsGeneralVC.m */; };
@@ -67,6 +68,8 @@
 		6F21F6F31F0CDA7D00F443BE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.strings"; sourceTree = "<group>"; };
 		6F21F6F41F0CDA7D00F443BE /* zh-Hans */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		6F21F6F51F0CDA7D00F443BE /* zh-Hans */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		7F0018AB2417F3B400562B73 /* Fonter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Fonter.h; sourceTree = "<group>"; };
+		7F0018AC2417F3B400562B73 /* Fonter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Fonter.m; sourceTree = "<group>"; };
 		921181C622E0192A00591FDA /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		9215AD4A1E3AECA700317FAE /* MoVFLHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoVFLHelper.h; sourceTree = "<group>"; };
 		9215AD4B1E3AECA700317FAE /* MoVFLHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoVFLHelper.m; sourceTree = "<group>"; };
@@ -245,6 +248,8 @@
 				9261EB2F1EEF447500DCFFC4 /* Themer.m */,
 				92B28CCD210BD17500485AE2 /* Sizer.h */,
 				92B28CCE210BD17500485AE2 /* Sizer.m */,
+				7F0018AB2417F3B400562B73 /* Fonter.h */,
+				7F0018AC2417F3B400562B73 /* Fonter.m */,
 			);
 			path = Itsycal;
 			sourceTree = "<group>";
@@ -406,6 +411,7 @@
 				9242A5841A82A189005AA4B3 /* ViewController.m in Sources */,
 				924C518C1E5F721C0049E3A9 /* MoCalResizeHandle.m in Sources */,
 				921E62CD1E26B3EA007B029F /* PrefsGeneralVC.m in Sources */,
+				7F0018AD2417F3B400562B73 /* Fonter.m in Sources */,
 				9242A5631A82A136005AA4B3 /* AppDelegate.m in Sources */,
 				921E62D31E26E038007B029F /* PrefsAboutVC.m in Sources */,
 			);

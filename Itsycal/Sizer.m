@@ -2,6 +2,7 @@
 // Copyright (c) 2018 mowglii.com
 
 #import "Sizer.h"
+#import <AppKit/AppKit.h>
 
 // NSUserDefaults key
 NSString * const kSizePreference = @"SizePreference";
@@ -27,8 +28,20 @@ NSString * const kSizeDidChangeNotification = @"SizeDidChangeNotification";
     [[NSNotificationCenter defaultCenter] postNotificationName:kSizeDidChangeNotification object:nil];
 }
 
-- (CGFloat)fontSize {
+- (CGFloat)dowFontSize {
+    return SMALL_OR_BIG(12, 14);
+}
+
+- (CGFloat)weekFontSize {
     return SMALL_OR_BIG(14, 16);
+}
+
+- (CGFloat)fontSize {
+    return SMALL_OR_BIG(18, 20);
+}
+
+- (CGFloat)dateLunarSize {
+    return SMALL_OR_BIG(10, 12);
 }
 
 - (CGFloat)calendarTitleFontSize {
@@ -59,4 +72,24 @@ NSString * const kSizeDidChangeNotification = @"SizeDidChangeNotification";
     return SMALL_OR_BIG(15, 16);
 }
 
+- (NSFont *)dowFont {
+    return [self arialWithSize:[self dowFontSize]];
+}
+
+- (NSFont *)weekFont {
+    return [self arialWithSize:[self weekFontSize]];
+}
+
+- (NSFont *)dateFont {
+    return [self arialWithSize:[self fontSize]];
+}
+
+- (NSFont *)dateLunarFont {
+    return [NSFont systemFontOfSize:[self dateLunarSize] weight:NSFontWeightLight];
+}
+
+
+- (NSFont *)arialWithSize:(CGFloat)size {
+    return [NSFont fontWithName:@"Arial" size:size];
+}
 @end

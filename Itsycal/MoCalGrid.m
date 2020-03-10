@@ -10,7 +10,6 @@
 #import "MoCalCell.h"
 #import "Sizer.h"
 
-#define calcellSizeScaleFact  1.7;
 CGFloat dateHPadding = 11;
 CGFloat dateVPadding = 6;
 
@@ -28,14 +27,14 @@ CGFloat dateVPadding = 6;
 {
     self = [super initWithFrame:NSZeroRect];
     if (self) {
-        CGFloat sz = [self getDateSize];
+        CGFloat sz = [self getCellSize];
         CGFloat heightDate = sz;
+        // dow's width and week's height cut
         if (_cellType == CalCellDow) {
             heightDate = heightDate * 0.5;
         }else if (_cellType == CalCellWeek) {
             sz = sz * 0.5;
         }
-        
         NSMutableArray *cells = [NSMutableArray new];
         for (NSUInteger row = 0; row < rows; row++) {
             for (NSUInteger col = 0; col < cols; col++) {
@@ -45,6 +44,13 @@ CGFloat dateVPadding = 6;
                 [cell setFrame:NSMakeRect(x, y, sz, heightDate)];
                 [self addSubview:cell];
                 [cells addObject:cell];
+                // dow's font and week's font smaller
+                if (_cellType == CalCellDow) {
+                    cell.textField.font = [[Sizer shared] dowFont];
+                    //[NSFont fontWithName:@"Arial" size:[[Sizer shared] dowFontSize]];
+                }else if (_cellType == CalCellWeek) {
+                    cell.textField.font = [[Sizer shared] weekFont];
+                }
             }
         }
         _cells = [NSArray arrayWithArray:cells];
@@ -69,13 +75,13 @@ CGFloat dateVPadding = 6;
     // Shift existing cells up.
     for (MoCalCell *cell in cells) {
         NSRect frame = cell.frame;
-        frame.origin.y += [self getDateSize];
+        frame.origin.y += [self getCellSize];
         cell.frame = frame;
     }
 
     // Add new row of cells.
-    CGFloat sz = [self getDateSize];
-    CGFloat heightDate = [self getDateSize];
+    CGFloat sz = [self getCellSize];
+    CGFloat heightDate = [self getCellSize];
     for (NSUInteger col = 0; col < _cols; col++) {
         CGFloat x = sz * col + _hMargin;
         CGFloat y = heightDate * (_rows + 1) - heightDate * (_rows + 1) + _vMargin;
@@ -102,7 +108,7 @@ CGFloat dateVPadding = 6;
     }
 
     // Shift remaining cells down.
-    CGFloat heightDate = [self getDateSize];
+    CGFloat heightDate = [self getCellSize];
     for (MoCalCell *cell in cells) {
         NSRect frame = cell.frame;
         frame.origin.y -= heightDate;
@@ -116,8 +122,8 @@ CGFloat dateVPadding = 6;
 
 - (MoCalCell *)cellAtPoint:(NSPoint)point
 {
-    CGFloat sz = [self getDateSize];
-    CGFloat heightDate = [self getDateSize];
+    CGFloat sz = [self getCellSize];
+    CGFloat heightDate = [self getCellSize];
     NSInteger col = floorf((point.x - _hMargin) / sz);
     NSInteger row = floorf((point.y - _vMargin) / heightDate);
     row = _rows - row - 1; // flip row coordinate
@@ -144,7 +150,7 @@ CGFloat dateVPadding = 6;
 
 - (NSSize)intrinsicContentSize
 {
-    CGFloat sz = [self getDateSize];
+    CGFloat sz = [self getCellSize];
     CGFloat heightDate = sz;
     if (_cellType == CalCellDow) {
         heightDate = heightDate * 0.5;
@@ -158,7 +164,7 @@ CGFloat dateVPadding = 6;
 
 - (void)sizeChanged:(id)sender
 {
-    CGFloat sz = [self getDateSize];
+    CGFloat sz = [self getCellSize];
     CGFloat heightDate = sz;
     if (_cellType == CalCellDow) {
         heightDate = heightDate * 0.5;
@@ -181,8 +187,5 @@ CGFloat dateVPadding = 6;
     return  [[Sizer shared] cellSize];
 }
 
-- (CGFloat)getDateSize {
-    return [self getCellSize] ;
-}
 
 @end

@@ -21,7 +21,7 @@
     self = [super initWithFrame:NSMakeRect(0, 0, sz, sz)];
     if (self) {
         _textField = [NSTextField labelWithString:@""];
-        [_textField setFont:[NSFont systemFontOfSize:[[Sizer shared] fontSize] weight:NSFontWeightMedium]];
+        [_textField setFont:[[Sizer shared] dateFont]];//[NSFont systemFontOfSize:[[Sizer shared] fontSize] weight:NSFontWeightMedium]];
         [_textField setTextColor:[NSColor blackColor]];
         [_textField setAlignment:NSTextAlignmentCenter];
         [_textField setTranslatesAutoresizingMaskIntoConstraints:NO];

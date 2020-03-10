@@ -106,9 +106,6 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     _weekGrid = [[MoCalGrid alloc] initWithRows:numRows columns:1 horizontalMargin:0 verticalMargin:6 cellType:CalCellWeek];
     _dowGrid  = [[MoCalGrid alloc] initWithRows:1 columns:7 horizontalMargin:6 verticalMargin:0 cellType:CalCellDow];
 
-    for (MoCalCell *cell in _dowGrid.cells) {
-        cell.textField.font = [NSFont systemFontOfSize:[[Sizer shared] fontSize] weight:NSFontWeightSemibold];
-    }
 
     // The _resizeHandle is at the bottom of the calendar.
     _resizeHandle = [MoCalResizeHandle new];
@@ -368,8 +365,8 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             NSString *lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
             // attributed string
             NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithString: lunarWithNewLine];
-            [colorTitle addAttribute:NSFontAttributeName value:[NSFont systemFontOfSize:[[Sizer shared] fontSize] weight:NSFontWeightBold] range:NSMakeRange(0, dateString.length)];
-            [colorTitle addAttribute:NSFontAttributeName value:[NSFont systemFontOfSize:[[Sizer shared] fontSize]-2 weight:NSFontWeightRegular] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
+            [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateFont] range:NSMakeRange(0, dateString.length)];
+            [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateLunarFont] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
             [colorTitle setAlignment:NSTextAlignmentCenter range:NSMakeRange(0, lunarWithNewLine.length)];
             cell.textField.attributedStringValue = colorTitle;
             
