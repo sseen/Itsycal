@@ -325,9 +325,14 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     for (NSInteger col = 0; col < 7; col++) {
         NSString *dow = [NSString stringWithFormat:@"%@", dows[COL_DOW(self.weekStartDOW, col)]];
         [[_dowGrid.cells[col] textField] setStringValue:dow];
-        [[_dowGrid.cells[col] textField] setTextColor:[self columnIsMemberOfHighlightedDOWs:col] 
-         ? Theme.highlightedDOWTextColor
-         : Theme.DOWTextColor];
+        NSColor *dowColor = Theme.DOWTextColor;
+        if (col > 4) {
+            dowColor = Theme.DOWWeekEndTextColor;
+        }
+        [[_dowGrid.cells[col] textField] setTextColor:dowColor];
+        // [[_dowGrid.cells[col] textField] setTextColor:[self columnIsMemberOfHighlightedDOWs:col]
+        // ? Theme.highlightedDOWTextColor
+        // : Theme.DOWTextColor];
     }
     
     // Get the first of the month.

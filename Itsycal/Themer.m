@@ -88,7 +88,10 @@ Themer *Theme = nil;
 }
 
 - (NSColor *)DOWTextColor {
-    return NSColor.labelColor;
+    return [self currentMonthTextColor];
+}
+- (NSColor *)DOWWeekEndTextColor {
+    return [NSColor colorNamed:@"currentMonthWeekEndText"];
 }
 
 - (NSColor *)highlightedDOWBackgroundColor {

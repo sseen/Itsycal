@@ -21,7 +21,8 @@
     self = [super initWithFrame:NSMakeRect(0, 0, sz, sz)];
     if (self) {
         _textField = [NSTextField labelWithString:@""];
-        [_textField setFont:[[Sizer shared] dateFont]];//[NSFont systemFontOfSize:[[Sizer shared] fontSize] weight:NSFontWeightMedium]];
+        // 默认使用 dow font medium，后面 date font 会更新一次使用 regular
+        [_textField setFont:[[Sizer shared] dowFont]];
         [_textField setTextColor:[NSColor blackColor]];
         [_textField setAlignment:NSTextAlignmentCenter];
         [_textField setTranslatesAutoresizingMaskIntoConstraints:NO];
