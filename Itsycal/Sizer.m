@@ -85,7 +85,7 @@ NSString * const kSizeDidChangeNotification = @"SizeDidChangeNotification";
 }
 
 - (NSFont *)dateLunarFont {
-    return [NSFont systemFontOfSize:[self dateLunarSize] weight:NSFontWeightRegular];
+    return [NSFont systemFontOfSize:[self dateLunarSize] weight:NSFontWeightMedium];
 }
 
 
