@@ -77,7 +77,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 
     _monthLabel = [NSTextField labelWithString:@""];
     _monthLabel.font = [NSFont systemFontOfSize:[[Sizer shared] calendarTitleFontSize] weight:NSFontWeightSemibold];
-    _monthLabel.textColor = Theme.monthTextColor;
+    _monthLabel.textColor = Theme.currentMonthTextColor;
     
     // Make long labels compress and show ellipsis instead of forcing the window wider.
     // Prevent short label from pulling buttons leftward toward it.
