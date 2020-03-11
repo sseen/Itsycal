@@ -43,9 +43,12 @@ extern Themer *Theme;
 @property (nonatomic, readonly) NSColor *resizeHandleForegroundColor;
 @property (nonatomic, readonly) NSColor *selectedCellColor;
 @property (nonatomic, readonly) NSColor *todayCellColor;
+@property (nonatomic, readonly) NSColor *todayCellOutlineColor;
 @property (nonatomic, readonly) NSColor *tooltipBackgroundColor;
 @property (nonatomic, readonly) NSColor *weekTextColor;
 @property (nonatomic, readonly) NSColor *windowBorderColor;
+@property (nonatomic, readonly) NSColor *holidayWeekEndTextColor;
+@property (nonatomic, readonly) NSColor *holidayTextColor;
 
 + (instancetype)shared;
 

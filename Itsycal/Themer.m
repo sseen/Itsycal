@@ -143,6 +143,16 @@ Themer *Theme = nil;
 - (NSColor *)todayCellColor {
     return [NSColor colorNamed:@"TodayCellColor"];
 }
+- (NSColor *)todayCellOutlineColor {
+    return [NSColor colorWithRed:0.9 green:0.2 blue:0.1 alpha:1];
+}
+
+- (NSColor *)holidayTextColor {
+    return [NSColor colorNamed:@"holidayText"];
+}
+- (NSColor *)holidayWeekEndTextColor {
+    return [NSColor colorNamed:@"holidayWeekEndText"];
+}
 
 - (NSColor *)tooltipBackgroundColor {
     return [self mainBackgroundColor];

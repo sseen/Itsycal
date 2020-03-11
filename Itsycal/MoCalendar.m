@@ -382,6 +382,10 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             } else if (cell.isInCurrentMonth) {
                 [colorTitle addAttribute:NSForegroundColorAttributeName value:[Theme lunarTextColor] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
             }
+            // 农历初一显示为月份
+            if (lunarDay == 1 ) {
+                [colorTitle addAttribute:NSForegroundColorAttributeName value:[Theme todayCellOutlineColor] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
+            }
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateFont] range:NSMakeRange(0, dateString.length)];
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateLunarFont] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
             [colorTitle setAlignment:NSTextAlignmentCenter range:NSMakeRange(0, lunarWithNewLine.length)];
