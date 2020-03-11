@@ -11,7 +11,7 @@
 #import "Sizer.h"
 
 CGFloat dateHPadding = 8;
-CGFloat dateVPadding = 6;
+CGFloat dateVPadding = 8;
 
 @implementation MoCalGrid
 {
