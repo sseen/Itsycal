@@ -397,7 +397,8 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             // If the current column is Monday, use this date to
             // calculate the week number for this row.
             if (col == DOW_COL(self.weekStartDOW, 1)) {
-                [_weekGrid.cells[row] textField].textColor = Theme.weekTextColor;
+                // use month text color
+                [_weekGrid.cells[row] textField].textColor = Theme.currentMonthWeekEndText;
                 [_weekGrid.cells[row] textField].integerValue = WeekOfYear(date.year, date.month, date.day);
             }
             date = AddDaysToDate(1, date);
