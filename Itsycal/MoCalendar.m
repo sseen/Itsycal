@@ -367,11 +367,16 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             }
             NSString *dateString = [NSString stringWithFormat:@"%ld",date.day];
             NSString *lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
+            
+            cell.date = date;
+            cell.isHighlighted = [self columnIsMemberOfHighlightedDOWs:col];
+            cell.isInCurrentMonth = (date.month == self.monthDate.month);
+            
             // attributed string
             // date number big font, lunar string small font
             NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithString: lunarWithNewLine];
             // weekend color
-            if (col == 0 || col == 6) {
+            if ((col == 0 || col == 6) && cell.isInCurrentMonth) {
                 [colorTitle addAttribute:NSForegroundColorAttributeName value:[Theme currentMonthWeekEndText] range:NSMakeRange(0, dateString.length)];
                 [colorTitle addAttribute:NSForegroundColorAttributeName value:[Theme lunarWeekEndTextColor] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
             }
@@ -379,10 +384,6 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateLunarFont] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
             [colorTitle setAlignment:NSTextAlignmentCenter range:NSMakeRange(0, lunarWithNewLine.length)];
             cell.textField.attributedStringValue = colorTitle;
-            
-            cell.date = date;
-            cell.isHighlighted = [self columnIsMemberOfHighlightedDOWs:col];
-            cell.isInCurrentMonth = (date.month == self.monthDate.month);
             if (date.month == self.monthDate.month) {
                 if (date.day == 1) {
                     _monthStartCell = cell;
