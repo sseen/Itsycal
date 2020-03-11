@@ -122,7 +122,7 @@ Themer *Theme = nil;
 
 
 - (NSColor *)lunarTextColor {
-    return [NSColor colorNamed:@"lunarTextColor"];
+    return [NSColor colorNamed:@"lunarText"];
 }
 - (NSColor *)lunarWeekEndTextColor {
     return [NSColor colorNamed:@"lunarWeekEndText"];
