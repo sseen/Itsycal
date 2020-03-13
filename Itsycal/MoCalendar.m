@@ -384,7 +384,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             }
             // 农历初一显示为月份
             if (lunarDay == 1 ) {
-                [colorTitle addAttribute:NSForegroundColorAttributeName value:[Theme todayCellOutlineColor] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
+                [colorTitle addAttributes:@{NSUnderlineColorAttributeName:Theme.todayCellColor,NSUnderlineStyleAttributeName:[NSNumber numberWithInteger:NSUnderlineStyleSingle]} range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
             }
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateFont] range:NSMakeRange(0, dateString.length)];
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateLunarFont] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
