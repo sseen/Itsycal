@@ -306,6 +306,11 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     }
 }
 
+- (void)changeDateAndLunarColor:(NSMutableAttributedString *)colorTitle dateString:(NSString *)dateString lunarWithNewLine:(NSString *)lunarWithNewLine color:(NSColor *)color {
+    [colorTitle addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, dateString.length)];
+    [colorTitle addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
+}
+
 - (void)updateCalendar
 {
     // Month/year and DOW labels
@@ -372,20 +377,24 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             cell.isHighlighted = [self columnIsMemberOfHighlightedDOWs:col];
             cell.isInCurrentMonth = (date.month == self.monthDate.month);
             
-            // attributed string
+            // attributed string lunar and date
             // date number big font, lunar string small font
             NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithString: lunarWithNewLine];
             // weekend color
             if ((col == 0 || col == 6) && cell.isInCurrentMonth) {
-                [colorTitle addAttribute:NSForegroundColorAttributeName value:[Theme currentMonthWeekEndText] range:NSMakeRange(0, dateString.length)];
-                [colorTitle addAttribute:NSForegroundColorAttributeName value:[Theme lunarWeekEndTextColor] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
-            } else if (cell.isInCurrentMonth) {
-                [colorTitle addAttribute:NSForegroundColorAttributeName value:[Theme lunarTextColor] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
+                [self changeDateAndLunarColor:colorTitle dateString:dateString lunarWithNewLine:lunarWithNewLine color:Theme.currentMonthWeekEndText];
             }
             // 农历初一显示为月份
             if (lunarDay == 1 ) {
                 [colorTitle addAttributes:@{NSUnderlineColorAttributeName:Theme.todayCellColor,NSUnderlineStyleAttributeName:[NSNumber numberWithInteger:NSUnderlineStyleSingle]} range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
             }
+            // today date text color
+            
+            if (cell.isToday) {
+                [self changeDateAndLunarColor:colorTitle dateString:dateString lunarWithNewLine:lunarWithNewLine color:[NSColor whiteColor]];
+            }
+            
+            // date and lunar font size
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateFont] range:NSMakeRange(0, dateString.length)];
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateLunarFont] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
             [colorTitle setAlignment:NSTextAlignmentCenter range:NSMakeRange(0, lunarWithNewLine.length)];

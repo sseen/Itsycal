@@ -95,14 +95,13 @@
     CGFloat radius = [[Sizer shared] cellRadius];
     if (self.isToday) {
         [Theme.todayCellColor setFill];
-//        [[NSColor redColor] setStroke];
-        [Theme.todayCellOutlineColor setStroke];
+        //[Theme.todayCellOutlineColor setStroke];
         NSRect r = NSInsetRect(self.bounds, inset, inset);
         //NSRect r = NSOffsetRect(r0, offsetx, offsety);
         NSBezierPath *p = [NSBezierPath bezierPathWithRoundedRect:r xRadius:radius yRadius:radius];
         [p setLineWidth:2];
         [p fill];
-        [p stroke];
+        //[p stroke];
     }
     else if (self.isSelected) {
         [Theme.selectedCellColor set];
