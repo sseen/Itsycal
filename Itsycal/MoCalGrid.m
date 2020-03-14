@@ -10,8 +10,8 @@
 #import "MoCalCell.h"
 #import "Sizer.h"
 
-CGFloat dateHPadding = 8;
-CGFloat dateVPadding = 8;
+CGFloat dateHPadding = 6;
+CGFloat dateVPadding = 6;
 
 @implementation MoCalGrid
 {

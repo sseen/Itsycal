@@ -49,7 +49,7 @@ NSString * const kSizeDidChangeNotification = @"SizeDidChangeNotification";
 }
 
 - (CGFloat)cellSize {
-    return SMALL_OR_BIG(36, 41);
+    return SMALL_OR_BIG(38, 42);
 }
 
 - (CGFloat)cellTextFieldVerticalSpace {

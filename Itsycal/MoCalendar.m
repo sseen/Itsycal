@@ -389,15 +389,18 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
                 [colorTitle addAttributes:@{NSUnderlineColorAttributeName:Theme.todayCellColor,NSUnderlineStyleAttributeName:[NSNumber numberWithInteger:NSUnderlineStyleSingle]} range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
             }
             // today date text color
-            
             if (cell.isToday) {
                 [self changeDateAndLunarColor:colorTitle dateString:dateString lunarWithNewLine:lunarWithNewLine color:[NSColor whiteColor]];
             }
-            
             // date and lunar font size
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateFont] range:NSMakeRange(0, dateString.length)];
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateLunarFont] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
             [colorTitle setAlignment:NSTextAlignmentCenter range:NSMakeRange(0, lunarWithNewLine.length)];
+            // 行间距
+//            NSMutableParagraphStyle *textParagraph = [[NSMutableParagraphStyle alloc] init];
+//            textParagraph.lineSpacing = 0.0;
+//            textParagraph.maximumLineHeight = 20.0;
+//            [colorTitle addAttribute:NSParagraphStyleAttributeName value:textParagraph range:NSMakeRange(0, lunarWithNewLine.length)];
             cell.textField.attributedStringValue = colorTitle;
             if (date.month == self.monthDate.month) {
                 if (date.day == 1) {
