@@ -396,11 +396,6 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateFont] range:NSMakeRange(0, dateString.length)];
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateLunarFont] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
             [colorTitle setAlignment:NSTextAlignmentCenter range:NSMakeRange(0, lunarWithNewLine.length)];
-            // 行间距
-//            NSMutableParagraphStyle *textParagraph = [[NSMutableParagraphStyle alloc] init];
-//            textParagraph.lineSpacing = 0.0;
-//            textParagraph.maximumLineHeight = 20.0;
-//            [colorTitle addAttribute:NSParagraphStyleAttributeName value:textParagraph range:NSMakeRange(0, lunarWithNewLine.length)];
             cell.textField.attributedStringValue = colorTitle;
             if (date.month == self.monthDate.month) {
                 if (date.day == 1) {
