@@ -358,7 +358,8 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     for (NSInteger row = 0; row < _dateGrid.rows; row++) {
         for (NSInteger col = 0; col < 7; col++) {
             MoCalCell *cell = _dateGrid.cells[row * 7 + col];
-            
+            // cell hilight line hide
+            cell.lineLayer.hidden = true;
             cell.isToday = CompareDates(date, self.todayDate) == 0;
             // chinese lunar text
             NSDate *lunarDate = MakeNSDateWithDate(date, [NSCalendar autoupdatingCurrentCalendar]);
@@ -386,7 +387,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             }
             // 农历初一显示为月份
             if (lunarDay == 1 ) {
-                [colorTitle addAttributes:@{NSUnderlineColorAttributeName:Theme.todayCellColor,NSUnderlineStyleAttributeName:[NSNumber numberWithInteger:NSUnderlineStyleSingle]} range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
+                cell.lineLayer.hidden = false;
             }
             // today date text color
             if (cell.isToday) {

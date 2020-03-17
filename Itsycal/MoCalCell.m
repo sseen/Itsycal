@@ -34,6 +34,13 @@
         _textFieldVerticalSpace = [NSLayoutConstraint constraintWithItem:_textField attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1 constant:[[Sizer shared] cellTextFieldVerticalSpace]];
         [self addConstraint:_textFieldVerticalSpace];
 
+        // highlight line
+        self.wantsLayer = true;
+        _lineLayer = [CALayer layer];
+        _lineLayer.frame = NSMakeRect(5, 1, CGRectGetWidth(self.bounds) - 10, 1);
+        _lineLayer.backgroundColor = NSColor.redColor.CGColor;
+        [self.layer addSublayer:_lineLayer];
+        _lineLayer.hidden = true;
         
         REGISTER_FOR_SIZE_CHANGE;
     }
