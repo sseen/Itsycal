@@ -29,7 +29,6 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 @implementation MoCalendar
 {
     NSDateFormatter *_formatter;
-    NSTextField *_monthLabel;
     MoCalGrid *_dateGrid;
     MoCalGrid *_weekGrid;
     MoCalGrid *_dowGrid;
@@ -74,16 +73,12 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     
     _formatter = [NSDateFormatter new];
     _tooltipWC = [MoCalToolTipWC new];
-
-    _monthLabel = [NSTextField labelWithString:@""];
-    _monthLabel.font = [NSFont systemFontOfSize:[[Sizer shared] calendarTitleFontSize] weight:NSFontWeightSemibold];
-    _monthLabel.textColor = Theme.currentMonthTextColor;
     
     // Make long labels compress and show ellipsis instead of forcing the window wider.
     // Prevent short label from pulling buttons leftward toward it.
-    [_monthLabel setContentCompressionResistancePriority:1 forOrientation:NSLayoutConstraintOrientationHorizontal];
-    [_monthLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
-    [_monthLabel setContentHuggingPriority:1 forOrientation:NSLayoutConstraintOrientationHorizontal];
+    // [_monthLabel setContentCompressionResistancePriority:1 forOrientation:NSLayoutConstraintOrientationHorizontal];
+    // [_monthLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
+    // [_monthLabel setContentHuggingPriority:1 forOrientation:NSLayoutConstraintOrientationHorizontal];
     
     // Convenience function to make buttons.
     MoButton* (^btn)(NSString*, SEL) = ^MoButton* (NSString *imageName, SEL action) {
@@ -98,6 +93,13 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     _btnPrev  = btn(@"btnPrev",  @selector(showPreviousMonth:));
     _btnToday = btn(@"btnToday", @selector(showTodayMonth:));
     _btnNext  = btn(@"btnNext",  @selector(showNextMonth:));
+    
+    // hide btntoday image
+    [_btnToday setImage:[[NSImage alloc] initWithSize:_btnToday.image.size]];
+    
+    [_btnToday setContentCompressionResistancePriority:1 forOrientation:NSLayoutConstraintOrientationHorizontal];
+    [_btnToday setLineBreakMode:NSLineBreakByTruncatingMiddle];
+    [_btnToday setContentHuggingPriority:1 forOrientation:NSLayoutConstraintOrientationHorizontal];
 
     NSInteger numRows = [[NSUserDefaults standardUserDefaults] integerForKey:kMoCalendarNumRows];
     numRows = MIN(MAX(numRows, 6), 10);
@@ -111,19 +113,17 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     _resizeHandle = [MoCalResizeHandle new];
     [_resizeHandle dim:YES];
 
-    [self addSubview:_monthLabel];
     [self addSubview:_dateGrid];
     [self addSubview:_weekGrid];
     [self addSubview:_dowGrid];
     [self addSubview:_resizeHandle];
 
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:self metrics:nil views:NSDictionaryOfVariableBindings(_monthLabel, _btnPrev, _btnToday, _btnNext, _dowGrid, _weekGrid, _dateGrid, _resizeHandle)];
-    [vfl :@"H:|-8-[_monthLabel]-4-[_btnPrev]" :NSLayoutFormatAlignAllCenterY];
-    [vfl :@"H:[_btnPrev]-2-[_btnToday]-2-[_btnNext]-6-|" :NSLayoutFormatAlignAllBottom];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:self metrics:nil views:NSDictionaryOfVariableBindings(_btnPrev, _btnToday, _btnNext, _dowGrid, _weekGrid, _dateGrid, _resizeHandle)];
+    [vfl :@"H:|-6-[_btnPrev]-2-[_btnToday]-2-[_btnNext]-6-|" :NSLayoutFormatAlignAllBottom];
     [vfl :@"H:[_dowGrid]|"];
     [vfl :@"H:[_weekGrid]-(-2)-[_dateGrid]|"];
     [vfl :@"H:|[_resizeHandle]|"];
-    [vfl :@"V:|-(-1)-[_monthLabel]-7-[_dowGrid]-(-6)-[_dateGrid]-5-|"];
+    [vfl :@"V:|-(-1)-[_btnPrev]-7-[_dowGrid]-(-6)-[_dateGrid]-5-|"];
     [vfl :@"V:[_weekGrid]-5-|"];
     [vfl :@"V:[_resizeHandle(8)]|"];
 
@@ -317,7 +317,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     NSArray *months = [_formatter shortMonthSymbols];
     NSArray *dows = [_formatter shortWeekdaySymbols];
     NSString *month = [NSString stringWithFormat:@"%@ %zd", months[self.monthDate.month], self.monthDate.year];
-    [_monthLabel setStringValue:month];
+    [_btnToday setTitle:month];
     // Make French dow strings lowercase because that is the convention
     // in France. -veryShortWeekdaySymbols should have done this for us.
     if ([[NSLocale currentLocale].localeIdentifier hasPrefix:@"fr"]) {
@@ -472,7 +472,6 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 
 - (void)delayedSizeChanges:(id)sender {
     // Font sizes.
-    _monthLabel.font = [NSFont systemFontOfSize:[[Sizer shared] calendarTitleFontSize] weight:NSFontWeightSemibold];
     for (MoCalCell *cell in _dowGrid.cells) {
         cell.textField.font = [NSFont systemFontOfSize:[[Sizer shared] fontSize] weight:NSFontWeightSemibold];
     }
@@ -743,7 +742,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     MoDate firstOfYear = MakeDate(self.selectedDate.year, 0, 1);
     NSInteger dayOfYear = CompareDates(self.selectedDate, firstOfYear) + 1;
     dayInfo = [NSString stringWithFormat:@"%@ ∕ %zd", dayInfo, dayOfYear];
-    [_monthLabel setStringValue:dayInfo];
+    [_btnToday setTitle:dayInfo];
     [self performSelector:@selector(clearDateInfo) withObject:nil afterDelay:2];
 }
 
@@ -752,7 +751,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     // This should match month code in -updateCalendar
     NSArray *months = [_formatter shortMonthSymbols];
     NSString *month = [NSString stringWithFormat:@"%@ %zd", months[self.monthDate.month], self.monthDate.year];
-    [_monthLabel setStringValue:month];
+    [_btnToday setTitle:month];
 }
 
 #pragma mark
