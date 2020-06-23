@@ -83,12 +83,12 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
         frameView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
         [super setContentView:frameView];
     }
-//    // blur
-//    ItsycalWindowVisualView *vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSZeroRect];
-//    vibrant.translatesAutoresizingMaskIntoConstraints = YES;
-//    [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
-//    [vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
-//    [frameView addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
+    // blur
+    ItsycalWindowVisualView *vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSZeroRect];
+    vibrant.translatesAutoresizingMaskIntoConstraints = YES;
+    [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+    [vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+    [frameView addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
     if (_childContentView) {
         [_childContentView removeFromSuperview];
         _childContentView = nil;
