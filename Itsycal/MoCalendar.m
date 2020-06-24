@@ -123,7 +123,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     [vfl :@"H:[_dowGrid]|"];
     [vfl :@"H:[_weekGrid]-(-2)-[_dateGrid]|"];
     [vfl :@"H:|[_resizeHandle]|"];
-    [vfl :@"V:|-(-1)-[_btnPrev]-7-[_dowGrid]-(-6)-[_dateGrid]-5-|"];
+    [vfl :@"V:|-(-1)-[_btnPrev(14)]-7-[_dowGrid]-(-6)-[_dateGrid]-5-|"];
     [vfl :@"V:[_weekGrid]-5-|"];
     [vfl :@"V:[_resizeHandle(8)]|"];
 
