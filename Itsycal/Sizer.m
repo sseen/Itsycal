@@ -37,7 +37,7 @@ NSString * const kSizeDidChangeNotification = @"SizeDidChangeNotification";
 }
 
 - (CGFloat)fontSize {
-    return SMALL_OR_BIG(18, 20);
+    return SMALL_OR_BIG(16, 18);
 }
 
 - (CGFloat)dateLunarSize {

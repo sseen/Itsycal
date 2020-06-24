@@ -578,8 +578,8 @@ static NSString *kEventCellIdentifier = @"EventCell";
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Must be opaque so rows can scroll under it.
-    [Theme.mainBackgroundColor set];
-    NSRectFillUsingOperation(self.bounds, NSCompositingOperationSourceOver);
+//    [Theme.mainBackgroundColor set];
+//    NSRectFillUsingOperation(self.bounds, NSCompositingOperationSourceOver);
     NSRect r = NSMakeRect(4, self.bounds.size.height - 4, self.bounds.size.width - 8, 1);
     [Theme.agendaDividerColor set];
     NSRectFillUsingOperation(r, NSCompositingOperationSourceOver);
