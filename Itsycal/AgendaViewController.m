@@ -555,7 +555,7 @@ static NSString *kEventCellIdentifier = @"EventCell";
         [self addSubview:_DOWTextField];
         MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:self metrics:nil views:NSDictionaryOfVariableBindings(_dayTextField, _DOWTextField)];
         [vfl :@"H:|-4-[_DOWTextField]-(>=4)-[_dayTextField]-4-|" :NSLayoutFormatAlignAllLastBaseline];
-        [vfl :@"V:|-6-[_dayTextField]-1-|"];
+        [vfl :@"V:|-13-[_dayTextField]-2-|"];
         
         REGISTER_FOR_SIZE_CHANGE;
     }
@@ -572,7 +572,7 @@ static NSString *kEventCellIdentifier = @"EventCell";
 {
     // The height of the textfield plus the height of the
     // top and bottom marigns.
-    return [_dayTextField intrinsicContentSize].height + 7; // 6+1=top+bottom margin
+    return [_dayTextField intrinsicContentSize].height + 15; // 13+2=top+bottom margin
 }
 
 - (void)drawRect:(NSRect)dirtyRect

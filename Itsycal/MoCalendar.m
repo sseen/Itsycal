@@ -96,6 +96,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     
     // hide btntoday image
     [_btnToday setImage:[[NSImage alloc] initWithSize:_btnToday.image.size]];
+    [_btnToday setFont:[[Sizer shared] dowFont]];
     
     [_btnToday setContentCompressionResistancePriority:1 forOrientation:NSLayoutConstraintOrientationHorizontal];
     [_btnToday setLineBreakMode:NSLineBreakByTruncatingMiddle];
