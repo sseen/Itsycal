@@ -87,7 +87,8 @@ Themer *Theme = nil;
     return [self currentMonthTextColor];
 }
 - (NSColor *)DOWWeekEndTextColor {
-    return [NSColor colorNamed:@"currentMonthWeekEndText"];
+//    return [NSColor colorNamed:@"currentMonthWeekEndText"];
+    return NSColor.secondaryLabelColor;
 }
 
 - (NSColor *)highlightedDOWBackgroundColor {
@@ -103,7 +104,7 @@ Themer *Theme = nil;
 }
 
 - (NSColor *)mainBackgroundColor {
-    return [NSColor colorNamed:@"MainBackgroundColor"];
+    return NSColor.windowBackgroundColor;//[NSColor colorNamed:@"MainBackgroundColor"];
 }
 
 - (NSColor *)monthTextColor {
@@ -111,13 +112,15 @@ Themer *Theme = nil;
 }
 
 - (NSColor *)currentMonthTextColor {
-    return [NSColor colorNamed:@"currentMonthText"];
+    return NSColor.labelColor;//[NSColor colorNamed:@"currentMonthText"];
 }
 - (NSColor *)noncurrentMonthTextColor {
-    return [NSColor colorNamed:@"noncurrentMonthText"];
+//    return [NSColor colorNamed:@"noncurrentMonthText"];
+    return NSColor.tertiaryLabelColor;
 }
 - (NSColor *)currentMonthWeekEndText {
-    return [NSColor colorNamed:@"currentMonthWeekEndText"];
+//    return [NSColor colorNamed:@"currentMonthWeekEndText"];
+    return NSColor.secondaryLabelColor;
 }
 
 
@@ -141,7 +144,8 @@ Themer *Theme = nil;
 }
 
 - (NSColor *)todayCellColor {
-    return [NSColor colorNamed:@"TodayCellColor"];
+//    return [NSColor colorNamed:@"TodayCellColor"];
+    return NSColor.systemRedColor;
 }
 - (NSColor *)todayCellOutlineColor {
     return [NSColor colorWithRed:0.9 green:0.2 blue:0.1 alpha:1];
