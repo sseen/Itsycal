@@ -321,7 +321,7 @@ static NSString *kEventCellIdentifier = @"EventCell";
     if ([obj isKindOfClass:[EventInfo class]]) {
         eventCell.frame = NSMakeRect(0, 0, NSWidth(_tv.frame), 999); // only width is important here
         [self populateEventCell:eventCell withInfo:obj showLocation:self.showLocation];
-        height = eventCell.height + 2;
+        height = eventCell.height ;
     }
     return height;
 }
@@ -543,7 +543,7 @@ static NSString *kEventCellIdentifier = @"EventCell";
         
         _DOWTextField = [NSTextField labelWithString:@""];
         _DOWTextField.translatesAutoresizingMaskIntoConstraints = NO;
-        _DOWTextField.font = [NSFont systemFontOfSize:[[Sizer shared] fontSize] weight:NSFontWeightRegular];
+        _DOWTextField.font = [NSFont systemFontOfSize:[[Sizer shared] dowFontSize] weight:NSFontWeightRegular];
         _DOWTextField.textColor = Theme.agendaEventDateTextColor;
 
         [self addSubview:_dayTextField];
@@ -595,7 +595,7 @@ static NSString *kEventCellIdentifier = @"EventCell";
     // Convenience function for making labels.
     NSTextField* (^label)(void) = ^NSTextField* () {
         NSTextField *lbl = [NSTextField labelWithString:@""];
-        lbl.font = [NSFont systemFontOfSize:[[Sizer shared] fontSize]];
+        lbl.font = [NSFont systemFontOfSize:[[Sizer shared] dowFontSize]];
         lbl.lineBreakMode = NSLineBreakByWordWrapping;
         lbl.textColor = Theme.agendaDOWTextColor;
         lbl.cell.truncatesLastVisibleLine = YES;
@@ -615,14 +615,11 @@ static NSString *kEventCellIdentifier = @"EventCell";
         _grid.translatesAutoresizingMaskIntoConstraints = NO;
         _grid.rowSpacing = 3.0;
         
-        // font size
-        _locationTextField.font = [NSFont systemFontOfSize:[[Sizer shared] dowFontSize]];
-        _durationTextField.font = [NSFont systemFontOfSize:[[Sizer shared] dowFontSize]];
         
         [self addSubview:_grid];
         MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:self metrics:nil views:NSDictionaryOfVariableBindings(_grid)];
         [vfl :@"H:[_grid]-10-|"];
-        [vfl :@"V:|-4-[_grid]"];
+        [vfl :@"V:|-2-[_grid]"];
         
         CGFloat leadingConstant = [[Sizer shared] agendaEventLeadingMargin];
         _gridLeadingConstraint = [_grid.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:leadingConstant];
@@ -672,7 +669,7 @@ static NSString *kEventCellIdentifier = @"EventCell";
 {
     CGFloat alpha = self.dim ? 0.5 : 1;
     CGFloat x = 5;
-    CGFloat yOffset = [[Sizer shared] fontSize] + 2;
+    CGFloat yOffset = [[Sizer shared] fontSize];
     CGFloat dotWidthX = [[Sizer shared] agendaDotWidth];
     CGFloat dotWidthY = dotWidthX;
     CGFloat radius = dotWidthX / 2.0;
