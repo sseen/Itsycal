@@ -456,11 +456,8 @@ static NSString *kEventCellIdentifier = @"EventCell";
         }
     }
     cell.titleTextField.stringValue = title;
-    cell.titleTextField.textColor = Theme.agendaEventDateTextColor;
     cell.locationTextField.stringValue = location;
-    cell.locationTextField.textColor = Theme.agendaEventDateTextColor;
     cell.durationTextField.stringValue = duration;
-    cell.durationTextField.textColor = Theme.agendaEventDateTextColor;
 }
 
 #pragma mark -
@@ -541,13 +538,13 @@ static NSString *kEventCellIdentifier = @"EventCell";
         _dayTextField = [NSTextField labelWithString:@""];
         _dayTextField.translatesAutoresizingMaskIntoConstraints = NO;
         _dayTextField.font = [NSFont systemFontOfSize:[[Sizer shared] dowFontSize] weight:NSFontWeightRegular];
-        _dayTextField.textColor = Theme.agendaDOWTextColor;
+        _dayTextField.textColor = Theme.agendaEventDateTextColor;
         [_dayTextField setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
         
         _DOWTextField = [NSTextField labelWithString:@""];
         _DOWTextField.translatesAutoresizingMaskIntoConstraints = NO;
         _DOWTextField.font = [NSFont systemFontOfSize:[[Sizer shared] fontSize] weight:NSFontWeightRegular];
-        _DOWTextField.textColor = Theme.agendaDOWTextColor;
+        _DOWTextField.textColor = Theme.agendaEventDateTextColor;
 
         [self addSubview:_dayTextField];
         [self addSubview:_DOWTextField];
@@ -600,6 +597,7 @@ static NSString *kEventCellIdentifier = @"EventCell";
         NSTextField *lbl = [NSTextField labelWithString:@""];
         lbl.font = [NSFont systemFontOfSize:[[Sizer shared] fontSize]];
         lbl.lineBreakMode = NSLineBreakByWordWrapping;
+        lbl.textColor = Theme.agendaDOWTextColor;
         lbl.cell.truncatesLastVisibleLine = YES;
         return lbl;
     };
