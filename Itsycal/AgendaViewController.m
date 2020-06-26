@@ -281,8 +281,6 @@ static NSString *kEventCellIdentifier = @"EventCell";
         cell.date = obj;
         cell.dayTextField.stringValue = [self dayStringForDate:obj];
         cell.DOWTextField.stringValue = [self DOWStringForDate:obj];
-        cell.dayTextField.textColor = Theme.agendaDayTextColor;
-        cell.DOWTextField.textColor = Theme.agendaDOWTextColor;
         v = cell;
     }
     else {
@@ -323,7 +321,7 @@ static NSString *kEventCellIdentifier = @"EventCell";
     if ([obj isKindOfClass:[EventInfo class]]) {
         eventCell.frame = NSMakeRect(0, 0, NSWidth(_tv.frame), 999); // only width is important here
         [self populateEventCell:eventCell withInfo:obj showLocation:self.showLocation];
-        height = eventCell.height;
+        height = eventCell.height + 2;
     }
     return height;
 }
@@ -458,7 +456,7 @@ static NSString *kEventCellIdentifier = @"EventCell";
         }
     }
     cell.titleTextField.stringValue = title;
-    cell.titleTextField.textColor = Theme.agendaEventTextColor;
+    cell.titleTextField.textColor = Theme.agendaEventDateTextColor;
     cell.locationTextField.stringValue = location;
     cell.locationTextField.textColor = Theme.agendaEventDateTextColor;
     cell.durationTextField.stringValue = duration;
@@ -542,13 +540,13 @@ static NSString *kEventCellIdentifier = @"EventCell";
         self.identifier = kDateCellIdentifier;
         _dayTextField = [NSTextField labelWithString:@""];
         _dayTextField.translatesAutoresizingMaskIntoConstraints = NO;
-        _dayTextField.font = [NSFont systemFontOfSize:[[Sizer shared] fontSize] weight:NSFontWeightSemibold];
-        _dayTextField.textColor = Theme.agendaDayTextColor;
+        _dayTextField.font = [NSFont systemFontOfSize:[[Sizer shared] dowFontSize] weight:NSFontWeightRegular];
+        _dayTextField.textColor = Theme.agendaDOWTextColor;
         [_dayTextField setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
         
         _DOWTextField = [NSTextField labelWithString:@""];
         _DOWTextField.translatesAutoresizingMaskIntoConstraints = NO;
-        _DOWTextField.font = [NSFont systemFontOfSize:[[Sizer shared] fontSize] weight:NSFontWeightSemibold];
+        _DOWTextField.font = [NSFont systemFontOfSize:[[Sizer shared] fontSize] weight:NSFontWeightRegular];
         _DOWTextField.textColor = Theme.agendaDOWTextColor;
 
         [self addSubview:_dayTextField];
@@ -617,11 +615,16 @@ static NSString *kEventCellIdentifier = @"EventCell";
                                                 @[_locationTextField],
                                                 @[_durationTextField]]];
         _grid.translatesAutoresizingMaskIntoConstraints = NO;
-        _grid.rowSpacing = 0;
+        _grid.rowSpacing = 3.0;
+        
+        // font size
+        _locationTextField.font = [NSFont systemFontOfSize:[[Sizer shared] dowFontSize]];
+        _durationTextField.font = [NSFont systemFontOfSize:[[Sizer shared] dowFontSize]];
+        
         [self addSubview:_grid];
         MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:self metrics:nil views:NSDictionaryOfVariableBindings(_grid)];
         [vfl :@"H:[_grid]-10-|"];
-        [vfl :@"V:|-3-[_grid]"];
+        [vfl :@"V:|-4-[_grid]"];
         
         CGFloat leadingConstant = [[Sizer shared] agendaEventLeadingMargin];
         _gridLeadingConstraint = [_grid.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:leadingConstant];

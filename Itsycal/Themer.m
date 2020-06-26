@@ -145,7 +145,8 @@ Themer *Theme = nil;
 
 - (NSColor *)todayCellColor {
 //    return [NSColor colorNamed:@"TodayCellColor"];
-    return NSColor.systemRedColor;
+    return NSColor.systemRedColor
+    ;
 }
 - (NSColor *)todayCellOutlineColor {
     return [NSColor colorWithRed:0.9 green:0.2 blue:0.1 alpha:1];
