@@ -112,6 +112,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 
     // The _resizeHandle is at the bottom of the calendar.
     _resizeHandle = [MoCalResizeHandle new];
+    _resizeHandle.hidden = true;
     [_resizeHandle dim:YES];
 
     [self addSubview:_dateGrid];
