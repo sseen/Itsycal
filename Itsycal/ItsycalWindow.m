@@ -86,6 +86,8 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     // blur
     ItsycalWindowVisualView *vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSZeroRect];
     vibrant.translatesAutoresizingMaskIntoConstraints = YES;
+    vibrant.wantsLayer = true;
+    vibrant.layer.cornerRadius = 15;
     [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
     [vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
     [frameView addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
