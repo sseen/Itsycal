@@ -131,7 +131,7 @@
         CGFloat dotWidth = [[Sizer shared] cellDotWidth];
         CGFloat dotSpacing = 1.5*dotWidth;
         NSRect r = NSMakeRect(0, 0, dotWidth, dotWidth);
-        r.origin.y = self.bounds.origin.y + dotWidth + 2;
+        r.origin.y = self.bounds.origin.y + dotWidth - 1;
         if (self.dotColors.count == 0) {
             [self.textField.textColor set];
             r.origin.x = self.bounds.origin.x + sz/2.0 - dotWidth/2.0;

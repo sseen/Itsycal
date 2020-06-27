@@ -140,7 +140,8 @@ Themer *Theme = nil;
 }
 
 - (NSColor *)selectedCellColor {
-    return [self currentMonthOutlineColor];
+//    return [self currentMonthOutlineColor];
+    return NSColor.secondaryLabelColor;
 }
 
 - (NSColor *)todayCellColor {
