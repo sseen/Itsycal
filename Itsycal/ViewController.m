@@ -332,20 +332,22 @@
 
 - (void)showOptionsMenu:(id)sender
 {
-    NSMenu *optMenu = [[NSMenu alloc] initWithTitle:@"Options Menu"];
-    NSInteger i = 0;
-
-    [optMenu insertItemWithTitle:NSLocalizedString(@"About Itsycal", @"") action:@selector(showAbout:) keyEquivalent:@"" atIndex:i++];
-    [optMenu insertItemWithTitle:NSLocalizedString(@"Check for Updates…", @"") action:@selector(checkForUpdates:) keyEquivalent:@"" atIndex:i++];
-    [optMenu insertItem:[NSMenuItem separatorItem] atIndex:i++];
-    [optMenu insertItemWithTitle:NSLocalizedString(@"Preferences…", @"") action:@selector(showPrefs:) keyEquivalent:@"," atIndex:i++];
-    [optMenu insertItemWithTitle:NSLocalizedString(@"Date & Time…", @"") action:@selector(openDateAndTimePrefs:) keyEquivalent:@"" atIndex:i++];
-    [optMenu insertItem:[NSMenuItem separatorItem] atIndex:i++];
-    [optMenu insertItemWithTitle:NSLocalizedString(@"Help…", @"") action:@selector(navigateToHelp:) keyEquivalent:@"" atIndex:i++];
-    [optMenu insertItem:[NSMenuItem separatorItem] atIndex:i++];
-    [optMenu insertItemWithTitle:NSLocalizedString(@"Quit Itsycal", @"") action:@selector(terminate:) keyEquivalent:@"q" atIndex:i++];
-    NSPoint pt = NSOffsetRect(_btnOpt.frame, -5, -10).origin;
-    [optMenu popUpMenuPositioningItem:nil atLocation:pt inView:self.view];
+    [self showPrefs:sender];
+    
+//    NSMenu *optMenu = [[NSMenu alloc] initWithTitle:@"Options Menu"];
+//    NSInteger i = 0;
+//
+//    [optMenu insertItemWithTitle:NSLocalizedString(@"About Itsycal", @"") action:@selector(showAbout:) keyEquivalent:@"" atIndex:i++];
+//    [optMenu insertItemWithTitle:NSLocalizedString(@"Check for Updates…", @"") action:@selector(checkForUpdates:) keyEquivalent:@"" atIndex:i++];
+//    [optMenu insertItem:[NSMenuItem separatorItem] atIndex:i++];
+//    [optMenu insertItemWithTitle:NSLocalizedString(@"Preferences…", @"") action:@selector(showPrefs:) keyEquivalent:@"," atIndex:i++];
+//    [optMenu insertItemWithTitle:NSLocalizedString(@"Date & Time…", @"") action:@selector(openDateAndTimePrefs:) keyEquivalent:@"" atIndex:i++];
+//    [optMenu insertItem:[NSMenuItem separatorItem] atIndex:i++];
+//    [optMenu insertItemWithTitle:NSLocalizedString(@"Help…", @"") action:@selector(navigateToHelp:) keyEquivalent:@"" atIndex:i++];
+//    [optMenu insertItem:[NSMenuItem separatorItem] atIndex:i++];
+//    [optMenu insertItemWithTitle:NSLocalizedString(@"Quit Itsycal", @"") action:@selector(terminate:) keyEquivalent:@"q" atIndex:i++];
+//    NSPoint pt = NSOffsetRect(_btnOpt.frame, -5, -10).origin;
+//    [optMenu popUpMenuPositioningItem:nil atLocation:pt inView:self.view];
 }
 
 - (void)pin:(id)sender
