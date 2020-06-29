@@ -326,6 +326,10 @@
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url]];
 }
 
+- (void)exitApp:(id)sender {
+    [NSApp terminate:sender];
+}
+
 - (void)showOptionsMenu:(id)sender
 {
     NSMenu *optMenu = [[NSMenu alloc] initWithTitle:@"Options Menu"];
