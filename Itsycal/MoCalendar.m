@@ -86,6 +86,8 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
         [btn setImage:[NSImage imageNamed:imageName]];
         [btn setAlternateImage:[NSImage imageNamed:[imageName stringByAppendingString:@"Alt"]]];
         [btn setTarget:self];
+        [btn.image setTemplate:true];
+        [btn setContentTintColor:NSColor.secondaryLabelColor];
         [btn setAction:action];
         [self addSubview:btn];
         return btn;
@@ -125,7 +127,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     [vfl :@"H:[_dowGrid]|"];
     [vfl :@"H:[_weekGrid]-(-2)-[_dateGrid]|"];
     [vfl :@"H:|[_resizeHandle]|"];
-    [vfl :@"V:|-(-1)-[_btnPrev(14)]-7-[_dowGrid]-(-6)-[_dateGrid]-5-|"];
+    [vfl :@"V:|-(-1)-[_btnPrev(15)]-7-[_dowGrid]-(-6)-[_dateGrid]-5-|"];
     [vfl :@"V:[_weekGrid]-5-|"];
     [vfl :@"V:[_resizeHandle(8)]|"];
 

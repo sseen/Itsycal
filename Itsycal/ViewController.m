@@ -26,7 +26,7 @@
     MoCalendar    *_moCal;
     NSCalendar    *_nsCal;
     NSStatusItem  *_statusItem;
-    MoButton      *_btnAdd, *_btnCal, *_btnOpt, *_btnPin;
+    MoButton      *_btnAdd, *_btnCal, *_btnOpt, *_btnPin, *_btnExit;
     NSWindowController    *_prefsWC;
     AgendaViewController  *_agendaVC;
     NSLayoutConstraint    *_bottomMargin;
@@ -76,18 +76,27 @@
         [btn setImage:[NSImage imageNamed:imageName]];
         [btn setKeyEquivalent:key];
         [btn setKeyEquivalentModifierMask:NSEventModifierFlagCommand];
+        [btn.image setTemplate:true];
+        [btn setContentTintColor:NSColor.secondaryLabelColor];
         [v addSubview:btn];
         return btn;
     };
 
     // Add event, Calendar.app, and Options buttons
     _btnAdd = btn(@"btnAdd", NSLocalizedString(@"New Event… ⌘N", @""), @"n", @selector(addCalendarEvent:));
+    _btnExit = btn(@"btnExit", NSLocalizedString(@"Exit", @""), @"n", @selector(exitApp:));
     _btnCal = btn(@"btnCal", NSLocalizedString(@"Open Calendar… ⌘O", @""), @"o", @selector(showCalendarApp:));
     _btnOpt = btn(@"btnOpt", NSLocalizedString(@"Options", @""), @"", @selector(showOptionsMenu:));
     _btnPin = btn(@"btnPin", NSLocalizedString(@"Pin Itsycal… P", @""), @"p", @selector(pin:));
     _btnPin.keyEquivalentModifierMask = 0;
     _btnPin.alternateImage = [NSImage imageNamed:@"btnPinAlt"];
     [_btnPin setButtonType:NSButtonTypeToggle];
+    
+    _btnPin.hidden = true;
+#ifdef DEBUG
+    _btnPin.hidden = false;
+#endif
+    
     
     // Agenda
     _agendaVC = [AgendaViewController new];
@@ -97,10 +106,10 @@
     [v addSubview:agenda];
 
     // Constraints
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:nil views:NSDictionaryOfVariableBindings(_moCal, _btnAdd, _btnCal, _btnOpt, _btnPin, agenda)];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:nil views:NSDictionaryOfVariableBindings(_moCal, _btnExit, _btnAdd, _btnCal, _btnOpt, _btnPin, agenda)];
     [vfl :@"H:|[_moCal]|"];
     [vfl :@"H:|-4-[agenda]-4-|"];
-    [vfl :@"H:|-6-[_btnAdd]-(>=0)-[_btnPin]-10-[_btnCal]-10-[_btnOpt]-6-|" :NSLayoutFormatAlignAllCenterY];
+    [vfl :@"H:|-6-[_btnExit]-(>=0)-[_btnPin]-10-[_btnAdd]-10-[_btnCal]-10-[_btnOpt]-6-|" :NSLayoutFormatAlignAllCenterY];
     [vfl :@"V:|[_moCal]-6-[_btnOpt]"];
     [vfl :@"V:[agenda]-(-1)-|"];
     
