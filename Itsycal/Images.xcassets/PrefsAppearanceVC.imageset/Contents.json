@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Regular-M.png",
+      "filename" : "自定义预设.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Regular-M@2x.png",
+      "filename" : "自定义预设@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Regular-M@3x.png",
+      "filename" : "自定义预设@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
