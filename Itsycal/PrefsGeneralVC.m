@@ -66,7 +66,7 @@ static NSString * const kCalendarCellId = @"CalendarCell";
     // Checkboxes
     _login = chkbx(NSLocalizedString(@"Launch at login", @""));
     _login.action = @selector(launchAtLogin:);
-    _checkUpdates = chkbx(NSLocalizedString(@"Automatically check for updates", @""));
+//    _checkUpdates = chkbx(NSLocalizedString(@"Automatically check for updates", @""));
 
     // First day of week label
     NSTextField *firstDayLabel = label(NSLocalizedString(@"First day of week:", @""));
@@ -83,7 +83,7 @@ static NSString * const kCalendarCellId = @"CalendarCell";
     [v addSubview:_firstDayPopup];
     
     // Shortcut label
-    NSTextField *shortcutLabel = label(NSLocalizedString(@"Keyboard shortcut", @""));
+//    NSTextField *shortcutLabel = label(NSLocalizedString(@"Keyboard shortcut", @""));
     
     // Shortcut view
     MASShortcutView *shortcutView = [MASShortcutView new];
@@ -123,18 +123,25 @@ static NSString * const kCalendarCellId = @"CalendarCell";
                                      NSLocalizedString(@"31 days", @"")]];
     [v addSubview:_agendaDaysPopup];
 
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20} views:NSDictionaryOfVariableBindings(_login, _checkUpdates, firstDayLabel, _firstDayPopup, shortcutLabel, shortcutView, tvContainer, agendaDaysLabel, _agendaDaysPopup)];
-    [vfl :@"V:|-m-[_login]-[_checkUpdates]-20-[_firstDayPopup]-20-[shortcutLabel]-3-[shortcutView(25)]-20-[tvContainer(170)]-[_agendaDaysPopup]-m-|"];
+//    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20} views:NSDictionaryOfVariableBindings(_login, _checkUpdates, firstDayLabel, _firstDayPopup, shortcutLabel, shortcutView, tvContainer, agendaDaysLabel, _agendaDaysPopup)];
+//    [vfl :@"V:|-m-[_login]-[_checkUpdates]-20-[_firstDayPopup]-20-[shortcutLabel]-3-[shortcutView(25)]-20-[tvContainer(170)]-[_agendaDaysPopup]-m-|"];
+//    [vfl :@"H:|-m-[_login]-(>=m)-|"];
+//    [vfl :@"H:|-m-[_checkUpdates]-(>=m)-|"];
+//    [vfl :@"H:|-m-[firstDayLabel]-[_firstDayPopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
+//    [vfl :@"H:|-(>=m)-[shortcutLabel]-(>=m)-|"];
+//    [vfl :@"H:|-m-[shortcutView(>=220)]-m-|"];
+//    [vfl :@"H:|-m-[tvContainer]-m-|"];
+//    [vfl :@"H:|-m-[agendaDaysLabel]-[_agendaDaysPopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
+    
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20} views:NSDictionaryOfVariableBindings(_login, firstDayLabel, _firstDayPopup, tvContainer, agendaDaysLabel, _agendaDaysPopup)];
+    [vfl :@"V:|-m-[_login]-20-[_firstDayPopup]-20-[tvContainer(170)]-[_agendaDaysPopup]-m-|"];
     [vfl :@"H:|-m-[_login]-(>=m)-|"];
-    [vfl :@"H:|-m-[_checkUpdates]-(>=m)-|"];
     [vfl :@"H:|-m-[firstDayLabel]-[_firstDayPopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
-    [vfl :@"H:|-(>=m)-[shortcutLabel]-(>=m)-|"];
-    [vfl :@"H:|-m-[shortcutView(>=220)]-m-|"];
-    [vfl :@"H:|-m-[tvContainer]-m-|"];
+    [vfl :@"H:|-m-[tvContainer(>=220)]-m-|"];
     [vfl :@"H:|-m-[agendaDaysLabel]-[_agendaDaysPopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
 
     // Center shortcutLabel
-    [v addConstraint:[NSLayoutConstraint constraintWithItem:shortcutLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:v attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+//    [v addConstraint:[NSLayoutConstraint constraintWithItem:shortcutLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:v attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
 
     // Binding for Sparkle automatic update checks
 //    [_checkUpdates bind:@"value" toObject:[SUUpdater sharedUpdater] withKeyPath:@"automaticallyChecksForUpdates" options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
