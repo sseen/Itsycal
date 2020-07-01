@@ -53,7 +53,7 @@
     NSButton *useColoredDots = chkbx(NSLocalizedString(@"Use colored dots", @""));
     NSButton *showWeeks = chkbx(NSLocalizedString(@"Show calendar weeks", @""));
     NSButton *showLocation = chkbx(NSLocalizedString(@"Show event location", @""));
-    NSButton *bigger = chkbx(NSLocalizedString(@"Use larger text", @""));
+//    NSButton *bigger = chkbx(NSLocalizedString(@"Use larger text", @""));
     _hideIcon = chkbx(NSLocalizedString(@"Hide icon", @""));
 
     // Datetime format text field
@@ -109,8 +109,8 @@
 //    [vfl :@"H:|-m-[showLocation]-(>=m)-|"];
 //    [vfl :@"H:|-m-[bigger]-(>=m)-|"];
     
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20, @"mm": @40} views:NSDictionaryOfVariableBindings(menubarLabel, calendarLabel, separator0, separator1, bigger, useOutlineIcon, showMonth, showDayOfWeek, showEventDots, useColoredDots, showWeeks, showLocation, _hideIcon, themeLabel, themePopup)];
-    [vfl :@"V:|-m-[menubarLabel]-10-[useOutlineIcon]-[showMonth]-[showDayOfWeek]-[_hideIcon]-m-[calendarLabel]-10-[themePopup]-m-[showEventDots]-[useColoredDots]-[showLocation]-[showWeeks]-[bigger]-m-|"];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20, @"mm": @40} views:NSDictionaryOfVariableBindings(menubarLabel, calendarLabel, separator0, separator1, useOutlineIcon, showMonth, showDayOfWeek, showEventDots, useColoredDots, showWeeks, showLocation, _hideIcon, themeLabel, themePopup)];
+    [vfl :@"V:|-m-[menubarLabel]-10-[useOutlineIcon]-[showMonth]-[showDayOfWeek]-[_hideIcon]-m-[calendarLabel]-10-[themePopup]-m-[showEventDots]-[useColoredDots]-[showLocation]-[showWeeks]-m-|"];
     [vfl :@"H:|-m-[menubarLabel]-[separator0]-m-|" :NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[calendarLabel]-[separator1]-m-|" :NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[useOutlineIcon]-(>=m)-|"];
@@ -122,7 +122,6 @@
     [vfl :@"H:|-mm-[useColoredDots]-(>=m)-|"];
     [vfl :@"H:|-m-[showWeeks]-(>=m)-|"];
     [vfl :@"H:|-m-[showLocation]-(>=m)-|"];
-    [vfl :@"H:|-m-[bigger]-(>=m)-|"];
 
     // Bindings for icon preferences
     [useOutlineIcon bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kUseOutlineIcon] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
@@ -159,7 +158,7 @@
     [themePopup bind:@"selectedTag" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kThemePreference] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
     
     // Bindings for size
-    [bigger bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kSizePreference] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
+//    [bigger bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kSizePreference] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
     
     self.view = v;
 }
