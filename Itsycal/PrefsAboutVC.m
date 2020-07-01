@@ -75,7 +75,7 @@
     
     MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @25} views:NSDictionaryOfVariableBindings(appName, version)];
     [vfl :@"V:|-m-[appName]-8-[version]-m-|"];
-    [vfl :@"H:|-m-[appName]-(>=m)-|"];
+    [vfl :@"H:|-m-[appName]-(>=131)-|"];
     [vfl :@"H:|-m-[version]-(>=m)-|"];
 
     self.view = v;
