@@ -145,10 +145,11 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     [self setMonthDate:_todayDate selectedDate:_todayDate];
     
     // blur
-    NSVisualEffectView *vibrant=[[NSVisualEffectView alloc] initWithFrame:self.bounds];
-    [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
-    [vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
-    [self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
+//    NSVisualEffectView *vibrant=[[NSVisualEffectView alloc] initWithFrame:self.bounds];
+//    vibrant.material = NSVisualEffectMaterialLight;
+//    [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+//    [vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+//    [self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
     
     REGISTER_FOR_SIZE_CHANGE;
 }
@@ -844,8 +845,8 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    [Theme.mainBackgroundColor set];
-    NSRectFill(self.bounds);
+//    [Theme.mainBackgroundColor set];
+//    NSRectFill(self.bounds);
     
     CGFloat radius = [[Sizer shared] cellRadius] + 3;
     CGFloat sz = [[Sizer shared] cellSize];

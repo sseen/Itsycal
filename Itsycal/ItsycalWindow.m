@@ -88,9 +88,11 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     vibrant.translatesAutoresizingMaskIntoConstraints = YES;
     vibrant.wantsLayer = true;
     vibrant.layer.cornerRadius = 15;
+    vibrant.material = NSVisualEffectMaterialLight;
     [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
     [vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
     [frameView addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
+    
     if (_childContentView) {
         [_childContentView removeFromSuperview];
         _childContentView = nil;
