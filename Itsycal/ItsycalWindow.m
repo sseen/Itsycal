@@ -24,6 +24,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 
 @interface ItsycalWindowVisualView : NSVisualEffectView
 @property (nonatomic, assign) CGFloat arrowMidX;
+@property (nonatomic, strong) NSImage *cornerImage;
 @end
 
 #pragma mark -
@@ -36,6 +37,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 @implementation ItsycalWindow
 {
     NSView *_childContentView;
+    ItsycalWindowVisualView *_vibrant;
 }
 
 - (id)init
@@ -81,17 +83,13 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
         frameView = [[ItsycalWindowFrameView alloc] initWithFrame:NSZeroRect];
         frameView.translatesAutoresizingMaskIntoConstraints = YES;
         frameView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+
         [super setContentView:frameView];
+        
     }
-    // blur
-    ItsycalWindowVisualView *vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSZeroRect];
-    vibrant.translatesAutoresizingMaskIntoConstraints = YES;
-    vibrant.wantsLayer = true;
-    vibrant.layer.cornerRadius = 15;
-    vibrant.material = NSVisualEffectMaterialLight;
-    [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
-    [vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
-    [frameView addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
+    
+    
+    
     
     if (_childContentView) {
         [_childContentView removeFromSuperview];
@@ -105,6 +103,29 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     [frameView addSubview:_childContentView];
     [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(m)-[_childContentView]-(m)-|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_childContentView)]];
     [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(tm)-[_childContentView]-(bm)-|" options:0 metrics:@{ @"tm" : @(kWindowTopMargin), @"bm" : @(kWindowBottomMargin) } views:NSDictionaryOfVariableBindings(_childContentView)]];
+    
+    // blur
+    if (_vibrant) {
+        [_vibrant removeFromSuperview];
+        _vibrant = nil;
+    }
+    _vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
+    _vibrant.translatesAutoresizingMaskIntoConstraints = NO;
+//        vibrant.wantsLayer = true;
+//    vibrant.layer.cornerRadius = 15;
+//    vibrant.maskImage = [NSImage imageWithSize:bounds.size flipped:YES drawingHandler:^BOOL(NSRect dstRect) {
+//        NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:bounds xRadius:10 yRadius:10];
+//        [path fill];
+//
+//        return YES;
+//    }];
+    _vibrant.material = NSVisualEffectMaterialAppearanceBased;
+    [_vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+    [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+    [frameView addSubview:_vibrant positioned:NSWindowBelow relativeTo:nil];
+    [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_vibrant]|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
+    [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_vibrant]|" options:0 metrics:@{ @"tm" : @(kWindowTopMargin), @"bm" : @(kWindowBottomMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
+    
 
 }
 
@@ -179,6 +200,8 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     NSRect rect = NSInsetRect(self.bounds, kBorderWidth, kBorderWidth);
     rect.size.height -= kArrowHeight;
     
+    NSLog(@"———— %@,%f", NSStringFromRect(rect),_arrowMidX);
+    
     // Do we need to draw the whole window?
     // If dirtyRect is inside the body of the window, we can just fill it.
     NSRect bodyRect = NSInsetRect(rect, 1, kCornerRadius);
@@ -231,58 +254,67 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 
 @implementation ItsycalWindowVisualView
 
-- (void)drawRect:(NSRect)dirtyRect
-{
-    
-    
+- (void)invalidateCornerImage {
+    _cornerImage = [[NSImage alloc] initWithSize:self.bounds.size];
+    [_cornerImage lockFocus];
+
+
     // Draw the window background with the little arrow
     // at the top.
-    
+
     // The rectangular part of frame view must be inset and
     // shortened to make room for the border and arrow.
     NSRect rect = NSInsetRect(self.bounds, kBorderWidth, kBorderWidth);
     rect.size.height -= kArrowHeight;
     
-    // Do we need to draw the whole window?
-    // If dirtyRect is inside the body of the window, we can just fill it.
-    NSRect bodyRect = NSInsetRect(rect, 1, kCornerRadius);
-    if (NSContainsRect(bodyRect, dirtyRect)) {
-        [Theme.mainBackgroundColor setFill];
-        NSRectFill(dirtyRect);
-        return;
-    }
-    
+//    rect = NSMakeRect(0, 0, 300, 300);
+    NSLog(@"%@,%f", NSStringFromRect(rect),_arrowMidX);
+
+
     // We need to draw the whole window.
 
-    [[NSColor clearColor] set];
-    NSRectFill(self.bounds);
-    
+//    [[NSColor clearColor] set];
+//    NSRectFill(self.bounds);
+
     NSBezierPath *rectPath = [NSBezierPath bezierPathWithRoundedRect:rect xRadius:kCornerRadius yRadius:kCornerRadius];
-    
+
     // Append the arrow to the body if its right ege is inside
     // the right edge of the body (taking into account the corner
     // radius). This accounts for the edge-case where Itsycal is
     // all the way to the right in the menu bar. This is possible
     // if the user has a 3rd party app like Bartender.
     CGFloat curveOffset = 5;
-    CGFloat arrowMidX = (_arrowMidX == 0) ? NSMidX(self.frame) : _arrowMidX;
+    CGFloat arrowMidX = (_arrowMidX == 0) ? NSMidX(rect) : _arrowMidX;
     CGFloat arrowRightEdge = arrowMidX + curveOffset + kArrowHeight;
     CGFloat bodyRightEdge = NSMaxX(rect) - kCornerRadius;
     if (arrowRightEdge < bodyRightEdge) {
         NSBezierPath *arrowPath = [NSBezierPath bezierPath];
         CGFloat x = arrowMidX - kArrowHeight - curveOffset;
-        CGFloat y = NSHeight(self.frame) - kArrowHeight - kBorderWidth;
+        CGFloat y = NSHeight(rect) + 1 - kBorderWidth;
         [arrowPath moveToPoint:NSMakePoint(x, y)];
         [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, kArrowHeight)];
         [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, -kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, -kArrowHeight)];
         [rectPath appendBezierPath:arrowPath];
     }
     [Theme.windowBorderColor setStroke];
-    [rectPath setLineWidth:kBorderWidth];
+    [rectPath setLineWidth:1*kBorderWidth];
     [rectPath stroke];
-    [Theme.mainBackgroundColor setFill];
+    [NSColor.whiteColor setFill];
     [rectPath fill];
-    
+
+    [_cornerImage unlockFocus];
+
+    self.maskImage = _cornerImage;
+}
+
+- (void)viewDidMoveToSuperview {
+    [super viewDidMoveToSuperview];
+    [self invalidateCornerImage];
+}
+
+- (void)setFrameSize:(NSSize)newSize {
+    [super setFrameSize:newSize];
+    [self invalidateCornerImage];
 }
 
 @end
