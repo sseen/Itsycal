@@ -78,28 +78,38 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     if ([_childContentView isEqualTo:aView]) {
         return;
     }
-    ItsycalWindowVisualView *frameView = [super contentView];
+    ItsycalWindowFrameView *frameView = [super contentView];
     if (!frameView) {
-        frameView = [[ItsycalWindowVisualView alloc] initWithFrame:NSZeroRect];
+        frameView = [[ItsycalWindowFrameView alloc] initWithFrame:NSZeroRect];
         frameView.translatesAutoresizingMaskIntoConstraints = YES;
         frameView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-        frameView.material = NSVisualEffectMaterialPopover;
 
         [super setContentView:frameView];
 
     }
     
-//    ItsycalWindowFrameView *frameView = [super contentView];
-//    if (!frameView) {
-//        frameView = [[ItsycalWindowFrameView alloc] initWithFrame:NSZeroRect];
-//        frameView.translatesAutoresizingMaskIntoConstraints = YES;
-//        frameView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    // blur
+    if (_vibrant) {
+        [_vibrant removeFromSuperview];
+        _vibrant = nil;
+    }
+    _vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSMakeRect(0, 0, 2, 2)];
+    _vibrant.translatesAutoresizingMaskIntoConstraints = NO;
+//        vibrant.wantsLayer = true;
+//    vibrant.layer.cornerRadius = 15;
+//    vibrant.maskImage = [NSImage imageWithSize:bounds.size flipped:YES drawingHandler:^BOOL(NSRect dstRect) {
+//        NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:bounds xRadius:10 yRadius:10];
+//        [path fill];
 //
-//        [super setContentView:frameView];
-//
-//    }
-    
-    
+//        return YES;
+//    }];
+
+//    _vibrant.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+    _vibrant.material = NSVisualEffectMaterialPopover;
+    [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+    [frameView addSubview:_vibrant];// positioned:NSWindowBelow relativeTo:nil];
+    [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_vibrant]|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
+    [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_vibrant]|" options:0 metrics:@{ @"tm" : @(kWindowTopMargin), @"bm" : @(kWindowBottomMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
     
     
     if (_childContentView) {
@@ -114,29 +124,6 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     [frameView addSubview:_childContentView];
     [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(m)-[_childContentView]-(m)-|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_childContentView)]];
     [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(tm)-[_childContentView]-(bm)-|" options:0 metrics:@{ @"tm" : @(kWindowTopMargin), @"bm" : @(kWindowBottomMargin) } views:NSDictionaryOfVariableBindings(_childContentView)]];
-    
-//    // blur
-//    if (_vibrant) {
-//        [_vibrant removeFromSuperview];
-//        _vibrant = nil;
-//    }
-//    _vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSMakeRect(0, 0, 2, 2)];
-//    _vibrant.translatesAutoresizingMaskIntoConstraints = NO;
-////        vibrant.wantsLayer = true;
-////    vibrant.layer.cornerRadius = 15;
-////    vibrant.maskImage = [NSImage imageWithSize:bounds.size flipped:YES drawingHandler:^BOOL(NSRect dstRect) {
-////        NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:bounds xRadius:10 yRadius:10];
-////        [path fill];
-////
-////        return YES;
-////    }];
-//
-////    _vibrant.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
-//    _vibrant.material = NSVisualEffectMaterialPopover;
-//    [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
-//    [frameView addSubview:_vibrant];// positioned:NSWindowBelow relativeTo:nil];
-//    [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_vibrant]|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
-//    [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_vibrant]|" options:0 metrics:@{ @"tm" : @(kWindowTopMargin), @"bm" : @(kWindowBottomMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
     
 
 }
@@ -218,7 +205,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     // If dirtyRect is inside the body of the window, we can just fill it.
     NSRect bodyRect = NSInsetRect(rect, 1, kCornerRadius);
     if (NSContainsRect(bodyRect, dirtyRect)) {
-        [Theme.mainBackgroundColor setFill];
+//        [Theme.mainBackgroundColor setFill];
         NSRectFill(dirtyRect);
         return;
     }
@@ -251,7 +238,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     [Theme.windowBorderColor setStroke];
     [rectPath setLineWidth:1*kBorderWidth];
     [rectPath stroke];
-    [Theme.mainBackgroundColor setFill];
+//    [Theme.mainBackgroundColor setFill];
     [rectPath fill];
 }
 
