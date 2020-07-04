@@ -86,8 +86,18 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
         frameView.material = NSVisualEffectMaterialPopover;
 
         [super setContentView:frameView];
-        
+
     }
+    
+//    ItsycalWindowFrameView *frameView = [super contentView];
+//    if (!frameView) {
+//        frameView = [[ItsycalWindowFrameView alloc] initWithFrame:NSZeroRect];
+//        frameView.translatesAutoresizingMaskIntoConstraints = YES;
+//        frameView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+//
+//        [super setContentView:frameView];
+//
+//    }
     
     
     
@@ -261,10 +271,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     if (self.bounds.size.height == 0) {
         return;
     }
-    _cornerImage = [[NSImage alloc] initWithSize:self.bounds.size];
-    [_cornerImage lockFocus];
-
-
+    
     // Draw the window background with the little arrow
     // at the top.
 
@@ -273,6 +280,18 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     NSRect rect = NSInsetRect(self.bounds, kBorderWidth, kBorderWidth);
     rect.size.height -= kArrowHeight;
     
+//    // Do we need to draw the whole window?
+//    // If dirtyRect is inside the body of the window, we can just fill it.
+//    NSRect bodyRect = NSInsetRect(rect, 1, kCornerRadius);
+//    if (NSContainsRect(bodyRect, dirtyRect)) {
+//        [Theme.mainBackgroundColor setFill];
+//        NSRectFill(dirtyRect);
+//        return;
+//    }
+    
+    _cornerImage = [[NSImage alloc] initWithSize:self.bounds.size];
+    [_cornerImage lockFocus];
+
 //    rect = NSMakeRect(0, 0, 300, 300);
     NSLog(@"%@,%f", NSStringFromRect(rect),_arrowMidX);
 
@@ -319,6 +338,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 }
 
 - (void)setFrameSize:(NSSize)newSize {
+    NSLog(@"** %@,%@", NSStringFromRect(self.bounds),NSStringFromSize(newSize));
     [super setFrameSize:newSize];
     [self invalidateCornerImage];
 }
