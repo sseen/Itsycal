@@ -78,11 +78,12 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     if ([_childContentView isEqualTo:aView]) {
         return;
     }
-    ItsycalWindowFrameView *frameView = [super contentView];
+    ItsycalWindowVisualView *frameView = [super contentView];
     if (!frameView) {
-        frameView = [[ItsycalWindowFrameView alloc] initWithFrame:NSZeroRect];
+        frameView = [[ItsycalWindowVisualView alloc] initWithFrame:NSZeroRect];
         frameView.translatesAutoresizingMaskIntoConstraints = YES;
         frameView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+        frameView.material = NSVisualEffectMaterialPopover;
 
         [super setContentView:frameView];
         
@@ -104,29 +105,28 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(m)-[_childContentView]-(m)-|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_childContentView)]];
     [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(tm)-[_childContentView]-(bm)-|" options:0 metrics:@{ @"tm" : @(kWindowTopMargin), @"bm" : @(kWindowBottomMargin) } views:NSDictionaryOfVariableBindings(_childContentView)]];
     
-    // blur
-    if (_vibrant) {
-        [_vibrant removeFromSuperview];
-        _vibrant = nil;
-    }
-    _vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
-    _vibrant.translatesAutoresizingMaskIntoConstraints = NO;
-//        vibrant.wantsLayer = true;
-//    vibrant.layer.cornerRadius = 15;
-//    vibrant.maskImage = [NSImage imageWithSize:bounds.size flipped:YES drawingHandler:^BOOL(NSRect dstRect) {
-//        NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:bounds xRadius:10 yRadius:10];
-//        [path fill];
+//    // blur
+//    if (_vibrant) {
+//        [_vibrant removeFromSuperview];
+//        _vibrant = nil;
+//    }
+//    _vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSMakeRect(0, 0, 2, 2)];
+//    _vibrant.translatesAutoresizingMaskIntoConstraints = NO;
+////        vibrant.wantsLayer = true;
+////    vibrant.layer.cornerRadius = 15;
+////    vibrant.maskImage = [NSImage imageWithSize:bounds.size flipped:YES drawingHandler:^BOOL(NSRect dstRect) {
+////        NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:bounds xRadius:10 yRadius:10];
+////        [path fill];
+////
+////        return YES;
+////    }];
 //
-//        return YES;
-//    }];
-    
-    _vibrant.material = NSVisualEffectMaterialHUDWindow;
-
-    [_vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
-    [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
-    [frameView addSubview:_vibrant positioned:NSWindowBelow relativeTo:nil];
-    [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_vibrant]|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
-    [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_vibrant]|" options:0 metrics:@{ @"tm" : @(kWindowTopMargin), @"bm" : @(kWindowBottomMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
+////    _vibrant.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+//    _vibrant.material = NSVisualEffectMaterialPopover;
+//    [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+//    [frameView addSubview:_vibrant];// positioned:NSWindowBelow relativeTo:nil];
+//    [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_vibrant]|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
+//    [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_vibrant]|" options:0 metrics:@{ @"tm" : @(kWindowTopMargin), @"bm" : @(kWindowBottomMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
     
 
 }
@@ -257,6 +257,10 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 @implementation ItsycalWindowVisualView
 
 - (void)invalidateCornerImage {
+    // 刚开始时候尺寸没有的话，报错
+    if (self.bounds.size.height == 0) {
+        return;
+    }
     _cornerImage = [[NSImage alloc] initWithSize:self.bounds.size];
     [_cornerImage lockFocus];
 
