@@ -119,7 +119,9 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 //
 //        return YES;
 //    }];
-    _vibrant.material = NSVisualEffectMaterialAppearanceBased;
+    
+    _vibrant.material = NSVisualEffectMaterialHUDWindow;
+
     [_vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
     [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
     [frameView addSubview:_vibrant positioned:NSWindowBelow relativeTo:nil];
@@ -290,7 +292,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     if (arrowRightEdge < bodyRightEdge) {
         NSBezierPath *arrowPath = [NSBezierPath bezierPath];
         CGFloat x = arrowMidX - kArrowHeight - curveOffset;
-        CGFloat y = NSHeight(rect) + 1 - kBorderWidth;
+        CGFloat y = NSHeight(rect) + 2 - kBorderWidth;
         [arrowPath moveToPoint:NSMakePoint(x, y)];
         [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, kArrowHeight)];
         [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, -kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, -kArrowHeight)];

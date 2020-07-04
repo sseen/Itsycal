@@ -65,6 +65,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 
 - (void)commonInitForMoCalendar
 {
+   
     _chineseCalendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierChinese];
     _chineseCalendar.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh-CN"];
     _lunarChars = @[@"初一",@"初二",@"初三",@"初四",@"初五",@"初六",@"初七",@"初八",@"初九",@"初十",@"十一",@"十二",@"十三",@"十四",@"十五",@"十六",@"十七",@"十八",@"十九",@"二十",@"二一",@"二二",@"二三",@"二四",@"二五",@"二六",@"二七",@"二八",@"二九",@"三十"];
@@ -161,7 +162,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 
 - (BOOL)isOpaque
 {
-    return YES;
+    return false;
 }
 
 #pragma mark
