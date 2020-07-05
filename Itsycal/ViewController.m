@@ -764,6 +764,7 @@
 
 - (ItsycalWindow *)itsycalWindow
 {
+    [self.view.window setAnimationBehavior:NSWindowAnimationBehaviorNone];
     return (ItsycalWindow *)self.view.window;
 }
 
