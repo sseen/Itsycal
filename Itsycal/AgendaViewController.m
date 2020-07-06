@@ -88,7 +88,7 @@ static NSString *kEventCellIdentifier = @"EventCell";
     NSScrollView *tvContainer = [NSScrollView new];
     tvContainer.translatesAutoresizingMaskIntoConstraints = NO;
     tvContainer.drawsBackground = NO;
-    tvContainer.hasVerticalScroller = YES;
+    tvContainer.hasVerticalScroller = NO;
     tvContainer.documentView = _tv;
     tvContainer.verticalScroller = [ThemedScroller new];
     
@@ -575,7 +575,7 @@ static NSString *kEventCellIdentifier = @"EventCell";
     // Must be opaque so rows can scroll under it.
 //    [Theme.mainBackgroundColor set];
 //    NSRectFillUsingOperation(self.bounds, NSCompositingOperationSourceOver);
-    NSRect r = NSMakeRect(4, self.bounds.size.height - 4, self.bounds.size.width - 8, 1);
+    NSRect r = NSMakeRect(4, self.bounds.size.height - 3, self.bounds.size.width - 8, 1);
     [Theme.agendaDividerColor set];
     NSRectFillUsingOperation(r, NSCompositingOperationSourceOver);
 }
