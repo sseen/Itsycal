@@ -312,6 +312,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     [rectPath setLineWidth:1*kBorderWidth];
     [rectPath stroke];
     [NSColor.whiteColor setFill];
+    [rectPath addClip];
     [rectPath fill];
 
     [_cornerImage unlockFocus];
