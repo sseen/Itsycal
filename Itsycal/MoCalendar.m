@@ -194,7 +194,11 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     if (IsValidDate(todayDate)) {
         _todayDate = todayDate;
         for (MoCalCell *c in _dateGrid.cells) {
-            c.isToday = CompareDates(c.date, todayDate) == 0;
+            if (CompareDates(c.date, todayDate) == 0) {
+                c.isToday = true;
+                [self updateCalendar];
+                break;
+            }
         }
     }
 }
