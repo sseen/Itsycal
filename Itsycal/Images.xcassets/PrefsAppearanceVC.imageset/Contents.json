@@ -1,17 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "自定义预设.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "自定义预设@2x.png",
+      "filename" : "外观@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "自定义预设@3x.png",
+      "filename" : "外观@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
