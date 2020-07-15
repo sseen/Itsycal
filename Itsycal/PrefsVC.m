@@ -108,6 +108,44 @@
     }
 }
 
+- (void)toolbarItemClicked2:(NSButton *)item
+{
+    [self switchToTabForToolbarItem2:item animated:YES];
+}
+
+- (void)switchToTabForToolbarItem2:(NSButton *)item animated:(BOOL)animated
+{
+    if (_selectedItemTag == item.tag) return;
+
+    _selectedItemTag = item.tag;
+
+    NSViewController *toVC = [self viewControllerForItemIdentifier:_toolbarIdentifiers[item.tag]];
+    if (toVC) {
+
+        if (self.view.subviews[0] == toVC.view) return;
+
+        NSWindow *window = self.view.window;
+        NSRect contentRect = (NSRect){0, 0, toVC.view.fittingSize};
+        NSRect contentFrame = [window frameRectForContentRect:contentRect];
+        CGFloat windowHeightDelta = window.frame.size.height - contentFrame.size.height;
+        NSPoint newOrigin = NSMakePoint(window.frame.origin.x, window.frame.origin.y + windowHeightDelta);
+        NSRect newFrame = (NSRect){newOrigin, contentFrame.size};
+
+        [toVC.view setAlphaValue: 0];
+        [toVC.view setFrame:contentRect];
+        [self.view addSubview:toVC.view];
+
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
+            [context setDuration:animated ? 0.2 : 0];
+            [window.animator setFrame:newFrame display:NO];
+            [toVC.view.animator setAlphaValue:1];
+            [self.view.subviews[0].animator setAlphaValue:0];
+        } completionHandler:^{
+            [self.view.subviews[0] removeFromSuperview];
+        }];
+    }
+}
+
 - (NSViewController *)viewControllerForItemIdentifier:(NSString *)itemIdentifier
 {
     for (NSViewController *vc in self.childViewControllers) {
@@ -123,10 +161,24 @@
 {
     NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
     item.label = itemIdentifier;
-    item.image = [NSImage imageNamed:NSStringFromClass([[self viewControllerForItemIdentifier:itemIdentifier] class])];
-    item.target = self;
-    item.action = @selector(toolbarItemClicked:);
-    item.tag = [_toolbarIdentifiers indexOfObject:itemIdentifier];
+//    item.image = [NSImage imageNamed:NSStringFromClass([[self viewControllerForItemIdentifier:itemIdentifier] class])];
+//    item.target = self;
+//    item.action = @selector(toolbarItemClicked:);
+//    item.tag = [_toolbarIdentifiers indexOfObject:itemIdentifier];
+    
+    NSImage *iconImage = [NSImage imageNamed:NSStringFromClass([[self viewControllerForItemIdentifier:itemIdentifier] class])];
+    
+    NSButton *button = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 35.0, 35.0)];
+    button.title = @"hooo";
+    button.image = iconImage;
+    [button.image setTemplate:true];
+    [button setContentTintColor:NSColor.secondaryLabelColor];
+//    [button setButtonType:NSButtonTypeToggle];
+    button.tag = [_toolbarIdentifiers indexOfObject:itemIdentifier];
+//    button.bezelStyle = NSBezelStyleTexturedRounded;
+    button.action = @selector(toolbarItemClicked2:);
+    [item setView:button];
+    
     return item;
 }
 
