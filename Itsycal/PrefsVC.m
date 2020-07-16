@@ -4,6 +4,7 @@
 //
 
 #import "PrefsVC.h"
+#import "NSImage+TintColor.h"
 
 @implementation PrefsVC
 {
@@ -161,23 +162,18 @@
 {
     NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
     item.label = itemIdentifier;
-//    item.image = [NSImage imageNamed:NSStringFromClass([[self viewControllerForItemIdentifier:itemIdentifier] class])];
-//    item.target = self;
-//    item.action = @selector(toolbarItemClicked:);
-//    item.tag = [_toolbarIdentifiers indexOfObject:itemIdentifier];
     
-    NSImage *iconImage = [NSImage imageNamed:NSStringFromClass([[self viewControllerForItemIdentifier:itemIdentifier] class])];
+    NSImage *img = [NSImage imageNamed:NSStringFromClass([[self viewControllerForItemIdentifier:itemIdentifier] class])];
+    [img setTemplate:true];
     
-    NSButton *button = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 35.0, 35.0)];
-    button.title = @"hooo";
-    button.image = iconImage;
-    [button.image setTemplate:true];
-    [button setContentTintColor:NSColor.secondaryLabelColor];
-//    [button setButtonType:NSButtonTypeToggle];
-    button.tag = [_toolbarIdentifiers indexOfObject:itemIdentifier];
-//    button.bezelStyle = NSBezelStyleTexturedRounded;
-    button.action = @selector(toolbarItemClicked2:);
-    [item setView:button];
+    NSColor *color = NSColor.secondaryLabelColor;
+    NSImage *newImage = [img imageWith:color];
+    [newImage setTemplate:true];
+    
+    item.image = newImage;
+    item.target = self;
+    item.action = @selector(toolbarItemClicked:);
+    item.tag = [_toolbarIdentifiers indexOfObject:itemIdentifier];
     
     return item;
 }

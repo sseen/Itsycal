@@ -48,6 +48,7 @@
 		F80B46F42412010900A72DCF /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80B46F02412010900A72DCF /* AppCenter.framework */; };
 		F80B46F52412010900A72DCF /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80B46F12412010900A72DCF /* AppCenterAnalytics.framework */; };
 		F80B46F62412010900A72DCF /* AppCenterPush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80B46F22412010900A72DCF /* AppCenterPush.framework */; };
+		F8C3C24524BFD576007B2A65 /* NSImage+TintColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C3C24424BFD576007B2A65 /* NSImage+TintColor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -149,6 +150,8 @@
 		F80B46F02412010900A72DCF /* AppCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenter.framework; path = _frameworks/AppCenter.framework; sourceTree = "<group>"; };
 		F80B46F12412010900A72DCF /* AppCenterAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterAnalytics.framework; path = _frameworks/AppCenterAnalytics.framework; sourceTree = "<group>"; };
 		F80B46F22412010900A72DCF /* AppCenterPush.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterPush.framework; path = _frameworks/AppCenterPush.framework; sourceTree = "<group>"; };
+		F8C3C24324BFD575007B2A65 /* NSImage+TintColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+TintColor.h"; sourceTree = "<group>"; };
+		F8C3C24424BFD576007B2A65 /* NSImage+TintColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+TintColor.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +174,8 @@
 		9228A5A5210509910076BFFC /* Prefs */ = {
 			isa = PBXGroup;
 			children = (
+				F8C3C24324BFD575007B2A65 /* NSImage+TintColor.h */,
+				F8C3C24424BFD576007B2A65 /* NSImage+TintColor.m */,
 				926A6D8D1E3EC89100AAA991 /* PrefsVC.h */,
 				926A6D8E1E3EC89100AAA991 /* PrefsVC.m */,
 				921E62C01E26B3EA007B029F /* PrefsGeneralVC.h */,
@@ -409,6 +414,7 @@
 				9242A5911A82A40B005AA4B3 /* MoCalCell.m in Sources */,
 				9224B0751A8BE75500D63030 /* MoButton.m in Sources */,
 				9242A5841A82A189005AA4B3 /* ViewController.m in Sources */,
+				F8C3C24524BFD576007B2A65 /* NSImage+TintColor.m in Sources */,
 				924C518C1E5F721C0049E3A9 /* MoCalResizeHandle.m in Sources */,
 				921E62CD1E26B3EA007B029F /* PrefsGeneralVC.m in Sources */,
 				7F0018AD2417F3B400562B73 /* Fonter.m in Sources */,
