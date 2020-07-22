@@ -50,7 +50,7 @@
 "31 days" = "31 天";
 
 /* No comment provided by engineer. */
-"About Itsycal" = "关于 Itsycal";
+"About Solo Calendar" = "关于 Solo Calendar";
 
 /* About prefs tab label */
 "About" = "关于";
@@ -82,9 +82,9 @@
 /* No comment provided by engineer. */
 "Calendar access denied.
 
-Itsycal is more useful when it can display events from your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy" = "日历访问被拒绝。
+Solo Calendar is more useful when it can display events from your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy" = "日历访问被拒绝。
 
-当 Itsycal 可以显示你的日历事件时会更好用。你可以在 “系统偏好设置>安全隐私>隐私” 中更改此设置。";
+当 Solo Calendar 可以显示你的日历事件时会更好用。你可以在 “系统偏好设置>安全隐私>隐私” 中更改此设置。";
 
 /* No comment provided by engineer. */
 "Calendar access was denied." = "日历访问被拒绝。";
@@ -180,17 +180,17 @@ Itsycal is more useful when it can display events from your calendars. You can c
 "Highlight:" = "高亮：";
 
 /* No comment provided by engineer. */
-"Itsycal cannot create a new event unless there is at least one calendar you have permission to modify." = "除非有至少一个有权限修改的日历，否则 Itsycal 无法创建新事件。";
+"Solo Calendar cannot create a new event unless there is at least one calendar you have permission to modify." = "除非有至少一个有权限修改的日历，否则 Solo Calendar 无法创建新事件。";
 
 /* No comment provided by engineer. */
-"Itsycal is more useful when you allow it to add events to your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy." = "当你允许 Itsycal 将事件添加到你的日历中时会更好用。 你可以在 “系统偏好设置>安全隐私>隐私” 中更改此设置。";
+"Solo Calendar is more useful when you allow it to add events to your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy." = "当你允许 Solo Calendar 将事件添加到你的日历中时会更好用。 你可以在 “系统偏好设置>安全隐私>隐私” 中更改此设置。";
 
 /* No comment provided by engineer. */
-"Itsycal must be run from the Applications folder in order to work properly.
+"Solo Calendar must be run from the Applications folder in order to work properly.
 
-Please quit Itsycal, move it to the Applications folder, and relaunch." = "必须从应用程序文件夹运行 Itsycal 才能正常工作。
+Please quit Solo Calendar, move it to the Applications folder, and relaunch." = "必须从应用程序文件夹运行 Solo Calendar 才能正常工作。
 
-请退出 Itsycal，将其移动到应用程序文件夹，然后重新启动。";
+请退出 Solo Calendar，将其移动到应用程序文件夹，然后重新启动。";
 
 /* No comment provided by engineer. */
 "Keyboard shortcut" = "键盘快捷键";
@@ -208,7 +208,7 @@ Please quit Itsycal, move it to the Applications folder, and relaunch." = "必�
 "Monday" = "星期一";
 
 /* No comment provided by engineer. */
-"Move Itsycal to the Applications folder" = "将 Itsycal 移动到应用程序文件夹";
+"Move Solo Calendar to the Applications folder" = "将 Solo Calendar 移动到应用程序文件夹";
 
 /* Repeat ends never */
 "Never" = "从不";
@@ -239,13 +239,13 @@ Please quit Itsycal, move it to the Applications folder, and relaunch." = "必�
 "or" = "or";
 
 /* No comment provided by engineer. */
-"Pin Itsycal… P" = "固定 Itsycal… P";
+"Pin Solo Calendar… P" = "固定 Solo Calendar… P";
 
 /* No comment provided by engineer. */
 "Preferences…" = "偏好设置…";
 
 /* No comment provided by engineer. */
-"Quit Itsycal" = "退出 Itsycal";
+"Quit Solo Calendar" = "退出 Solo Calendar";
 
 /* No comment provided by engineer. */
 "Repeat:" = "重复：";

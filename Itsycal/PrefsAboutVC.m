@@ -30,6 +30,9 @@
         [v addSubview:txt];
         return txt;
     };
+    
+    NSImageView *imv = [NSImageView imageViewWithImage:[NSImage imageNamed:@"AppIcon"]];
+    [v addSubview:imv];
 
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
     NSTextField *appName = label(@"solo calendar", NO);
@@ -73,9 +76,9 @@
 //
 //    [smile.centerXAnchor constraintEqualToAnchor:v.centerXAnchor].active = YES;
     
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @25} views:NSDictionaryOfVariableBindings(appName, version)];
-    [vfl :@"V:|-m-[appName]-8-[version]-m-|"];
-    [vfl :@"H:|-m-[appName]-(>=131)-|"];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @25} views:NSDictionaryOfVariableBindings(imv, appName, version)];
+    [vfl :@"V:|-m-[imv(42)]-8-[version]-m-|"];
+    [vfl :@"H:|-m-[imv(42)]-20-[appName]-(>=80)-|": NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[version]-(>=m)-|"];
 
     self.view = v;

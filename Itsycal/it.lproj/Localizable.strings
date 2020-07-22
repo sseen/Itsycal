@@ -50,7 +50,7 @@
 "31 days" = "31 giorni";
 
 /* No comment provided by engineer. */
-"About Itsycal" = "Informazioni su Itsycal";
+"About Solo Calendar" = "Informazioni su Solo Calendar";
 
 /* About prefs tab label */
 "About" = "Informazioni";
@@ -82,9 +82,9 @@
 /* No comment provided by engineer. */
 "Calendar access denied.
 
-Itsycal is more useful when it can display events from your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy" = "L'accesso al calendario negato.
+Solo Calendar is more useful when it can display events from your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy" = "L'accesso al calendario negato.
 
-Itsycal è più utile quando è in grado di visualizzare eventi dai calendari. È possibile modificare questa impostazione in Preferenze di Sistema › Sicurezza e Privacy › Privacy.";
+Solo Calendar è più utile quando è in grado di visualizzare eventi dai calendari. È possibile modificare questa impostazione in Preferenze di Sistema › Sicurezza e Privacy › Privacy.";
 
 /* No comment provided by engineer. */
 "Calendar access was denied." = "L'accesso al calendario negato.";
@@ -180,17 +180,17 @@ Itsycal è più utile quando è in grado di visualizzare eventi dai calendari. �
 "Highlight:" = "Evidenzia:";
 
 /* No comment provided by engineer. */
-"Itsycal cannot create a new event unless there is at least one calendar you have permission to modify." = "Itsycal non possono creare un nuovo evento se c'è almeno un permessi di calendario da modificare.";
+"Solo Calendar cannot create a new event unless there is at least one calendar you have permission to modify." = "Solo Calendar non possono creare un nuovo evento se c'è almeno un permessi di calendario da modificare.";
 
 /* No comment provided by engineer. */
-"Itsycal is more useful when you allow it to add events to your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy." = "Itsycal è più utile quando si permettono di aggiungere eventi dai calendari. È possibile modificare questa impostazione in Preferenze di Sistema › Sicurezza e Privacy › Privacy.";
+"Solo Calendar is more useful when you allow it to add events to your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy." = "Solo Calendar è più utile quando si permettono di aggiungere eventi dai calendari. È possibile modificare questa impostazione in Preferenze di Sistema › Sicurezza e Privacy › Privacy.";
 
 /* No comment provided by engineer. */
-"Itsycal must be run from the Applications folder in order to work properly.
+"Solo Calendar must be run from the Applications folder in order to work properly.
 
-Please quit Itsycal, move it to the Applications folder, and relaunch." = "Itsycal deve essere eseguito dalla cartella Applicazioni per poter funzionare correttamente.
+Please quit Solo Calendar, move it to the Applications folder, and relaunch." = "Solo Calendar deve essere eseguito dalla cartella Applicazioni per poter funzionare correttamente.
 
-Si prega di esci da Itsycal, spostarlo nella cartella Applicazioni, e riavvia.";
+Si prega di esci da Solo Calendar, spostarlo nella cartella Applicazioni, e riavvia.";
 
 /* No comment provided by engineer. */
 "Keyboard shortcut" = "Abbreviazione da tastiera";
@@ -208,7 +208,7 @@ Si prega di esci da Itsycal, spostarlo nella cartella Applicazioni, e riavvia.";
 "Monday" = "Lunedì";
 
 /* No comment provided by engineer. */
-"Move Itsycal to the Applications folder" = "Spostare Itsycal nella cartella Applicazioni";
+"Move Solo Calendar to the Applications folder" = "Spostare Solo Calendar nella cartella Applicazioni";
 
 /* Repeat ends never */
 "Never" = "Mai";
@@ -239,13 +239,13 @@ Si prega di esci da Itsycal, spostarlo nella cartella Applicazioni, e riavvia.";
 "or" = "o";
 
 /* No comment provided by engineer. */
-"Pin Itsycal… P" = "Mantieni Itsycal visibile… P";
+"Pin Solo Calendar… P" = "Mantieni Solo Calendar visibile… P";
 
 /* No comment provided by engineer. */
 "Preferences…" = "Preferenze…";
 
 /* No comment provided by engineer. */
-"Quit Itsycal" = "Esci da Itsycal";
+"Quit Solo Calendar" = "Esci da Solo Calendar";
 
 /* No comment provided by engineer. */
 "Repeat:" = "Ripetizione:";
