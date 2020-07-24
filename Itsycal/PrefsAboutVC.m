@@ -40,6 +40,7 @@
     NSTextField *version = label([NSString stringWithFormat:@"%@ (%@)", infoDict[@"CFBundleShortVersionString"], infoDict[@"CFBundleVersion"]], NO);
     version.font = [NSFont systemFontOfSize:11 weight:NSFontWeightMedium];
     version.textColor = [NSColor secondaryLabelColor];
+    NSTextField *mail = label(@"xiaolidev@gmail.com", YES);
 //    NSTextField *donateWith = label(NSLocalizedString(@"Donate with", nil), NO);
 //    MoTextField *paypal = label(@"PayPal", YES);
 //    NSTextField *or = label(NSLocalizedString(@"or", nil), NO);
@@ -76,10 +77,11 @@
 //
 //    [smile.centerXAnchor constraintEqualToAnchor:v.centerXAnchor].active = YES;
     
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @25} views:NSDictionaryOfVariableBindings(imv, appName, version)];
-    [vfl :@"V:|-m-[imv(42)]-8-[version]-m-|"];
-    [vfl :@"H:|-m-[imv(42)]-20-[appName]-(>=80)-|": NSLayoutFormatAlignAllCenterY];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @25} views:NSDictionaryOfVariableBindings(imv, appName, version, mail)];
+    [vfl :@"V:|-m-[imv(42)]-8-[version]-8-[mail]-m-|"];
+    [vfl :@"H:|-m-[imv(42)]-20-[appName]-(>=70)-|": NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[version]-(>=m)-|"];
+    [vfl :@"H:|-m-[mail]-(>=m)-|"];
 
     self.view = v;
 }
