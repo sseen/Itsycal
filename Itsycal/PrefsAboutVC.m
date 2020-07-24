@@ -40,7 +40,7 @@
     NSTextField *version = label([NSString stringWithFormat:@"%@ (%@)", infoDict[@"CFBundleShortVersionString"], infoDict[@"CFBundleVersion"]], NO);
     version.font = [NSFont systemFontOfSize:11 weight:NSFontWeightMedium];
     version.textColor = [NSColor secondaryLabelColor];
-    NSTextField *mail = label(@"xiaolidev@gmail.com", YES);
+    NSTextField *mail = label(@"swittee.app@gmail.com", YES);
 //    NSTextField *donateWith = label(NSLocalizedString(@"Donate with", nil), NO);
 //    MoTextField *paypal = label(@"PayPal", YES);
 //    NSTextField *or = label(NSLocalizedString(@"or", nil), NO);
