@@ -317,6 +317,7 @@
 				9242A5591A82A136005AA4B3 /* Frameworks */,
 				9242A55A1A82A136005AA4B3 /* Resources */,
 				9252DF361AFD3557007B079F /* CopyFiles */,
+				F878EB6E24CAE11F00EC9B66 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -385,6 +386,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F878EB6E24CAE11F00EC9B66 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$PRODUCT_SETTINGS_PATH\")\necho $PRODUCT_SETTINGS_PATH\necho \"1 $buildNumber\"\nbuildNumber=$(cut -d'.' -f2 <<<$buildNumber)\necho \"2 $buildNumber\"\nbuildNumber=$(date +\"%y%m%d\")\".\"$[$buildNumber + 1]\necho \"3 $buildNumber\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$PRODUCT_SETTINGS_PATH\"\n#180925.1008 First is the current date and after the dot the build number\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9242A5581A82A136005AA4B3 /* Sources */ = {
@@ -577,7 +598,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20072401;
+				CURRENT_PROJECT_VERSION = 200724.;
 				DEVELOPMENT_TEAM = 4N44FM69KH;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -603,7 +624,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 20072401;
+				CURRENT_PROJECT_VERSION = 200724.;
 				DEVELOPMENT_TEAM = 4N44FM69KH;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
