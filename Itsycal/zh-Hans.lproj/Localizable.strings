@@ -50,7 +50,7 @@
 "31 days" = "31 天";
 
 /* No comment provided by engineer. */
-"About Solo Calendar" = "关于 Solo Calendar";
+"About Swittee Calendar" = "关于 Swittee Calendar";
 
 /* About prefs tab label */
 "About" = "关于";
@@ -82,9 +82,9 @@
 /* No comment provided by engineer. */
 "Calendar access denied.
 
-Solo Calendar is more useful when it can display events from your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy" = "日历访问被拒绝。
+Swittee Calendar is more useful when it can display events from your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy" = "日历访问被拒绝。
 
-当 Solo Calendar 可以显示你的日历事件时会更好用。你可以在 “系统偏好设置>安全隐私>隐私” 中更改此设置。";
+当 Swittee Calendar 可以显示你的日历事件时会更好用。你可以在 “系统偏好设置>安全隐私>隐私” 中更改此设置。";
 
 /* No comment provided by engineer. */
 "Calendar access was denied." = "日历访问被拒绝。";
@@ -180,17 +180,17 @@ Solo Calendar is more useful when it can display events from your calendars. You
 "Highlight:" = "高亮：";
 
 /* No comment provided by engineer. */
-"Solo Calendar cannot create a new event unless there is at least one calendar you have permission to modify." = "除非有至少一个有权限修改的日历，否则 Solo Calendar 无法创建新事件。";
+"Swittee Calendar cannot create a new event unless there is at least one calendar you have permission to modify." = "除非有至少一个有权限修改的日历，否则 Swittee Calendar 无法创建新事件。";
 
 /* No comment provided by engineer. */
-"Solo Calendar is more useful when you allow it to add events to your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy." = "当你允许 Solo Calendar 将事件添加到你的日历中时会更好用。 你可以在 “系统偏好设置>安全隐私>隐私” 中更改此设置。";
+"Swittee Calendar is more useful when you allow it to add events to your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy." = "当你允许 Swittee Calendar 将事件添加到你的日历中时会更好用。 你可以在 “系统偏好设置>安全隐私>隐私” 中更改此设置。";
 
 /* No comment provided by engineer. */
-"Solo Calendar must be run from the Applications folder in order to work properly.
+"Swittee Calendar must be run from the Applications folder in order to work properly.
 
-Please quit Solo Calendar, move it to the Applications folder, and relaunch." = "必须从应用程序文件夹运行 Solo Calendar 才能正常工作。
+Please quit Swittee Calendar, move it to the Applications folder, and relaunch." = "必须从应用程序文件夹运行 Swittee Calendar 才能正常工作。
 
-请退出 Solo Calendar，将其移动到应用程序文件夹，然后重新启动。";
+请退出 Swittee Calendar，将其移动到应用程序文件夹，然后重新启动。";
 
 /* No comment provided by engineer. */
 "Keyboard shortcut" = "键盘快捷键";
@@ -208,7 +208,7 @@ Please quit Solo Calendar, move it to the Applications folder, and relaunch." = 
 "Monday" = "星期一";
 
 /* No comment provided by engineer. */
-"Move Solo Calendar to the Applications folder" = "将 Solo Calendar 移动到应用程序文件夹";
+"Move Swittee Calendar to the Applications folder" = "将 Swittee Calendar 移动到应用程序文件夹";
 
 /* Repeat ends never */
 "Never" = "从不";
@@ -239,13 +239,13 @@ Please quit Solo Calendar, move it to the Applications folder, and relaunch." = 
 "or" = "or";
 
 /* No comment provided by engineer. */
-"Pin Solo Calendar… P" = "固定 Solo Calendar… P";
+"Pin Swittee Calendar… P" = "固定 Swittee Calendar… P";
 
 /* No comment provided by engineer. */
 "Preferences…" = "偏好设置…";
 
 /* No comment provided by engineer. */
-"Quit Solo Calendar" = "退出 Solo Calendar";
+"Quit Swittee Calendar" = "退出 Swittee Calendar";
 
 /* No comment provided by engineer. */
 "Repeat:" = "重复：";

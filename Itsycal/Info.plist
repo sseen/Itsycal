@@ -17,7 +17,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>$(PRODUCT_NAME)</string>
+	<string>Swittee Calendar</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -25,7 +25,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>200727.4</string>
+	<string>200728.9</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
@@ -38,9 +38,9 @@
 		<true/>
 	</dict>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>Solo Calendar uses AppleEvents to open your calendar app to the selected day. You can change this setting in System Preferences › Security &amp; Privacy › Privacy</string>
+	<string>Swittee Calendar uses AppleEvents to open your calendar app to the selected day. You can change this setting in System Preferences › Security &amp; Privacy › Privacy</string>
 	<key>NSCalendarsUsageDescription</key>
-	<string>Solo Calendar is more useful when it can display events from your calendars. You can change this setting in System Preferences › Security &amp; Privacy › Privacy</string>
+	<string>Swittee Calendar is more useful when it can display events from your calendars. You can change this setting in System Preferences › Security &amp; Privacy › Privacy</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>© 2020</string>
 	<key>NSMainNibFile</key>

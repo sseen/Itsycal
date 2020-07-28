@@ -35,7 +35,7 @@
     [v addSubview:imv];
 
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
-    NSTextField *appName = label(@"solo calendar", NO);
+    NSTextField *appName = label(@"Swittee Calendar", NO);
     appName.font = [NSFont systemFontOfSize:16 weight:NSFontWeightBold];
     NSTextField *version = label([NSString stringWithFormat:@"%@ (%@)", infoDict[@"CFBundleShortVersionString"], infoDict[@"CFBundleVersion"]], NO);
     version.font = [NSFont systemFontOfSize:11 weight:NSFontWeightMedium];

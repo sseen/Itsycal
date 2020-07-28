@@ -50,7 +50,7 @@
 "31 days" = "31 jours";
 
 /* No comment provided by engineer. */
-"About Solo Calendar" = "À propos de Solo Calendar";
+"About Swittee Calendar" = "À propos de Swittee Calendar";
 
 /* About prefs tab label */
 "About" = "À propos";
@@ -82,9 +82,9 @@
 /* No comment provided by engineer. */
 "Calendar access denied.
 
-Solo Calendar is more useful when it can display events from your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy" = "L'accès au calendrier est refusée.
+Swittee Calendar is more useful when it can display events from your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy" = "L'accès au calendrier est refusée.
 
-Solo Calendar est plus utile quand il peut afficher les événements de vos calendriers. Vous pouvez modifier ce paramètre dans les Préférences Système › Sécurité et confidentialité › Confidentialité.";
+Swittee Calendar est plus utile quand il peut afficher les événements de vos calendriers. Vous pouvez modifier ce paramètre dans les Préférences Système › Sécurité et confidentialité › Confidentialité.";
 
 /* No comment provided by engineer. */
 "Calendar access was denied." = "L'accès au calendrier est refusée.";
@@ -180,17 +180,17 @@ Solo Calendar est plus utile quand il peut afficher les événements de vos cale
 "Highlight:" = "Mettre en évidence:";
 
 /* No comment provided by engineer. */
-"Solo Calendar cannot create a new event unless there is at least one calendar you have permission to modify." = "Solo Calendar ne peut pas créer de nouvel événement si vous ne possédez pas au moins un calendrier avec la permission de modification.";
+"Swittee Calendar cannot create a new event unless there is at least one calendar you have permission to modify." = "Swittee Calendar ne peut pas créer de nouvel événement si vous ne possédez pas au moins un calendrier avec la permission de modification.";
 
 /* No comment provided by engineer. */
-"Solo Calendar is more useful when you allow it to add events to your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy." = "Solo Calendar est plus utile lorsque vous lui permettent d'ajouter des événements à vos calendriers. Vous pouvez modifier ce paramètre dans les Préférences Système › Sécurité et confidentialité › Confidentialité.";
+"Swittee Calendar is more useful when you allow it to add events to your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy." = "Swittee Calendar est plus utile lorsque vous lui permettent d'ajouter des événements à vos calendriers. Vous pouvez modifier ce paramètre dans les Préférences Système › Sécurité et confidentialité › Confidentialité.";
 
 /* No comment provided by engineer. */
-"Solo Calendar must be run from the Applications folder in order to work properly.
+"Swittee Calendar must be run from the Applications folder in order to work properly.
 
-Please quit Solo Calendar, move it to the Applications folder, and relaunch." = "Solo Calendar doit être exécuté à partir du dossier Applications afin de fonctionner correctement.
+Please quit Swittee Calendar, move it to the Applications folder, and relaunch." = "Swittee Calendar doit être exécuté à partir du dossier Applications afin de fonctionner correctement.
 
-S'il vous plaît quitter Solo Calendar, le déplacer dans le dossier Applications, et relancer.";
+S'il vous plaît quitter Swittee Calendar, le déplacer dans le dossier Applications, et relancer.";
 
 /* No comment provided by engineer. */
 "Keyboard shortcut" = "Raccourci clavier";
@@ -208,7 +208,7 @@ S'il vous plaît quitter Solo Calendar, le déplacer dans le dossier Application
 "Monday" = "lundi";
 
 /* No comment provided by engineer. */
-"Move Solo Calendar to the Applications folder" = "Déplacer Solo Calendar dans le dossier Applications";
+"Move Swittee Calendar to the Applications folder" = "Déplacer Swittee Calendar dans le dossier Applications";
 
 /* Repeat ends never */
 "Never" = "jamais";
@@ -239,13 +239,13 @@ S'il vous plaît quitter Solo Calendar, le déplacer dans le dossier Application
 "or" = "ou";
 
 /* No comment provided by engineer. */
-"Pin Solo Calendar… P" = "Maintenir Solo Calendar visible… P";
+"Pin Swittee Calendar… P" = "Maintenir Swittee Calendar visible… P";
 
 /* No comment provided by engineer. */
 "Preferences…" = "Préférences…";
 
 /* No comment provided by engineer. */
-"Quit Solo Calendar" = "Quitter Solo Calendar";
+"Quit Swittee Calendar" = "Quitter Swittee Calendar";
 
 /* No comment provided by engineer. */
 "Repeat:" = "Récurrence:";
