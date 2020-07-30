@@ -403,7 +403,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$PRODUCT_SETTINGS_PATH\")\necho $PRODUCT_SETTINGS_PATH\necho \"1 $buildNumber\"\nbuildNumber=$(cut -d'.' -f2 <<<$buildNumber)\necho \"2 $buildNumber\"\nbuildNumber=$(date +\"%y%m%d\")\".\"$[$buildNumber + 1]\necho \"3 $buildNumber\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$PRODUCT_SETTINGS_PATH\"\n#180925.1008 First is the current date and after the dot the build number\n";
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$PRODUCT_SETTINGS_PATH\")\n# echo $PRODUCT_SETTINGS_PATH\n# echo \"1 $buildNumber\"\nbuildNumber=$(cut -d'.' -f2 <<<$buildNumber)\n# echo \"2 $buildNumber\"\nbuildNumber=$(date +\"%y%m%d\")\".\"$[$buildNumber + 1]\n# echo \"3 $buildNumber\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$PRODUCT_SETTINGS_PATH\"\n#180925.1008 First is the current date and after the dot the build number\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -607,7 +607,7 @@
 				);
 				INFOPLIST_FILE = Itsycal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -633,7 +633,7 @@
 				);
 				INFOPLIST_FILE = Itsycal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte;
 				PRODUCT_NAME = "$(TARGET_NAME)";
