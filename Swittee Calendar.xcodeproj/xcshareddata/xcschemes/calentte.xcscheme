@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9242A55B1A82A136005AA4B3"
-               BuildableName = "calentte.app"
-               BlueprintName = "calentte"
-               ReferencedContainer = "container:calentte.xcodeproj">
+               BuildableName = "Swittee Calendar.app"
+               BlueprintName = "Swittee Calendar"
+               ReferencedContainer = "container:Swittee Calendar.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9242A55B1A82A136005AA4B3"
-            BuildableName = "calentte.app"
-            BlueprintName = "calentte"
-            ReferencedContainer = "container:calentte.xcodeproj">
+            BuildableName = "Swittee Calendar.app"
+            BlueprintName = "Swittee Calendar"
+            ReferencedContainer = "container:Swittee Calendar.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9242A55B1A82A136005AA4B3"
-            BuildableName = "calentte.app"
-            BlueprintName = "calentte"
-            ReferencedContainer = "container:calentte.xcodeproj">
+            BuildableName = "Swittee Calendar.app"
+            BlueprintName = "Swittee Calendar"
+            ReferencedContainer = "container:Swittee Calendar.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
