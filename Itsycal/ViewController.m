@@ -496,6 +496,8 @@
         iconText = [NSString stringWithFormat:@"%zd", _moCal.todayDate.day];
     }
     
+    iconText = [NSString stringWithFormat:@"%@ 1️⃣7️⃣7️⃣",iconText];
+    
     if (iconText == nil) {
         iconText = @"!!";
     }
@@ -509,8 +511,10 @@
         _statusItem.button.imagePosition = NSNoImage;
     }
     else {
-        _statusItem.button.image = [self iconImageForText:[self iconText]];
-        _statusItem.button.imagePosition = _clockFormat ? NSImageLeft : NSImageOnly;
+//        _statusItem.button.image = [self iconImageForText:[self iconText]];
+//        _statusItem.button.imagePosition = _clockFormat ? NSImageLeft : NSImageOnly;
+        _statusItem.button.title = [self iconText];
+        _statusItem.button.imagePosition = NSImageLeft;
     }
     if (_clockFormat) {
         [_iconDateFormatter setDateFormat:_clockFormat];
