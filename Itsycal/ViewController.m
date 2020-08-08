@@ -20,6 +20,10 @@
 #import "MoVFLHelper.h"
 #import "MoUtils.h"
 
+static NSString const *emojiMonth[13]  = {@"",@"♒️",@"♓️",@"♈️",@"♉️",@"♊️",@"♋️",@"♌️",@"♍️",@"♎️",@"♏️",@"♐️",@"♑️"};
+static NSString const *emojiWeekday[8] = {@"",@"🥺",@"😭",@"🙄",@"😁",@"😎",@"🥳",@"😍"};
+static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3️⃣",@"4️⃣",@"5️⃣",@"6️⃣",@"7️⃣",@"8️⃣",@"9️⃣"};
+
 @implementation ViewController
 {
     EventCenter   *_ec;
@@ -46,6 +50,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kShowEventDays];
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kUseOutlineIcon];
+    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kUseEmojiIcon];
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kShowMonthInIcon];
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kShowDayOfWeekInIcon];
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kClockFormat];
@@ -482,21 +487,53 @@
 {
     NSString *iconText;
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kShowMonthInIcon] || [[NSUserDefaults standardUserDefaults] boolForKey:kShowDayOfWeekInIcon]) {
+    NSCalendar *calendar    = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];//指定日历的算法
+    NSDateComponents *comps = [calendar components:NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitWeekday
+                                          fromDate:[NSDate date]];//NSDateComponents可以获取日期的详细信息，所有的信息获取是可配置的
+    
+    // emoji
+    NSMutableString *templateEmoji = [NSMutableString string];
+    Boolean isEmoji = [[NSUserDefaults standardUserDefaults] boolForKey:kShowMonthInIcon];
+    if (isEmoji) {
+        if (comps.day > 9) {
+            NSString *tenStr = (NSString *)emojiNumber[comps.day / 10];
+            NSString *geStr = (NSString *)emojiNumber[comps.day % 10];
+            [templateEmoji appendFormat:@"%@%@",tenStr, geStr];
+        } else {
+            [templateEmoji appendFormat:@"%@",(NSString *)emojiNumber[comps.day]];
+        }
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kShowMonthInIcon] ||
+        [[NSUserDefaults standardUserDefaults] boolForKey:kShowDayOfWeekInIcon]) {
+        
+        
         NSMutableString *template = @"d".mutableCopy;
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kShowMonthInIcon]) {
             [template appendString:@"MMM"];
+            if (isEmoji) {
+                [templateEmoji insertString:(NSString *)emojiMonth[comps.month] atIndex:0];
+            }
         }
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kShowDayOfWeekInIcon]) {
             [template appendString:@"EEE"];
+            if (isEmoji) {
+                NSInteger weekIndex = comps.weekday;
+                if (comps.weekday == 1) {
+                    weekIndex = 7;
+                }
+                [templateEmoji appendFormat:@"%@%@",(NSString *)emojiWeekday[comps.weekday],(NSString *)emojiNumber[weekIndex]];
+            }
+            [_iconDateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:template options:0 locale:[NSLocale currentLocale]]];
+            iconText = [_iconDateFormatter stringFromDate:[NSDate new]];
         }
-        [_iconDateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:template options:0 locale:[NSLocale currentLocale]]];
-        iconText = [_iconDateFormatter stringFromDate:[NSDate new]];
     } else {
         iconText = [NSString stringWithFormat:@"%zd", _moCal.todayDate.day];
     }
     
-    iconText = [NSString stringWithFormat:@"%@ 1️⃣7️⃣7️⃣",iconText];
+    if (isEmoji) {
+        iconText = templateEmoji;
+    }
     
     if (iconText == nil) {
         iconText = @"!!";
@@ -1170,7 +1207,7 @@
     }];
 
     // Observe NSUserDefaults for preference changes
-    for (NSString *keyPath in @[kShowEventDays, kUseOutlineIcon, kShowMonthInIcon, kShowDayOfWeekInIcon, kHideIcon, kClockFormat]) {
+    for (NSString *keyPath in @[kShowEventDays, kUseOutlineIcon, kUseEmojiIcon, kShowMonthInIcon, kShowDayOfWeekInIcon, kHideIcon, kClockFormat]) {
         [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:NULL];
     }
 }
@@ -1184,6 +1221,7 @@
         [self updateAgenda];
     }
     else if ([keyPath isEqualToString:kUseOutlineIcon] ||
+             [keyPath isEqualToString:kUseEmojiIcon] ||
              [keyPath isEqualToString:kShowMonthInIcon] ||
              [keyPath isEqualToString:kShowDayOfWeekInIcon] ||
              [keyPath isEqualToString:kHideIcon]) {
