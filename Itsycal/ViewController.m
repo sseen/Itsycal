@@ -493,7 +493,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     
     // emoji
     NSMutableString *templateEmoji = [NSMutableString string];
-    Boolean isEmoji = [[NSUserDefaults standardUserDefaults] boolForKey:kShowMonthInIcon];
+    Boolean isEmoji = [[NSUserDefaults standardUserDefaults] boolForKey:kUseEmojiIcon];
     if (isEmoji) {
         if (comps.day > 9) {
             NSString *tenStr = (NSString *)emojiNumber[comps.day / 10];
@@ -546,12 +546,18 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kHideIcon]) {
         _statusItem.button.image = nil;
         _statusItem.button.imagePosition = NSNoImage;
+        _statusItem.button.title = @"";
     }
     else {
-//        _statusItem.button.image = [self iconImageForText:[self iconText]];
-//        _statusItem.button.imagePosition = _clockFormat ? NSImageLeft : NSImageOnly;
-        _statusItem.button.title = [self iconText];
-        _statusItem.button.imagePosition = NSImageLeft;
+        // emoji
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kUseEmojiIcon]) {
+            _statusItem.button.image = nil;
+            _statusItem.button.title = [self iconText];
+            _statusItem.button.imagePosition = NSImageLeft;
+        } else {
+            _statusItem.button.image = [self iconImageForText:[self iconText]];
+            _statusItem.button.imagePosition = _clockFormat ? NSImageLeft : NSImageOnly;
+        }
     }
     if (_clockFormat) {
         [_iconDateFormatter setDateFormat:_clockFormat];
