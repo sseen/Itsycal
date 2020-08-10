@@ -494,7 +494,10 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     // emoji
     NSMutableString *templateEmoji = [NSMutableString string];
     Boolean isEmoji = [[NSUserDefaults standardUserDefaults] boolForKey:kUseEmojiIcon];
+    // 先生成一个emoji是几号的emoji
+    // 然后在前后添加月份和星期的emoji
     if (isEmoji) {
+        // 两位的emoji
         if (comps.day > 9) {
             NSString *tenStr = (NSString *)emojiNumber[comps.day / 10];
             NSString *geStr = (NSString *)emojiNumber[comps.day % 10];
@@ -507,7 +510,6 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kShowMonthInIcon] ||
         [[NSUserDefaults standardUserDefaults] boolForKey:kShowDayOfWeekInIcon]) {
         
-        
         NSMutableString *template = @"d".mutableCopy;
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kShowMonthInIcon]) {
             [template appendString:@"MMM"];
@@ -518,7 +520,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kShowDayOfWeekInIcon]) {
             [template appendString:@"EEE"];
             if (isEmoji) {
-                NSInteger weekIndex = comps.weekday;
+                NSInteger weekIndex = comps.weekday - 1; // 因为星期第一天是从周日开始的
                 if (comps.weekday == 1) {
                     weekIndex = 7;
                 }
