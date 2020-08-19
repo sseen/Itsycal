@@ -13,7 +13,7 @@
 
 @implementation PrefsAppearanceVC
 {
-//    NSTextField *_dateTimeFormat;
+    NSTextField *_dateTimeFormat;
     NSButton *_hideIcon;
 }
 
@@ -58,18 +58,18 @@
     _hideIcon = chkbx(NSLocalizedString(@"Hide icon", @""));
 
     // Datetime format text field
-//    _dateTimeFormat = [NSTextField textFieldWithString:@""];
-//    _dateTimeFormat.placeholderString = NSLocalizedString(@"Datetime pattern", @"");
-//    _dateTimeFormat.refusesFirstResponder = YES;
-//    _dateTimeFormat.bezelStyle = NSTextFieldRoundedBezel;
-//    _dateTimeFormat.usesSingleLineMode = YES;
-//    _dateTimeFormat.delegate = self;
-//    [v addSubview:_dateTimeFormat];
+    _dateTimeFormat = [NSTextField textFieldWithString:@""];
+    _dateTimeFormat.placeholderString = NSLocalizedString(@"Datetime pattern", @"");
+    _dateTimeFormat.refusesFirstResponder = YES;
+    _dateTimeFormat.bezelStyle = NSTextFieldRoundedBezel;
+    _dateTimeFormat.usesSingleLineMode = YES;
+    _dateTimeFormat.delegate = self;
+    [v addSubview:_dateTimeFormat];
 
     // Datetime help button
-//    NSButton *helpButton = [NSButton buttonWithTitle:@"" target:self action:@selector(openHelpPage:)];
-//    helpButton.bezelStyle = NSBezelStyleHelpButton;
-//    [v addSubview:helpButton];
+    NSButton *helpButton = [NSButton buttonWithTitle:@"" target:self action:@selector(openHelpPage:)];
+    helpButton.bezelStyle = NSBezelStyleHelpButton;
+    [v addSubview:helpButton];
 
     // Highlight control
 //    HighlightPicker *highlight = [HighlightPicker new];
@@ -110,14 +110,15 @@
 //    [vfl :@"H:|-m-[showLocation]-(>=m)-|"];
 //    [vfl :@"H:|-m-[bigger]-(>=m)-|"];
     
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20, @"mm": @40} views:NSDictionaryOfVariableBindings(menubarLabel, calendarLabel, separator0, separator1, useOutlineIcon, useEmojiIcon, showMonth, showDayOfWeek, showEventDots, useColoredDots, showWeeks, showLocation, _hideIcon, themeLabel, themePopup)];
-    [vfl :@"V:|-m-[menubarLabel]-10-[useOutlineIcon]-[useEmojiIcon]-[showMonth]-[showDayOfWeek]-[_hideIcon]-m-[calendarLabel]-10-[themePopup]-m-[showEventDots]-[useColoredDots]-[showLocation]-[showWeeks]-m-|"];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20, @"mm": @40} views:NSDictionaryOfVariableBindings(menubarLabel, calendarLabel, separator0, separator1, useOutlineIcon, useEmojiIcon, showMonth, showDayOfWeek, showEventDots, useColoredDots, showWeeks, showLocation, _dateTimeFormat, helpButton, _hideIcon, themeLabel, themePopup)];
+    [vfl :@"V:|-m-[menubarLabel]-10-[useOutlineIcon]-[useEmojiIcon]-[showMonth]-[showDayOfWeek]-[_dateTimeFormat]-[_hideIcon]-m-[calendarLabel]-10-[themePopup]-m-[showEventDots]-[useColoredDots]-[showLocation]-[showWeeks]-m-|"];
     [vfl :@"H:|-m-[menubarLabel]-[separator0(>=175)]-m-|" :NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[calendarLabel]-[separator1]-m-|" :NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[useOutlineIcon]-(>=m)-|"];
     [vfl :@"H:|-m-[useEmojiIcon]-(>=m)-|"];
     [vfl :@"H:|-m-[showMonth]-(>=m)-|"];
     [vfl :@"H:|-m-[showDayOfWeek]-(>=m)-|"];
+    [vfl :@"H:|-m-[_dateTimeFormat]-[helpButton]-m-|" :NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[_hideIcon]-(>=m)-|"];
     [vfl :@"H:|-m-[themeLabel]-[themePopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
     [vfl :@"H:|-m-[showEventDots]-(>=m)-|"];
@@ -139,7 +140,7 @@
     [showDayOfWeek bind:@"enabled" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kHideIcon] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES), NSValueTransformerNameBindingOption: NSNegateBooleanTransformerName}];
 
     // Binding for datetime format
-//    [_dateTimeFormat bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kClockFormat] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES), NSMultipleValuesPlaceholderBindingOption: _dateTimeFormat.placeholderString, NSNoSelectionPlaceholderBindingOption: _dateTimeFormat.placeholderString, NSNotApplicablePlaceholderBindingOption: _dateTimeFormat.placeholderString, NSNullPlaceholderBindingOption: _dateTimeFormat.placeholderString}];
+    [_dateTimeFormat bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kClockFormat] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES), NSMultipleValuesPlaceholderBindingOption: _dateTimeFormat.placeholderString, NSNoSelectionPlaceholderBindingOption: _dateTimeFormat.placeholderString, NSNotApplicablePlaceholderBindingOption: _dateTimeFormat.placeholderString, NSNullPlaceholderBindingOption: _dateTimeFormat.placeholderString}];
 
     // Bindings for showEventDots preference
     [showEventDots bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kShowEventDots] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
