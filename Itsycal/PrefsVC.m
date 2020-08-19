@@ -5,6 +5,7 @@
 
 #import "PrefsVC.h"
 #import "NSImage+TintColor.h"
+#import "SNToolbarItem.h"
 
 @implementation PrefsVC
 {
