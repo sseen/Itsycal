@@ -48,6 +48,7 @@
 		F80B46F42412010900A72DCF /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80B46F02412010900A72DCF /* AppCenter.framework */; };
 		F80B46F52412010900A72DCF /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80B46F12412010900A72DCF /* AppCenterAnalytics.framework */; };
 		F80B46F62412010900A72DCF /* AppCenterPush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80B46F22412010900A72DCF /* AppCenterPush.framework */; };
+		F845758224ECCA1D007921D0 /* SNToolbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F845758124ECCA1D007921D0 /* SNToolbarItem.m */; };
 		F8C3C24524BFD576007B2A65 /* NSImage+TintColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C3C24424BFD576007B2A65 /* NSImage+TintColor.m */; };
 /* End PBXBuildFile section */
 
@@ -150,6 +151,8 @@
 		F80B46F02412010900A72DCF /* AppCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenter.framework; path = _frameworks/AppCenter.framework; sourceTree = "<group>"; };
 		F80B46F12412010900A72DCF /* AppCenterAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterAnalytics.framework; path = _frameworks/AppCenterAnalytics.framework; sourceTree = "<group>"; };
 		F80B46F22412010900A72DCF /* AppCenterPush.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterPush.framework; path = _frameworks/AppCenterPush.framework; sourceTree = "<group>"; };
+		F845758024ECCA1D007921D0 /* SNToolbarItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SNToolbarItem.h; sourceTree = "<group>"; };
+		F845758124ECCA1D007921D0 /* SNToolbarItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SNToolbarItem.m; sourceTree = "<group>"; };
 		F8C3C24324BFD575007B2A65 /* NSImage+TintColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+TintColor.h"; sourceTree = "<group>"; };
 		F8C3C24424BFD576007B2A65 /* NSImage+TintColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+TintColor.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -184,6 +187,8 @@
 				921E62CF1E26B9D2007B029F /* PrefsAppearanceVC.m */,
 				921E62D11E26E038007B029F /* PrefsAboutVC.h */,
 				921E62D21E26E038007B029F /* PrefsAboutVC.m */,
+				F845758024ECCA1D007921D0 /* SNToolbarItem.h */,
+				F845758124ECCA1D007921D0 /* SNToolbarItem.m */,
 			);
 			name = Prefs;
 			sourceTree = "<group>";
@@ -423,6 +428,7 @@
 				929223EB1E2D6E0900F1A119 /* HighlightPicker.m in Sources */,
 				925B47181A93B63100E0329A /* MoCalToolTipWC.m in Sources */,
 				9242A5871A82A1A1005AA4B3 /* ItsycalWindow.m in Sources */,
+				F845758224ECCA1D007921D0 /* SNToolbarItem.m in Sources */,
 				92CDDE7B1A955D7F00D7675C /* AgendaViewController.m in Sources */,
 				9261EB301EEF447500DCFFC4 /* Themer.m in Sources */,
 				922B6BBB1A85E0EC00DEA9CD /* MoTextField.m in Sources */,
