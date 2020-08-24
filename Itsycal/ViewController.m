@@ -51,6 +51,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kShowEventDays];
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kUseOutlineIcon];
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kUseEmojiIcon];
+    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kUseEmojiIconHideFace];
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kShowMonthInIcon];
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kShowDayOfWeekInIcon];
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kClockFormat];
@@ -494,6 +495,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     // emoji
     NSMutableString *templateEmoji = [NSMutableString string];
     Boolean isEmoji = [[NSUserDefaults standardUserDefaults] boolForKey:kUseEmojiIcon];
+    Boolean isEmojiHideFace = [[NSUserDefaults standardUserDefaults] boolForKey:kUseEmojiIconHideFace];
     // 先生成一个emoji是几号的emoji
     // 然后在前后添加月份和星期的emoji
     if (isEmoji) {
@@ -524,7 +526,12 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
                 if (comps.weekday == 1) {
                     weekIndex = 7;
                 }
-                [templateEmoji appendFormat:@"%@%@",(NSString *)emojiWeekday[comps.weekday],(NSString *)emojiNumber[weekIndex]];
+                // hide face emoji
+                if (isEmojiHideFace) {
+                    [templateEmoji appendFormat:@"・%@",(NSString *)emojiNumber[weekIndex]];
+                } else {
+                    [templateEmoji appendFormat:@"%@%@",(NSString *)emojiWeekday[comps.weekday],(NSString *)emojiNumber[weekIndex]];
+                }
             }
             [_iconDateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:template options:0 locale:[NSLocale currentLocale]]];
             iconText = [_iconDateFormatter stringFromDate:[NSDate new]];
@@ -1215,7 +1222,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     }];
 
     // Observe NSUserDefaults for preference changes
-    for (NSString *keyPath in @[kShowEventDays, kUseOutlineIcon, kUseEmojiIcon, kShowMonthInIcon, kShowDayOfWeekInIcon, kHideIcon, kClockFormat]) {
+    for (NSString *keyPath in @[kShowEventDays, kUseOutlineIcon, kUseEmojiIcon, kUseEmojiIconHideFace, kShowMonthInIcon, kShowDayOfWeekInIcon, kHideIcon, kClockFormat]) {
         [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:NULL];
     }
 }
@@ -1230,6 +1237,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     }
     else if ([keyPath isEqualToString:kUseOutlineIcon] ||
              [keyPath isEqualToString:kUseEmojiIcon] ||
+             [keyPath isEqualToString:kUseEmojiIconHideFace] ||
              [keyPath isEqualToString:kShowMonthInIcon] ||
              [keyPath isEqualToString:kShowDayOfWeekInIcon] ||
              [keyPath isEqualToString:kHideIcon]) {
