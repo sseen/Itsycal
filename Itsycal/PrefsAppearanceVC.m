@@ -10,6 +10,7 @@
 #import "Themer.h"
 #import "Sizer.h"
 #import "MoUtils.h"
+#import "NSDiyMenuTipsViewController.h"
 
 @implementation PrefsAppearanceVC
 {
@@ -185,7 +186,16 @@
 
 - (void)openHelpPage:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://mowglii.com/itsycal/datetime.html"]];
+    
+           NSPopover *_newEventPopover = [NSPopover new];
+            _newEventPopover.animates = NO;
+            _newEventPopover.delegate = self;
+        
+        NSDiyMenuTipsViewController *eventVC = [NSDiyMenuTipsViewController new];
+        
+        _newEventPopover.contentViewController = eventVC;
+        _newEventPopover.appearance = NSApp.effectiveAppearance;
+        [_newEventPopover showRelativeToRect:NSZeroRect ofView:sender preferredEdge:NSRectEdgeMinX];
 }
 
 - (void)updateHideIconState
