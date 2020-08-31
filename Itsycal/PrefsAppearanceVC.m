@@ -186,16 +186,15 @@
 
 - (void)openHelpPage:(id)sender
 {
-    
-           NSPopover *_newEventPopover = [NSPopover new];
-            _newEventPopover.animates = NO;
-            _newEventPopover.delegate = self;
-        
-        NSDiyMenuTipsViewController *eventVC = [NSDiyMenuTipsViewController new];
-        
-        _newEventPopover.contentViewController = eventVC;
-        _newEventPopover.appearance = NSApp.effectiveAppearance;
-        [_newEventPopover showRelativeToRect:NSZeroRect ofView:sender preferredEdge:NSRectEdgeMinX];
+    NSPopover *_newEventPopover = [NSPopover new];
+    _newEventPopover.animates = NO;
+    _newEventPopover.behavior = NSPopoverBehaviorTransient;
+
+    NSDiyMenuTipsViewController *eventVC = [NSDiyMenuTipsViewController new];
+
+    _newEventPopover.contentViewController = eventVC;
+    _newEventPopover.appearance = NSApp.effectiveAppearance;
+    [_newEventPopover showRelativeToRect:NSZeroRect ofView:sender preferredEdge:NSRectEdgeMaxX];
 }
 
 - (void)updateHideIconState

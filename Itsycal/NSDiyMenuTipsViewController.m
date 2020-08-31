@@ -7,6 +7,7 @@
 //
 
 #import "NSDiyMenuTipsViewController.h"
+#import "Themer.h"
 
 @interface NSDiyMenuTipsViewController ()
 
@@ -17,6 +18,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    
+    self.view.wantsLayer = true;
+}
+
+- (void)viewWillAppear {
+    [super viewWillAppear];
+    
+    self.view.layer.backgroundColor = NSColor.windowBackgroundColor.CGColor;
 }
 
 @end
