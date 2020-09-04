@@ -330,7 +330,7 @@
 				9242A5591A82A136005AA4B3 /* Frameworks */,
 				9242A55A1A82A136005AA4B3 /* Resources */,
 				9252DF361AFD3557007B079F /* CopyFiles */,
-				F878EB6E24CAE11F00EC9B66 /* ShellScript */,
+				F878EB6E24CAE11F00EC9B66 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -402,7 +402,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		F878EB6E24CAE11F00EC9B66 /* ShellScript */ = {
+		F878EB6E24CAE11F00EC9B66 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -411,13 +411,14 @@
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$PRODUCT_SETTINGS_PATH\")\n# echo $PRODUCT_SETTINGS_PATH\n# echo \"1 $buildNumber\"\nbuildNumber=$(cut -d'.' -f2 <<<$buildNumber)\n# echo \"2 $buildNumber\"\nbuildNumber=$(date +\"%y%m%d\")\".\"$[$buildNumber + 1]\n# echo \"3 $buildNumber\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$PRODUCT_SETTINGS_PATH\"\n#180925.1008 First is the current date and after the dot the build number\n";
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$PRODUCT_SETTINGS_PATH\")\n# echo $PRODUCT_SETTINGS_PATH\n# echo \"1 $buildNumber\"\n# buildNumber=$(cut -d'.' -f2 <<<$buildNumber)\nbuildNumber=$(cut -c 7- <<<$buildNumber)\n# echo \"2 $buildNumber\"\nbuildNumber=$(date +\"%y%m%d\")\"\"$[$buildNumber + 1]\n# echo \"3 $buildNumber\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$PRODUCT_SETTINGS_PATH\"\n#180925.1008 First is the current date and after the dot the build number\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
