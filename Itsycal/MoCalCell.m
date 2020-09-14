@@ -37,6 +37,8 @@
         // highlight line
         self.wantsLayer = true;
         _lineLayer = [CALayer layer];
+        _lineLayer.borderColor = NSColor.clearColor.CGColor;
+        _lineLayer.borderWidth = 0;
         _lineLayer.frame = NSMakeRect(5, 1, CGRectGetWidth(self.bounds) - 10, 1);
         _lineLayer.backgroundColor = NSColor.redColor.CGColor;
         [self.layer addSublayer:_lineLayer];
