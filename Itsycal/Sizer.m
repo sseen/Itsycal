@@ -57,7 +57,7 @@ NSString * const kSizeDidChangeNotification = @"SizeDidChangeNotification";
 }
 
 - (CGFloat)cellDotWidth {
-    return SMALL_OR_BIG(3, 4);
+    return SMALL_OR_BIG(5, 4);
 }
 
 - (CGFloat)cellRadius {
