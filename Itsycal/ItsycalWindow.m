@@ -89,27 +89,17 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     }
     
     // blur
-    if (_vibrant) {
-        [_vibrant removeFromSuperview];
-        _vibrant = nil;
+    if (!_vibrant) {
+//        [_vibrant removeFromSuperview];
+//        _vibrant = nil;
+        _vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSMakeRect(0, 0, 2, 2)];
+        _vibrant.translatesAutoresizingMaskIntoConstraints = NO;
+        _vibrant.material = NSVisualEffectMaterialPopover;
+        [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+        [frameView addSubview:_vibrant];// positioned:NSWindowBelow relativeTo:nil];
+        [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_vibrant]|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
+        [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_vibrant]|" options:0 metrics:@{ @"tm" : @(kWindowTopMargin), @"bm" : @(kWindowBottomMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
     }
-    _vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSMakeRect(0, 0, 2, 2)];
-    _vibrant.translatesAutoresizingMaskIntoConstraints = NO;
-//        vibrant.wantsLayer = true;
-//    vibrant.layer.cornerRadius = 15;
-//    vibrant.maskImage = [NSImage imageWithSize:bounds.size flipped:YES drawingHandler:^BOOL(NSRect dstRect) {
-//        NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:bounds xRadius:10 yRadius:10];
-//        [path fill];
-//
-//        return YES;
-//    }];
-
-//    _vibrant.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
-    _vibrant.material = NSVisualEffectMaterialPopover;
-    [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
-    [frameView addSubview:_vibrant];// positioned:NSWindowBelow relativeTo:nil];
-    [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_vibrant]|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
-    [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_vibrant]|" options:0 metrics:@{ @"tm" : @(kWindowTopMargin), @"bm" : @(kWindowBottomMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
     
     
     if (_childContentView) {
@@ -235,9 +225,9 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
         [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, -kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, -kArrowHeight)];
         [rectPath appendBezierPath:arrowPath];
     }
-    [Theme.windowBorderColor setStroke];
-    [rectPath setLineWidth:1*kBorderWidth];
-    [rectPath stroke];
+//    [Theme.windowBorderColor setStroke];
+//    [rectPath setLineWidth:1*kBorderWidth];
+//    [rectPath stroke];
 //    [Theme.mainBackgroundColor setFill];
     [rectPath fill];
 }
