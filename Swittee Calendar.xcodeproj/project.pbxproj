@@ -625,7 +625,7 @@
 				);
 				INFOPLIST_FILE = Itsycal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = 1.9.0;
+				MARKETING_VERSION = 1.2.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte;
@@ -652,7 +652,7 @@
 				);
 				INFOPLIST_FILE = Itsycal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = 1.9.0;
+				MARKETING_VERSION = 1.2.1;
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte;
 				PRODUCT_NAME = "$(TARGET_NAME)";
