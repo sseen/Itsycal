@@ -108,9 +108,33 @@
         NSRect r = NSInsetRect(self.bounds, inset, inset);
         //NSRect r = NSOffsetRect(r0, offsetx, offsety);
         NSBezierPath *p = [NSBezierPath bezierPathWithRoundedRect:r xRadius:radius yRadius:radius];
-        [p setLineWidth:2];
         [p fill];
         //[p stroke];
+        
+        // CAShapeLayer *sl = [CAShapeLayer layer];
+        // sl.frame = CGRectMake(300, 0, 200, 200);
+        NSBezierPath* ovalPath = [NSBezierPath bezierPath];
+        
+        CGFloat holidayRadius = 8;
+        CGFloat holidayHalfR = 4;
+        CGFloat frameWidth = r.size.width + 1;
+        CGFloat frameHeight = r.size.height + 1;
+        CGFloat xStart = frameWidth - holidayRadius;
+        CGFloat yEnd = frameHeight - holidayRadius;
+        [ovalPath moveToPoint: NSMakePoint(xStart, frameHeight)];
+        [ovalPath lineToPoint: NSMakePoint(frameWidth, frameHeight)];
+        [ovalPath lineToPoint: NSMakePoint(frameWidth, yEnd)];
+        [ovalPath curveToPoint: NSMakePoint(xStart, frameHeight) controlPoint1: NSMakePoint(frameWidth - holidayHalfR, yEnd)  controlPoint2: NSMakePoint(xStart,frameHeight-holidayHalfR)];
+        [ovalPath closePath];
+        [NSColor.grayColor setFill];
+        [ovalPath fill];
+        [NSColor.purpleColor setStroke];
+        ovalPath.lineWidth = 1;
+        [ovalPath stroke];
+        
+        // sl.path = [ovalPath quartzPath];
+        
+        // [self.view.layer addSublayer:sl];
     }
     else if (self.isSelected) {
         [Theme.selectedCellColor set];
