@@ -52,6 +52,7 @@
 		F80FAABF24FA87C5007AFC84 /* NSDiyMenuTipsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F80FAABD24FA87C5007AFC84 /* NSDiyMenuTipsViewController.xib */; };
 		F845758224ECCA1D007921D0 /* SNToolbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F845758124ECCA1D007921D0 /* SNToolbarItem.m */; };
 		F8C3C24524BFD576007B2A65 /* NSImage+TintColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C3C24424BFD576007B2A65 /* NSImage+TintColor.m */; };
+		F8EAFBA625ACA6F400C9660F /* NSBezierPath+quartz.m in Sources */ = {isa = PBXBuildFile; fileRef = F8EAFBA525ACA6F300C9660F /* NSBezierPath+quartz.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -160,6 +161,8 @@
 		F845758124ECCA1D007921D0 /* SNToolbarItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SNToolbarItem.m; sourceTree = "<group>"; };
 		F8C3C24324BFD575007B2A65 /* NSImage+TintColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+TintColor.h"; sourceTree = "<group>"; };
 		F8C3C24424BFD576007B2A65 /* NSImage+TintColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+TintColor.m"; sourceTree = "<group>"; };
+		F8EAFBA425ACA6F300C9660F /* NSBezierPath+quartz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+quartz.h"; sourceTree = "<group>"; };
+		F8EAFBA525ACA6F300C9660F /* NSBezierPath+quartz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+quartz.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,38 +239,10 @@
 				9242A5661A82A136005AA4B3 /* Images.xcassets */,
 				921181C622E0192A00591FDA /* Colors.xcassets */,
 				9242A5681A82A136005AA4B3 /* MainMenu.xib */,
-				922B6B911A856A7D00DEA9CD /* SBCalendar.h */,
-				9242A5611A82A136005AA4B3 /* AppDelegate.h */,
-				9242A5621A82A136005AA4B3 /* AppDelegate.m */,
-				922D9B241DC7A1C90050AB2F /* MoUtils.h */,
-				922D9B251DC7A1C90050AB2F /* MoUtils.m */,
-				9242A5941A82BE5E005AA4B3 /* Itsycal.h */,
-				9242A5951A82BE5E005AA4B3 /* Itsycal.m */,
-				9242A5821A82A189005AA4B3 /* ViewController.h */,
-				9242A5831A82A189005AA4B3 /* ViewController.m */,
-				9242A5851A82A1A1005AA4B3 /* ItsycalWindow.h */,
-				9242A5861A82A1A1005AA4B3 /* ItsycalWindow.m */,
+				F8EAFBA225ACA5AD00C9660F /* main */,
+				F8EAFBA325ACA63B00C9660F /* other */,
 				92CDDE7C1A97FFE700D7675C /* MoCode */,
 				9228A5A5210509910076BFFC /* Prefs */,
-				929223E91E2D6E0800F1A119 /* HighlightPicker.h */,
-				929223EA1E2D6E0800F1A119 /* HighlightPicker.m */,
-				922232CB1A8DF672003BFAD9 /* EventCenter.h */,
-				922232CC1A8DF672003BFAD9 /* EventCenter.m */,
-				92CDDE791A955D7F00D7675C /* AgendaViewController.h */,
-				92CDDE7A1A955D7F00D7675C /* AgendaViewController.m */,
-				925B47191A93CD2A00E0329A /* TooltipViewController.h */,
-				925B471A1A93CD2A00E0329A /* TooltipViewController.m */,
-				92658E601A9DBD8E002AE86C /* EventViewController.h */,
-				92658E611A9DBD8E002AE86C /* EventViewController.m */,
-				9261EB2E1EEF447500DCFFC4 /* Themer.h */,
-				9261EB2F1EEF447500DCFFC4 /* Themer.m */,
-				92B28CCD210BD17500485AE2 /* Sizer.h */,
-				92B28CCE210BD17500485AE2 /* Sizer.m */,
-				7F0018AB2417F3B400562B73 /* Fonter.h */,
-				7F0018AC2417F3B400562B73 /* Fonter.m */,
-				F80FAABB24FA87C5007AFC84 /* NSDiyMenuTipsViewController.h */,
-				F80FAABC24FA87C5007AFC84 /* NSDiyMenuTipsViewController.m */,
-				F80FAABD24FA87C5007AFC84 /* NSDiyMenuTipsViewController.xib */,
 			);
 			path = Itsycal;
 			sourceTree = "<group>";
@@ -317,6 +292,52 @@
 				9215AD4B1E3AECA700317FAE /* MoVFLHelper.m */,
 			);
 			name = MoCode;
+			sourceTree = "<group>";
+		};
+		F8EAFBA225ACA5AD00C9660F /* main */ = {
+			isa = PBXGroup;
+			children = (
+				922D9B251DC7A1C90050AB2F /* MoUtils.m */,
+				9242A5941A82BE5E005AA4B3 /* Itsycal.h */,
+				9242A5951A82BE5E005AA4B3 /* Itsycal.m */,
+				9242A5821A82A189005AA4B3 /* ViewController.h */,
+				9242A5831A82A189005AA4B3 /* ViewController.m */,
+				9242A5851A82A1A1005AA4B3 /* ItsycalWindow.h */,
+				9242A5861A82A1A1005AA4B3 /* ItsycalWindow.m */,
+				922B6B911A856A7D00DEA9CD /* SBCalendar.h */,
+				9242A5611A82A136005AA4B3 /* AppDelegate.h */,
+				9242A5621A82A136005AA4B3 /* AppDelegate.m */,
+				922D9B241DC7A1C90050AB2F /* MoUtils.h */,
+			);
+			path = main;
+			sourceTree = "<group>";
+		};
+		F8EAFBA325ACA63B00C9660F /* other */ = {
+			isa = PBXGroup;
+			children = (
+				F8EAFBA425ACA6F300C9660F /* NSBezierPath+quartz.h */,
+				F8EAFBA525ACA6F300C9660F /* NSBezierPath+quartz.m */,
+				9261EB2F1EEF447500DCFFC4 /* Themer.m */,
+				92B28CCD210BD17500485AE2 /* Sizer.h */,
+				92B28CCE210BD17500485AE2 /* Sizer.m */,
+				7F0018AB2417F3B400562B73 /* Fonter.h */,
+				7F0018AC2417F3B400562B73 /* Fonter.m */,
+				F80FAABB24FA87C5007AFC84 /* NSDiyMenuTipsViewController.h */,
+				F80FAABC24FA87C5007AFC84 /* NSDiyMenuTipsViewController.m */,
+				F80FAABD24FA87C5007AFC84 /* NSDiyMenuTipsViewController.xib */,
+				929223E91E2D6E0800F1A119 /* HighlightPicker.h */,
+				929223EA1E2D6E0800F1A119 /* HighlightPicker.m */,
+				922232CB1A8DF672003BFAD9 /* EventCenter.h */,
+				922232CC1A8DF672003BFAD9 /* EventCenter.m */,
+				92CDDE791A955D7F00D7675C /* AgendaViewController.h */,
+				92CDDE7A1A955D7F00D7675C /* AgendaViewController.m */,
+				925B47191A93CD2A00E0329A /* TooltipViewController.h */,
+				925B471A1A93CD2A00E0329A /* TooltipViewController.m */,
+				92658E601A9DBD8E002AE86C /* EventViewController.h */,
+				92658E611A9DBD8E002AE86C /* EventViewController.m */,
+				9261EB2E1EEF447500DCFFC4 /* Themer.h */,
+			);
+			path = other;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -444,6 +465,7 @@
 				9261EB301EEF447500DCFFC4 /* Themer.m in Sources */,
 				922B6BBB1A85E0EC00DEA9CD /* MoTextField.m in Sources */,
 				9215AD4C1E3AECA700317FAE /* MoVFLHelper.m in Sources */,
+				F8EAFBA625ACA6F400C9660F /* NSBezierPath+quartz.m in Sources */,
 				9242A5901A82A40B005AA4B3 /* MoDate.m in Sources */,
 				925B471B1A93CD2A00E0329A /* TooltipViewController.m in Sources */,
 				921E62D01E26B9D2007B029F /* PrefsAppearanceVC.m in Sources */,
