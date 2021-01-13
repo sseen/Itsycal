@@ -21,6 +21,11 @@ NSString *NSStringFromMoDate(MoDate date)
     return [NSString stringWithFormat:@"%ld-%02ld-%02ld (%ld)", date.year, date.month+1, date.day, date.julian];
 }
 
+NSString *NSStringFromMoDateWithoutJulian(MoDate date)
+{
+    return [NSString stringWithFormat:@"%ld-%02ld-%02ld", date.year, date.month+1, date.day];
+}
+
 MoDate MakeDate(NSInteger year, NSInteger month, NSInteger day)
 {
     MoDate date;

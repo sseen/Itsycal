@@ -11,6 +11,8 @@
 @implementation SNPlister
 
 SNPlister *SNPlist = nil;
+static NSArray *nationWorkDays = nil;
+static NSArray *nationRelaxdays = nil;
 
 + (instancetype)shared
 {
@@ -23,8 +25,24 @@ SNPlister *SNPlist = nil;
     return shared;
 }
 
-- (NSDictionary *)cNationDays {
-    return [self getPlistDatas:@"CNationDays"];
+- (NSArray *)cNationWorkDays {
+    if (!nationWorkDays) {
+        [self cNationDays];
+    }
+    return nationWorkDays;
+}
+
+- (NSArray *)cNationRelaxDays {
+    if (!nationRelaxdays) {
+        [self cNationDays];
+    }
+    return nationRelaxdays;
+}
+
+- (void)cNationDays {
+    NSDictionary *dic = [self getPlistDatas:@"CNationDays"];
+    nationRelaxdays = dic[@"relax"];
+    nationWorkDays  = dic[@"work"];
 }
 
 - (NSMutableDictionary *)getPlistDatas:(NSString*)fileName{

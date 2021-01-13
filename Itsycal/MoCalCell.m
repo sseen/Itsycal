@@ -57,6 +57,11 @@
     _textFieldVerticalSpace.constant = [[Sizer shared] cellTextFieldVerticalSpace];
 }
 
+- (void)setCstatus:(KCNATIONSTATUS)cstatus {
+    _cstatus = cstatus;
+    [self setNeedsDisplay:YES];
+}
+
 - (void)setIsToday:(BOOL)isToday {
     _isToday = isToday;
     [self setNeedsDisplay:YES];
@@ -169,10 +174,17 @@
         }
     }
     
-    if (_cstatus != KCNATIONSTATUSnormal) {
+    
+        
         NSBezierPath* ovalPath = [NSBezierPath bezierPath];
         
         NSColor *nationColor = _cstatus == KCNATIONSTATUSwork ? Theme.cnWork : Theme.cnRelax;
+        NSColor *nationBoderColor = Theme.mainBackgroundColor;
+        
+        if (self.cstatus == KCNATIONSTATUSnormal) {
+            nationColor = [NSColor clearColor];
+            nationBoderColor = [NSColor clearColor];
+        }
         
         CGFloat holidayRadius = 8;
         CGFloat holidayHalfR = 4;
@@ -187,10 +199,10 @@
         [ovalPath closePath];
         [nationColor setFill];
         [ovalPath fill];
-        [Theme.mainBackgroundColor setStroke];
+        [nationBoderColor setStroke];
         ovalPath.lineWidth = 1;
         [ovalPath stroke];
-    }
+    
     
 }
 

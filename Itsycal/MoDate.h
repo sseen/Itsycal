@@ -47,6 +47,7 @@ typedef struct {
  * @return  An NSString: "yyy-mm-dd (julian)".
  */
 NSString *NSStringFromMoDate(MoDate date);
+NSString *NSStringFromMoDateWithoutJulian(MoDate date);
 
 /**
  * Make a MoDate given year, month, and day.

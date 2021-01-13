@@ -367,8 +367,6 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     // Get the date for the first column of the monthly calendar.
     MoDate date = AddDaysToDate(-monthStartColumn, firstOfMonth);
     
-    NSDictionary *cNationDic = SNPlist.cNationDays;
-    
     // Fill in the calendar grid sequentially.
     for (NSInteger row = 0; row < _dateGrid.rows; row++) {
         for (NSInteger col = 0; col < 7; col++) {
@@ -393,10 +391,16 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             cell.isHighlighted = [self columnIsMemberOfHighlightedDOWs:col];
             cell.isInCurrentMonth = (date.month == self.monthDate.month);
             
-            if ([_nsCal.locale.countryCode isEqual:@"CN"]) {
+            NSString *todayDateStr = NSStringFromMoDateWithoutJulian(date);
+            NSArray *workArray = SNPlist.cNationWorkDays;
+            NSArray *relaxArray = SNPlist.cNationRelaxDays;
+            if (![_nsCal.locale.countryCode isEqual:@"CN"]) {
                 lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
-                if (cell.date) {
-                    <#statements#>
+                
+                if ([workArray indexOfObject:todayDateStr] != NSNotFound) {
+                    cell.cstatus = KCNATIONSTATUSwork;
+                } else if ([relaxArray indexOfObject:todayDateStr] != NSNotFound) {
+                    cell.cstatus = KCNATIONSTATUSrelax;
                 }
             }
             
