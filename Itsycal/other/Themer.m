@@ -123,6 +123,13 @@ Themer *Theme = nil;
     return NSColor.secondaryLabelColor;
 }
 
+- (NSColor *)cnWork {
+    return [NSColor colorNamed:@"cnWork"];
+}
+
+- (NSColor *)cnRelax {
+    return [NSColor colorNamed:@"cnRelax"];
+}
 
 - (NSColor *)lunarTextColor {
     return [NSColor colorNamed:@"lunarText"];

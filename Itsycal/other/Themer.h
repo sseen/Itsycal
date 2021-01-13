@@ -49,6 +49,8 @@ extern Themer *Theme;
 @property (nonatomic, readonly) NSColor *windowBorderColor;
 @property (nonatomic, readonly) NSColor *holidayWeekEndTextColor;
 @property (nonatomic, readonly) NSColor *holidayTextColor;
+@property (nonatomic, readonly) NSColor *cnWork;
+@property (nonatomic, readonly) NSColor *cnRelax;
 
 + (instancetype)shared;
 

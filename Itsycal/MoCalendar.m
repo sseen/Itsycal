@@ -15,10 +15,11 @@
 #import "Themer.h"
 #import "Sizer.h"
 #import "MoDate.h"
+#import "SNPlister.h"
 
 NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 
-@interface MoCalendar ()
+@interface MoCalendar () 
 
 @property (strong, nonatomic) NSCalendar *chineseCalendar;
 @property (strong, nonatomic) NSArray<NSString *> *lunarChars;
@@ -43,6 +44,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     NSColor *_highlightColor;
     MoCalResizeHandle *_resizeHandle;
     NSInteger _repeatCount;
+    NSCalendar    *_nsCal;
 }
 
 - (instancetype)initWithFrame:(NSRect)frameRect
@@ -70,6 +72,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     _chineseCalendar.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh-CN"];
     _lunarChars = @[@"初一",@"初二",@"初三",@"初四",@"初五",@"初六",@"初七",@"初八",@"初九",@"初十",@"十一",@"十二",@"十三",@"十四",@"十五",@"十六",@"十七",@"十八",@"十九",@"二十",@"二一",@"二二",@"二三",@"二四",@"二五",@"二六",@"二七",@"二八",@"二九",@"三十"];
     _lunarMonthChars = @[@"正月", @"二月", @"三月", @"四月", @"五月", @"六月", @"七月", @"八月", @"九月", @"十月", @"冬月", @"腊月"];
+    _nsCal = [NSCalendar autoupdatingCurrentCalendar];
 
     
     _formatter = [NSDateFormatter new];
@@ -364,6 +367,8 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     // Get the date for the first column of the monthly calendar.
     MoDate date = AddDaysToDate(-monthStartColumn, firstOfMonth);
     
+    NSDictionary *cNationDic = SNPlist.cNationDays;
+    
     // Fill in the calendar grid sequentially.
     for (NSInteger row = 0; row < _dateGrid.rows; row++) {
         for (NSInteger col = 0; col < 7; col++) {
@@ -382,11 +387,18 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
                 lunarContent = _lunarMonthChars[comps.month - 1];
             }
             NSString *dateString = [NSString stringWithFormat:@"%ld",date.day];
-            NSString *lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
+            NSString *lunarWithNewLine = [NSString stringWithFormat:@"%@", dateString];
             
             cell.date = date;
             cell.isHighlighted = [self columnIsMemberOfHighlightedDOWs:col];
             cell.isInCurrentMonth = (date.month == self.monthDate.month);
+            
+            if ([_nsCal.locale.countryCode isEqual:@"CN"]) {
+                lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
+                if (cell.date) {
+                    <#statements#>
+                }
+            }
             
             // attributed string lunar and date
             // date number big font, lunar string small font

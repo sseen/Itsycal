@@ -15,6 +15,8 @@
 #import "MASShortcut/MASShortcutBinder.h"
 #import "MASShortcut/MASShortcutMonitor.h"
 #import "MoUtils.h"
+#import "SNPlister.h"
+
 @import AppCenter;
 @import AppCenterAnalytics;
 @import AppCenterCrashes;
@@ -22,6 +24,13 @@
 @implementation AppDelegate
 {
     NSWindowController *_wc;
+}
+
+- (NSMutableArray *)getPlistDatas {
+    NSString *pathFile = [[NSBundle mainBundle] pathForResource:@"CNationDays" ofType:@"plist"];
+    NSMutableArray *appConfig = [NSMutableArray arrayWithContentsOfFile:pathFile];
+    
+    return appConfig;
 }
 
 + (void)initialize
@@ -78,6 +87,7 @@
     // Initialize the 'Theme' global variable which can be
     // used throught the app instead of '[Themer shared]'.
     [Themer shared];
+    [SNPlister shared];
 
     // 0.11.1 introduced a new way to highlight columns in the calendar.
     [self weekendHighlightFixup];

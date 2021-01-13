@@ -8,6 +8,11 @@
 
 #import <AppKit/AppKit.h>
 #import "MoDate.h"
+typedef enum: NSInteger {
+    KCNATIONSTATUSwork = 0,
+    KCNATIONSTATUSrelax = 1,
+    KCNATIONSTATUSnormal = 2
+}KCNATIONSTATUS;
 
 @interface MoCalCell : NSView
 
@@ -19,6 +24,7 @@
 @property (nonatomic) BOOL isHovered;
 @property (nonatomic) BOOL isSelected;
 @property (nonatomic) CALayer *lineLayer;
+@property (nonatomic,assign) KCNATIONSTATUS cstatus;
 
 // An array of up to 3 colors.
 // - Nil means do not draw a dot.

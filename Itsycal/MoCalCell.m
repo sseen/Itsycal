@@ -44,6 +44,8 @@
         [self.layer addSublayer:_lineLayer];
         _lineLayer.hidden = true;
         
+        _cstatus = KCNATIONSTATUSnormal;
+        
         REGISTER_FOR_SIZE_CHANGE;
     }
     return self;
@@ -102,39 +104,14 @@
     CGFloat offsety __attribute__((unused)) = -2;
     CGFloat inset = 1;
     CGFloat radius = [[Sizer shared] cellRadius];
+    NSRect r = NSInsetRect(self.bounds, inset, inset);
     if (self.isToday) {
         [Theme.todayCellColor setFill];
         //[Theme.todayCellOutlineColor setStroke];
-        NSRect r = NSInsetRect(self.bounds, inset, inset);
         //NSRect r = NSOffsetRect(r0, offsetx, offsety);
         NSBezierPath *p = [NSBezierPath bezierPathWithRoundedRect:r xRadius:radius yRadius:radius];
         [p fill];
         //[p stroke];
-        
-        // CAShapeLayer *sl = [CAShapeLayer layer];
-        // sl.frame = CGRectMake(300, 0, 200, 200);
-        NSBezierPath* ovalPath = [NSBezierPath bezierPath];
-        
-        CGFloat holidayRadius = 8;
-        CGFloat holidayHalfR = 4;
-        CGFloat frameWidth = r.size.width + 1;
-        CGFloat frameHeight = r.size.height + 1;
-        CGFloat xStart = frameWidth - holidayRadius;
-        CGFloat yEnd = frameHeight - holidayRadius;
-        [ovalPath moveToPoint: NSMakePoint(xStart, frameHeight)];
-        [ovalPath lineToPoint: NSMakePoint(frameWidth, frameHeight)];
-        [ovalPath lineToPoint: NSMakePoint(frameWidth, yEnd)];
-        [ovalPath curveToPoint: NSMakePoint(xStart, frameHeight) controlPoint1: NSMakePoint(frameWidth - holidayHalfR, yEnd)  controlPoint2: NSMakePoint(xStart,frameHeight-holidayHalfR)];
-        [ovalPath closePath];
-        [NSColor.grayColor setFill];
-        [ovalPath fill];
-        [NSColor.purpleColor setStroke];
-        ovalPath.lineWidth = 1;
-        [ovalPath stroke];
-        
-        // sl.path = [ovalPath quartzPath];
-        
-        // [self.view.layer addSublayer:sl];
     }
     else if (self.isSelected) {
         [Theme.selectedCellColor set];
@@ -191,6 +168,30 @@
             [[NSBezierPath bezierPathWithOvalInRect:r] fill];
         }
     }
+    
+    if (_cstatus != KCNATIONSTATUSnormal) {
+        NSBezierPath* ovalPath = [NSBezierPath bezierPath];
+        
+        NSColor *nationColor = _cstatus == KCNATIONSTATUSwork ? Theme.cnWork : Theme.cnRelax;
+        
+        CGFloat holidayRadius = 8;
+        CGFloat holidayHalfR = 4;
+        CGFloat frameWidth = r.size.width + 1;
+        CGFloat frameHeight = r.size.height + 1;
+        CGFloat xStart = frameWidth - holidayRadius;
+        CGFloat yEnd = frameHeight - holidayRadius;
+        [ovalPath moveToPoint: NSMakePoint(xStart, frameHeight)];
+        [ovalPath lineToPoint: NSMakePoint(frameWidth, frameHeight)];
+        [ovalPath lineToPoint: NSMakePoint(frameWidth, yEnd)];
+        [ovalPath curveToPoint: NSMakePoint(xStart, frameHeight) controlPoint1: NSMakePoint(frameWidth - holidayHalfR, yEnd)  controlPoint2: NSMakePoint(xStart,frameHeight-holidayHalfR)];
+        [ovalPath closePath];
+        [nationColor setFill];
+        [ovalPath fill];
+        [Theme.mainBackgroundColor setStroke];
+        ovalPath.lineWidth = 1;
+        [ovalPath stroke];
+    }
+    
 }
 
 @end
