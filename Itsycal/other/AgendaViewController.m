@@ -328,7 +328,7 @@ static NSString *kEventCellIdentifier = @"EventCell";
 
 - (BOOL)tableView:(NSTableView *)tableView isGroupRow:(NSInteger)row
 {
-    return [self.events[row] isKindOfClass:[NSDate class]];
+    return false;//[self.events[row] isKindOfClass:[NSDate class]];
 }
 
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row

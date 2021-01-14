@@ -155,7 +155,7 @@
         !(self.window.occlusionState & NSWindowOcclusionStateVisible)) return;
     
     NSInteger hoverRow = [self rowAtPoint:mousePoint];
-    if (self.hoverRow != hoverRow) {
+    if (self.hoverRow != hoverRow && hoverRow % 2 != 0 ) {
         // We scrolled (rubberbanded) off the end of the tableView.
         if (hoverRow < 0 || hoverRow >= [self numberOfRows]) {
             hoverRow = -1;
