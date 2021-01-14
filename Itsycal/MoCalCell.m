@@ -123,7 +123,7 @@
         NSRect r = NSInsetRect(self.bounds, inset, inset);
         //NSRect r = NSOffsetRect(r0, offsetx, offsety);
         NSBezierPath *p = [NSBezierPath bezierPathWithRoundedRect:r xRadius:radius yRadius:radius];
-        [p setLineWidth:2];
+        [p setLineWidth:1];
         [p stroke];
     }
     else if (self.isHovered) {
@@ -131,7 +131,7 @@
         NSRect r = NSInsetRect(self.bounds, inset, inset);
         //NSRect r = NSOffsetRect(r0, offsetx, offsety);
         NSBezierPath *p = [NSBezierPath bezierPathWithRoundedRect:r xRadius:radius yRadius:radius];
-        [p setLineWidth:2];
+        [p setLineWidth:1];
         [p stroke];
     }
     if (self.dotColors) {
