@@ -341,6 +341,17 @@ static NSString *kEventCellIdentifier = @"EventCell";
     if (hoveredRow == -1 || [self tableView:_tv isGroupRow:hoveredRow]) {
         hoveredRow = -1;
     }
+    // 因为修改了 tablerowview 为不实 group 导致 hover出现了问题
+    // 如果agender 里有多个事件的话，需要处理
+    if (hoveredRow > self.events.count || hoveredRow < 0) {
+        hoveredRow = -1;
+    } else {
+        id obj = self.events[hoveredRow];
+        if ([obj isKindOfClass:[NSDate class]]) {
+            hoveredRow = -1;
+        }
+    }
+    
     for (NSInteger row = 0; row < [_tv numberOfRows]; row++) {
         if (![self tableView:_tv isGroupRow:row]) {
             AgendaRowView *rowView = [_tv rowViewAtRow:row makeIfNecessary:NO];
