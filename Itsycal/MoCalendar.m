@@ -394,13 +394,15 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             NSString *todayDateStr = NSStringFromMoDateWithoutJulian(date);
             NSArray *workArray = SNPlist.cNationWorkDays;
             NSArray *relaxArray = SNPlist.cNationRelaxDays;
-            if (![_nsCal.locale.countryCode isEqual:@"CN"]) {
+            if ([_nsCal.locale.countryCode isEqual:@"CN"]) {
                 lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
                 
                 if ([workArray indexOfObject:todayDateStr] != NSNotFound) {
                     cell.cstatus = KCNATIONSTATUSwork;
                 } else if ([relaxArray indexOfObject:todayDateStr] != NSNotFound) {
                     cell.cstatus = KCNATIONSTATUSrelax;
+                } else {
+                    cell.cstatus = KCNATIONSTATUSnormal;
                 }
             }
             

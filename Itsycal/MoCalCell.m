@@ -109,9 +109,9 @@
     CGFloat offsety __attribute__((unused)) = -2;
     CGFloat inset = 1;
     CGFloat radius = [[Sizer shared] cellRadius];
-    NSRect r = NSInsetRect(self.bounds, inset, inset);
     if (self.isToday) {
         [Theme.todayCellColor setFill];
+        NSRect r = NSInsetRect(self.bounds, inset, inset);
         //[Theme.todayCellOutlineColor setStroke];
         //NSRect r = NSOffsetRect(r0, offsetx, offsety);
         NSBezierPath *p = [NSBezierPath bezierPathWithRoundedRect:r xRadius:radius yRadius:radius];
@@ -174,16 +174,17 @@
         }
     }
     
-    
+    if (self.cstatus != KCNATIONSTATUSnormal) {
         
+        NSRect r = NSInsetRect(self.bounds, 0, 0);
         NSBezierPath* ovalPath = [NSBezierPath bezierPath];
         
         NSColor *nationColor = _cstatus == KCNATIONSTATUSwork ? Theme.cnWork : Theme.cnRelax;
-        NSColor *nationBoderColor = Theme.mainBackgroundColor;
+        NSColor *nationBoderColor = nationColor;
         
         if (self.cstatus == KCNATIONSTATUSnormal) {
-            nationColor = [NSColor clearColor];
-            nationBoderColor = [NSColor clearColor];
+            nationColor =  [NSColor colorWithRed: 0 green: 0 blue: 0 alpha: 0];;
+            nationBoderColor =  [NSColor colorWithRed: 0 green: 0 blue: 0 alpha: 0];;
         }
         
         CGFloat holidayRadius = 8;
@@ -202,6 +203,8 @@
         [nationBoderColor setStroke];
         ovalPath.lineWidth = 1;
         [ovalPath stroke];
+    }
+        
     
     
 }
