@@ -182,11 +182,6 @@
         NSColor *nationColor = _cstatus == KCNATIONSTATUSwork ? Theme.cnWork : Theme.cnRelax;
         NSColor *nationBoderColor = nationColor;
         
-        if (self.cstatus == KCNATIONSTATUSnormal) {
-            nationColor =  [NSColor colorWithRed: 0 green: 0 blue: 0 alpha: 0];;
-            nationBoderColor =  [NSColor colorWithRed: 0 green: 0 blue: 0 alpha: 0];;
-        }
-        
         CGFloat holidayRadius = 8;
         CGFloat holidayHalfR = 4;
         CGFloat frameWidth = r.size.width + 1;

@@ -54,6 +54,7 @@
 		F851E0A625ADEDE200357B8F /* CNationDays.plist in Resources */ = {isa = PBXBuildFile; fileRef = F851E0A525ADEDE200357B8F /* CNationDays.plist */; };
 		F851E0AB25AE881A00357B8F /* SNPlister.m in Sources */ = {isa = PBXBuildFile; fileRef = F851E0AA25AE881A00357B8F /* SNPlister.m */; };
 		F8C3C24524BFD576007B2A65 /* NSImage+TintColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C3C24424BFD576007B2A65 /* NSImage+TintColor.m */; };
+		F8E3276525B2BA2E004894C6 /* SCUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F8E3276425B2BA2E004894C6 /* SCUtils.m */; };
 		F8EAFBA625ACA6F400C9660F /* NSBezierPath+quartz.m in Sources */ = {isa = PBXBuildFile; fileRef = F8EAFBA525ACA6F300C9660F /* NSBezierPath+quartz.m */; };
 /* End PBXBuildFile section */
 
@@ -166,6 +167,8 @@
 		F851E0AA25AE881A00357B8F /* SNPlister.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SNPlister.m; sourceTree = "<group>"; };
 		F8C3C24324BFD575007B2A65 /* NSImage+TintColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+TintColor.h"; sourceTree = "<group>"; };
 		F8C3C24424BFD576007B2A65 /* NSImage+TintColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+TintColor.m"; sourceTree = "<group>"; };
+		F8E3276325B2BA2E004894C6 /* SCUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCUtils.h; sourceTree = "<group>"; };
+		F8E3276425B2BA2E004894C6 /* SCUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCUtils.m; sourceTree = "<group>"; };
 		F8EAFBA425ACA6F300C9660F /* NSBezierPath+quartz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+quartz.h"; sourceTree = "<group>"; };
 		F8EAFBA525ACA6F300C9660F /* NSBezierPath+quartz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+quartz.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -344,6 +347,8 @@
 				F851E0A525ADEDE200357B8F /* CNationDays.plist */,
 				F851E0A925AE881900357B8F /* SNPlister.h */,
 				F851E0AA25AE881A00357B8F /* SNPlister.m */,
+				F8E3276325B2BA2E004894C6 /* SCUtils.h */,
+				F8E3276425B2BA2E004894C6 /* SCUtils.m */,
 			);
 			path = other;
 			sourceTree = "<group>";
@@ -478,6 +483,7 @@
 				F8EAFBA625ACA6F400C9660F /* NSBezierPath+quartz.m in Sources */,
 				9242A5901A82A40B005AA4B3 /* MoDate.m in Sources */,
 				925B471B1A93CD2A00E0329A /* TooltipViewController.m in Sources */,
+				F8E3276525B2BA2E004894C6 /* SCUtils.m in Sources */,
 				921E62D01E26B9D2007B029F /* PrefsAppearanceVC.m in Sources */,
 				9242A5961A82BE5E005AA4B3 /* Itsycal.m in Sources */,
 				9242A5931A82A40B005AA4B3 /* MoCalendar.m in Sources */,

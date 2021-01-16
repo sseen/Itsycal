@@ -10,6 +10,7 @@
 
 @implementation SNPlister
 
+// static 全局变量
 SNPlister *SNPlist = nil;
 static NSArray *nationWorkDays = nil;
 static NSArray *nationRelaxdays = nil;
@@ -25,6 +26,7 @@ static NSArray *nationRelaxdays = nil;
     return shared;
 }
 
+/// get
 - (NSArray *)cNationWorkDays {
     if (!nationWorkDays) {
         [self cNationDays];
@@ -32,6 +34,8 @@ static NSArray *nationRelaxdays = nil;
     return nationWorkDays;
 }
 
+
+/// get
 - (NSArray *)cNationRelaxDays {
     if (!nationRelaxdays) {
         [self cNationDays];
@@ -39,12 +43,17 @@ static NSArray *nationRelaxdays = nil;
     return nationRelaxdays;
 }
 
+
+/// 生成中国官方节假日，包括放假，补班信息
 - (void)cNationDays {
     NSDictionary *dic = [self getPlistDatas:@"CNationDays"];
     nationRelaxdays = dic[@"relax"];
     nationWorkDays  = dic[@"work"];
 }
 
+
+/// 读取 plist 文件
+/// @param fileName the name of plist file
 - (NSMutableDictionary *)getPlistDatas:(NSString*)fileName{
     NSString *pathFile = [[NSBundle mainBundle] pathForResource:fileName ofType:@"plist"];
     // NSMutableArray *appConfig = [NSMutableArray arrayWithContentsOfFile:pathFile];

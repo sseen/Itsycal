@@ -8,10 +8,14 @@
 
 #import <AppKit/AppKit.h>
 #import "MoDate.h"
+
+/// work | relax 11
+/// work & ( work | relax) true
+/// normal & ( work | relax) false
 typedef enum: NSInteger {
-    KCNATIONSTATUSwork = 0,
-    KCNATIONSTATUSrelax = 1,
-    KCNATIONSTATUSnormal = 2
+    KCNATIONSTATUSnormal = 0,  // 0
+    KCNATIONSTATUSwork = 1<<0, // 1
+    KCNATIONSTATUSrelax = 1<<1,// 10
 }KCNATIONSTATUS;
 
 @interface MoCalCell : NSView

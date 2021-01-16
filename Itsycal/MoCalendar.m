@@ -15,7 +15,7 @@
 #import "Themer.h"
 #import "Sizer.h"
 #import "MoDate.h"
-#import "SNPlister.h"
+#import "SCUtils.h"
 
 NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 
@@ -392,18 +392,9 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             cell.isInCurrentMonth = (date.month == self.monthDate.month);
             
             NSString *todayDateStr = NSStringFromMoDateWithoutJulian(date);
-            NSArray *workArray = SNPlist.cNationWorkDays;
-            NSArray *relaxArray = SNPlist.cNationRelaxDays;
             if ([_nsCal.locale.countryCode isEqual:@"CN"]) {
                 lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
-                
-                if ([workArray indexOfObject:todayDateStr] != NSNotFound) {
-                    cell.cstatus = KCNATIONSTATUSwork;
-                } else if ([relaxArray indexOfObject:todayDateStr] != NSNotFound) {
-                    cell.cstatus = KCNATIONSTATUSrelax;
-                } else {
-                    cell.cstatus = KCNATIONSTATUSnormal;
-                }
+                cell.cstatus = [SCUtils whichNationDays:todayDateStr];
             }
             
             // attributed string lunar and date
