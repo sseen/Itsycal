@@ -15,6 +15,7 @@
 #import "MASShortcut/MASShortcutBinder.h"
 #import "MASShortcut/MASShortcutMonitor.h"
 #import "MoUtils.h"
+
 #import "SNPlister.h"
 
 @import AppCenter;
@@ -71,9 +72,9 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // app center init
-    [MSAppCenter start:@"28ac792f-9fcb-42ec-b902-8c44a4511602" withServices:@[
-      [MSAnalytics class],
-      [MSCrashes class]
+    [MSACAppCenter start:@"28ac792f-9fcb-42ec-b902-8c44a4511602" withServices:@[
+      [MSACAnalytics class],
+      [MSACCrashes class]
     ]];
     
     // Ensure the user has moved Itsycal to the /Applications folder.
