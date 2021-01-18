@@ -13,6 +13,7 @@
 #import "MoVFLHelper.h"
 #import "Themer.h"
 #import "Sizer.h"
+#import "MoCalCell.h"
 
 static NSString *kColumnIdentifier    = @"Column";
 static NSString *kDateCellIdentifier  = @"DateCell";
@@ -46,6 +47,12 @@ static NSString *kEventCellIdentifier = @"EventCell";
 @property (nonatomic) MoButton *btnDelete;
 - (void)populateWithEventInfo:(EventInfo *)info;
 - (NSSize)size;
+@end
+
+@interface AgendaViewController (){
+    EventInfo *_cnNationEI;
+}
+
 @end
 
 #pragma mark -
@@ -95,6 +102,12 @@ static NSString *kEventCellIdentifier = @"EventCell";
     [v addSubview:tvContainer];
     [v addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tv]|" options:0 metrics:nil views:@{@"tv": tvContainer}]];
     [v addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tv]|" options:0 metrics:nil views:@{@"tv": tvContainer}]];
+    
+    // cn nation day
+    _cnNationEI = [EventInfo new];
+    _cnNationEI.isAllDay = true;
+    _cnNationEI.event = [[EKEvent alloc] init];
+    _cnNationEI.event.calendar = [[EKCalendar alloc] init];
     
     self.view = v;
 }
@@ -275,7 +288,29 @@ static NSString *kEventCellIdentifier = @"EventCell";
     NSView *v = nil;
     id obj = self.events[row];
     
-    if ([obj isKindOfClass:[NSDate class]]) {
+    if ([obj isKindOfClass:[NSNumber class]]) {
+        AgendaEventCell *cell = [_tv makeViewWithIdentifier:kEventCellIdentifier owner:self];
+        if (!cell) cell = [AgendaEventCell new];
+        
+        // clear style 清理样式
+        cell.eventInfo = _cnNationEI;
+        cell.locationTextField.stringValue = @"";
+        cell.durationTextField.stringValue = @"";
+        
+        NSColor *nationColor = Theme.cnWork;
+        NSString *nationStr = @"班";
+        if ([obj intValue] == KCNATIONSTATUSrelax) {
+            nationStr = @"休";
+            nationColor = Theme.cnRelax;
+        }
+        NSMutableAttributedString *maStr = [[NSMutableAttributedString alloc] initWithString:nationStr];
+        [maStr addAttributes:@{NSBackgroundColorAttributeName:nationColor,NSForegroundColorAttributeName:NSColor.whiteColor} range:NSMakeRange(0, 1)];
+        cell.titleTextField.attributedStringValue = maStr;
+        cell.titleTextField.textColor = nationColor;
+        cell.eventInfo.event.calendar.color = nationColor;
+        
+        v = cell;
+    } else if ([obj isKindOfClass:[NSDate class]]) {
         AgendaDateCell *cell = [_tv makeViewWithIdentifier:kDateCellIdentifier owner:self];
         if (cell == nil) cell = [AgendaDateCell new];
         cell.date = obj;
@@ -287,6 +322,7 @@ static NSString *kEventCellIdentifier = @"EventCell";
         EventInfo *info = obj;
         AgendaEventCell *cell = [_tv makeViewWithIdentifier:kEventCellIdentifier owner:self];
         if (!cell) cell = [AgendaEventCell new];
+        cell.titleTextField.textColor = Theme.agendaDOWTextColor;
         cell.eventInfo = info;
         [self populateEventCell:cell withInfo:info showLocation:self.showLocation];
         cell.dim = NO;
