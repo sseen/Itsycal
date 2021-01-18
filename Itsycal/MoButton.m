@@ -26,6 +26,10 @@
     return self.image.size;
 }
 
+- (void)alignImageSize:(CGFloat)width {
+    self.image.size = CGSizeMake(width, width);
+}
+
 - (void)setImage:(NSImage *)image
 {
     [super setImage:image];

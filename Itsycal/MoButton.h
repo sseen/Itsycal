@@ -12,4 +12,6 @@
 
 @property (nonatomic) NSColor *backgroundColor;
 
+- (void)alignImageSize:(CGFloat)width ;
+
 @end
