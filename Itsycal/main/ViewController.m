@@ -80,7 +80,6 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
         [btn setAction:action];
         [btn setToolTip:tip];
         [btn setImage:[NSImage imageNamed:imageName]];
-        [btn alignImageSize:20];
         [btn setKeyEquivalent:key];
         [btn setKeyEquivalentModifierMask:NSEventModifierFlagCommand];
         [btn.image setTemplate:true];
