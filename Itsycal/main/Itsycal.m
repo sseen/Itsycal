@@ -26,3 +26,5 @@ NSString * const kHideIcon = @"HideIcon";
 NSString * const kShowLocation = @"ShowLocation";
 NSString * const kShowEventDots = @"kShowEventDots";
 NSString * const kUseColoredDots = @"UseColoredDots";
+NSString * const kShowCnLunar = @"showCnLunar";
+NSString * const kshowCnNationDays = @"showCnNationDays";

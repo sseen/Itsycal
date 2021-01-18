@@ -16,6 +16,7 @@
 #import "Sizer.h"
 #import "MoDate.h"
 #import "SCUtils.h"
+#import "Itsycal.h"
 
 NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 
@@ -392,7 +393,8 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             cell.isInCurrentMonth = (date.month == self.monthDate.month);
             
             NSString *todayDateStr = NSStringFromMoDateWithoutJulian(date);
-            if ([_nsCal.locale.countryCode isEqual:@"CN"]) {
+            Boolean isShowCnLunar = [[NSUserDefaults standardUserDefaults] boolForKey:kShowCnLunar];
+            if (isShowCnLunar) {
                 lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
                 cell.cstatus = [SCUtils whichNationDays:todayDateStr];
             }

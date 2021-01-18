@@ -8,6 +8,7 @@
 
 #import "SCUtils.h"
 #import "SNPlister.h"
+#import "Itsycal.h"
 
 @implementation SCUtils
 
@@ -16,14 +17,16 @@
 /// @param dateStr string like yyyy-mm-dd
 + (KCNATIONSTATUS)whichNationDays:(NSString *)dateStr {
     KCNATIONSTATUS rt = KCNATIONSTATUSnormal;
-    
-    NSArray *workArray = SNPlist.cNationWorkDays;
-    NSArray *relaxArray = SNPlist.cNationRelaxDays;
-    
-    if ([workArray indexOfObject:dateStr] != NSNotFound) {
-        rt = KCNATIONSTATUSwork;
-    } else if ([relaxArray indexOfObject:dateStr] != NSNotFound) {
-        rt = KCNATIONSTATUSrelax;
+    Boolean isShowCnNationDays= [[NSUserDefaults standardUserDefaults] boolForKey:kshowCnNationDays];
+    if (isShowCnNationDays) {
+        NSArray *workArray = SNPlist.cNationWorkDays;
+        NSArray *relaxArray = SNPlist.cNationRelaxDays;
+        
+        if ([workArray indexOfObject:dateStr] != NSNotFound) {
+            rt = KCNATIONSTATUSwork;
+        } else if ([relaxArray indexOfObject:dateStr] != NSNotFound) {
+            rt = KCNATIONSTATUSrelax;
+        }
     }
     
     return rt;

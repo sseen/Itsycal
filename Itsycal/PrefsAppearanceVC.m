@@ -55,6 +55,8 @@
     NSButton *showEventDots = chkbx(NSLocalizedString(@"Show event dots", @""));
     NSButton *useColoredDots = chkbx(NSLocalizedString(@"Use colored dots", @""));
     NSButton *showWeeks = chkbx(NSLocalizedString(@"Show calendar weeks", @""));
+    NSButton *showCnLunar = chkbx(NSLocalizedString(@"Show Chinese lunar calendar", @""));
+    NSButton *showCnNationDays = chkbx(NSLocalizedString(@"Show Chinese Official holidays", @""));
     NSButton *showLocation = chkbx(NSLocalizedString(@"Show event location", @""));
 //    NSButton *bigger = chkbx(NSLocalizedString(@"Use larger text", @""));
     _hideIcon = chkbx(NSLocalizedString(@"Hide icon", @""));
@@ -112,8 +114,8 @@
 //    [vfl :@"H:|-m-[showLocation]-(>=m)-|"];
 //    [vfl :@"H:|-m-[bigger]-(>=m)-|"];
     
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20, @"mm": @40} views:NSDictionaryOfVariableBindings(menubarLabel, calendarLabel, separator0, separator1, useOutlineIcon, useEmojiIcon, useEmojiIconHideFace, showMonth, showDayOfWeek, showEventDots, useColoredDots, showWeeks, showLocation, _dateTimeFormat, helpButton, _hideIcon, themeLabel, themePopup)];
-    [vfl :@"V:|-m-[menubarLabel]-10-[useOutlineIcon]-[useEmojiIcon]-[useEmojiIconHideFace]-[showMonth]-[showDayOfWeek]-[_dateTimeFormat]-[_hideIcon]-m-[calendarLabel]-10-[themePopup]-m-[showEventDots]-[useColoredDots]-[showLocation]-[showWeeks]-m-|"];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20, @"mm": @40} views:NSDictionaryOfVariableBindings(menubarLabel, calendarLabel, separator0, separator1, useOutlineIcon, useEmojiIcon, useEmojiIconHideFace, showMonth, showDayOfWeek, showEventDots, useColoredDots, showWeeks, showLocation, showCnLunar, showCnNationDays, _dateTimeFormat, helpButton, _hideIcon, themeLabel, themePopup)];
+    [vfl :@"V:|-m-[menubarLabel]-10-[useOutlineIcon]-[useEmojiIcon]-[useEmojiIconHideFace]-[showMonth]-[showDayOfWeek]-[_dateTimeFormat]-[_hideIcon]-m-[calendarLabel]-10-[themePopup]-m-[showEventDots]-[useColoredDots]-[showLocation]-[showWeeks]-[showCnLunar]-[showCnNationDays]-m-|"];
     [vfl :@"H:|-m-[menubarLabel]-[separator0(>=175)]-m-|" :NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[calendarLabel]-[separator1]-m-|" :NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[useOutlineIcon]-(>=m)-|"];
@@ -126,8 +128,10 @@
     [vfl :@"H:|-m-[themeLabel]-[themePopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
     [vfl :@"H:|-m-[showEventDots]-(>=m)-|"];
     [vfl :@"H:|-mm-[useColoredDots]-(>=m)-|"];
-    [vfl :@"H:|-m-[showWeeks]-(>=m)-|"];
     [vfl :@"H:|-m-[showLocation]-(>=m)-|"];
+    [vfl :@"H:|-m-[showWeeks]-(>=m)-|"];
+    [vfl :@"H:|-m-[showCnLunar]-(>=m)-|"];
+    [vfl :@"H:|-m-[showCnNationDays]-(>=m)-|"];
 
     // Bindings for icon preferences
     [useOutlineIcon bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kUseOutlineIcon] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
@@ -171,6 +175,11 @@
     
     // Bindings for size
 //    [bigger bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kSizePreference] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
+    
+    // show cn lunar
+    // show cn nation days
+    [showCnLunar bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kShowCnLunar] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
+    [showCnNationDays bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kshowCnNationDays] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
     
     self.view = v;
 }

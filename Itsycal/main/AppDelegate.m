@@ -40,6 +40,10 @@
     // User can change this in preferences.
     NSCalendar *cal = [NSCalendar autoupdatingCurrentCalendar];
     NSInteger weekStartDOW = MIN(MAX(cal.firstWeekday - 1, 0), 6);
+    Boolean isCn = false;
+    if ([cal.locale.countryCode isEqual:@"CN"]) {
+        isCn = true;
+    }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults registerDefaults:@{
@@ -55,6 +59,8 @@
         kShowEventDots:        @(YES),
         kUseColoredDots:       @(YES),
         kThemePreference:      @0, // System=0, Light=1, Dark=2
+        kShowCnLunar:          @(isCn),
+        kshowCnNationDays:     @(isCn),
         kHideIcon:             @(NO)
     }];
     

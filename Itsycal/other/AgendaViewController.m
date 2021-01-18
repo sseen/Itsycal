@@ -299,14 +299,15 @@ static NSString *kEventCellIdentifier = @"EventCell";
         
         NSColor *nationColor = Theme.cnWork;
         NSString *nationStr = @"班";
+        NSColor *nationStrColor = [NSColor colorWithRed:0 green:0 blue:0 alpha:0.85];
         if ([obj intValue] == KCNATIONSTATUSrelax) {
             nationStr = @"休";
             nationColor = Theme.cnRelax;
+            nationStrColor = NSColor.whiteColor;
         }
         NSMutableAttributedString *maStr = [[NSMutableAttributedString alloc] initWithString:nationStr];
-        [maStr addAttributes:@{NSBackgroundColorAttributeName:nationColor,NSForegroundColorAttributeName:NSColor.whiteColor} range:NSMakeRange(0, 1)];
+        [maStr addAttributes:@{NSBackgroundColorAttributeName:nationColor,NSForegroundColorAttributeName:nationStrColor} range:NSMakeRange(0, 1)];
         cell.titleTextField.attributedStringValue = maStr;
-        cell.titleTextField.textColor = nationColor;
         cell.eventInfo.event.calendar.color = nationColor;
         
         v = cell;
