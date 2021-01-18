@@ -316,3 +316,6 @@ Please quit Swittee Calendar, move it to the Applications folder, and relaunch."
 "ends" = "结束时间";
 
 "Hide face Emoji" = "隐藏中间笑脸图标";
+
+"Show Chinese lunar calendar" = "显示农历";
+"Show Chinese Official holidays" = "显示法定假期";
