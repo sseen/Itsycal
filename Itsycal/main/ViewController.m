@@ -533,9 +533,9 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
                     [templateEmoji appendFormat:@"%@%@",(NSString *)emojiWeekday[comps.weekday],(NSString *)emojiNumber[weekIndex]];
                 }
             }
-            [_iconDateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:template options:0 locale:[NSLocale currentLocale]]];
-            iconText = [_iconDateFormatter stringFromDate:[NSDate new]];
         }
+        [_iconDateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:template options:0 locale:[NSLocale currentLocale]]];
+        iconText = [_iconDateFormatter stringFromDate:[NSDate new]];
     } else {
         iconText = [NSString stringWithFormat:@"%zd", _moCal.todayDate.day];
     }
