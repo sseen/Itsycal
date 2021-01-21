@@ -14,6 +14,7 @@
 #import "Themer.h"
 #import "Sizer.h"
 #import "MoCalCell.h"
+#import "SCUtils.h"
 
 static NSString *kColumnIdentifier    = @"Column";
 static NSString *kDateCellIdentifier  = @"DateCell";
@@ -300,13 +301,16 @@ static NSString *kEventCellIdentifier = @"EventCell";
         NSColor *nationColor = Theme.cnWork;
         NSString *nationStr = @"班";
         NSColor *nationStrColor = [NSColor colorWithRed:0 green:0 blue:0 alpha:0.85];
+        nationStrColor = NSColor.whiteColor;
         if ([obj intValue] == KCNATIONSTATUSrelax) {
             nationStr = @"休";
             nationColor = Theme.cnRelax;
-            nationStrColor = NSColor.whiteColor;
+            // nationStrColor = NSColor.whiteColor;
         }
+        nationStr = [NSString stringWithFormat:@"%@ %@",nationStr, SCUtils.holidayName];
         NSMutableAttributedString *maStr = [[NSMutableAttributedString alloc] initWithString:nationStr];
-        [maStr addAttributes:@{NSBackgroundColorAttributeName:nationColor,NSForegroundColorAttributeName:nationStrColor} range:NSMakeRange(0, 1)];
+        [maStr addAttributes:@{NSBackgroundColorAttributeName:nationColor,NSForegroundColorAttributeName:nationStrColor} range:NSMakeRange(0,1)];
+        [maStr addAttributes:@{NSBackgroundColorAttributeName:nationColor,NSForegroundColorAttributeName:nationStrColor} range:NSMakeRange(2,nationStr.length-2)];
         cell.titleTextField.attributedStringValue = maStr;
         cell.eventInfo.event.calendar.color = nationColor;
         

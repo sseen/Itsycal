@@ -12,6 +12,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SCUtils : NSObject
+
+@property (class) NSString *holidayName;
+
 + (KCNATIONSTATUS)whichNationDays:(NSString *)dateStr;
 @end
 

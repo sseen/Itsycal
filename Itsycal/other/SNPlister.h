@@ -15,8 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern SNPlister *SNPlist;
 
-@property (nonatomic) NSArray* cNationWorkDays;
-@property (nonatomic) NSArray* cNationRelaxDays;
+@property (nonatomic) NSDictionary* cNationWorkDays;
+@property (nonatomic) NSDictionary* cNationRelaxDays;
 
 + (instancetype)shared;
 @end

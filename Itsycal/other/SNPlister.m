@@ -12,8 +12,8 @@
 
 // static 全局变量
 SNPlister *SNPlist = nil;
-static NSArray *nationWorkDays = nil;
-static NSArray *nationRelaxdays = nil;
+static NSDictionary *nationWorkDays = nil;
+static NSDictionary *nationRelaxdays = nil;
 
 + (instancetype)shared
 {
@@ -27,7 +27,7 @@ static NSArray *nationRelaxdays = nil;
 }
 
 /// get
-- (NSArray *)cNationWorkDays {
+- (NSDictionary *)cNationWorkDays {
     if (!nationWorkDays) {
         [self cNationDays];
     }
@@ -36,7 +36,7 @@ static NSArray *nationRelaxdays = nil;
 
 
 /// get
-- (NSArray *)cNationRelaxDays {
+- (NSDictionary *)cNationRelaxDays {
     if (!nationRelaxdays) {
         [self cNationDays];
     }
