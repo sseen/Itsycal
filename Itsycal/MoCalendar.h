@@ -81,6 +81,8 @@ typedef enum : NSInteger {
 - (void)highlightCellsFromDate:(MoDate)startDate toDate:(MoDate)endDate withColor:(NSColor *)color;
 - (void)unhighlightCells;
 
+- (void)updateCalendar;
+
 @end
 
 // =========================================================================
