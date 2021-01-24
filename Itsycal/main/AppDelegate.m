@@ -40,9 +40,9 @@
     // User can change this in preferences.
     NSCalendar *cal = [NSCalendar autoupdatingCurrentCalendar];
     NSInteger weekStartDOW = MIN(MAX(cal.firstWeekday - 1, 0), 6);
-    Boolean isCn = false;
+    Boolean isCn = NO;
     if ([cal.locale.countryCode isEqual:@"CN"]) {
-        isCn = true;
+        isCn = YES;
     }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -73,6 +73,7 @@
     if (themePref < 0 || themePref > 2) {
         [defaults setInteger:0 forKey:kThemePreference];
     }
+    
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification

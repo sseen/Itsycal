@@ -55,6 +55,8 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kShowMonthInIcon];
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kShowDayOfWeekInIcon];
     [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kClockFormat];
+    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kShowCnLunar];
+    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:kshowCnNationDays];
 }
 
 #pragma mark -
@@ -1222,7 +1224,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     }];
 
     // Observe NSUserDefaults for preference changes
-    for (NSString *keyPath in @[kShowEventDays, kUseOutlineIcon, kUseEmojiIcon, kUseEmojiIconHideFace, kShowMonthInIcon, kShowDayOfWeekInIcon, kHideIcon, kClockFormat]) {
+    for (NSString *keyPath in @[kShowEventDays, kUseOutlineIcon, kUseEmojiIcon, kUseEmojiIconHideFace, kShowMonthInIcon, kShowDayOfWeekInIcon, kHideIcon, kClockFormat, kShowCnLunar, kshowCnNationDays]) {
         [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:NULL];
     }
 }
@@ -1234,6 +1236,9 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 {
     if ([keyPath isEqualToString:kShowEventDays]) {
         [self updateAgenda];
+    } else if ([keyPath isEqualToString:kshowCnNationDays] ||
+               [keyPath isEqualToString:kShowCnLunar]){
+        [_moCal updateCalendar];
     }
     else if ([keyPath isEqualToString:kUseOutlineIcon] ||
              [keyPath isEqualToString:kUseEmojiIcon] ||

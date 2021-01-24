@@ -391,11 +391,15 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             cell.date = date;
             cell.isHighlighted = [self columnIsMemberOfHighlightedDOWs:col];
             cell.isInCurrentMonth = (date.month == self.monthDate.month);
+            cell.cstatus = KCNATIONSTATUSnormal;
             
             NSString *todayDateStr = NSStringFromMoDateWithoutJulian(date);
             Boolean isShowCnLunar = [[NSUserDefaults standardUserDefaults] boolForKey:kShowCnLunar];
+            Boolean isShowCnNaitonDays = [[NSUserDefaults standardUserDefaults] boolForKey:kshowCnNationDays];
             if (isShowCnLunar) {
                 lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
+            }
+            if (isShowCnNaitonDays) {
                 cell.cstatus = [SCUtils whichNationDays:todayDateStr];
             }
             
