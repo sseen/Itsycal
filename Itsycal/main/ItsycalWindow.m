@@ -181,6 +181,9 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    [NSColor.clearColor set];
+    NSRectFill(dirtyRect);
+    [super drawRect:dirtyRect];
     // Draw the window background with the little arrow
     // at the top.
     
@@ -298,9 +301,9 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
         [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, -kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, -kArrowHeight)];
         [rectPath appendBezierPath:arrowPath];
     }
-    [Theme.windowBorderColor setStroke];
-    [rectPath setLineWidth:1*kBorderWidth];
-    [rectPath stroke];
+//    [Theme.windowBorderColor setStroke];
+//    [rectPath setLineWidth:0*kBorderWidth];
+//    [rectPath stroke];
 //    [NSColor.whiteColor setFill]; //278打开的话这个必须有 [[NSColor clearColor] set];
     [rectPath addClip];
     [rectPath fill];
