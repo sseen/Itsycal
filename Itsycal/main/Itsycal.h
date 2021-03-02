@@ -29,3 +29,4 @@ extern NSString * const kShowEventDots;
 extern NSString * const kUseColoredDots;
 extern NSString * const kShowCnLunar;
 extern NSString * const kshowCnNationDays;
+extern NSString * const kUseBigMenuFont;

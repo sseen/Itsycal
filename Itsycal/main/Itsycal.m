@@ -28,3 +28,4 @@ NSString * const kShowEventDots = @"kShowEventDots";
 NSString * const kUseColoredDots = @"UseColoredDots";
 NSString * const kShowCnLunar = @"showCnLunar";
 NSString * const kshowCnNationDays = @"showCnNationDays";
+NSString * const kUseBigMenuFont = @"UseBigMenuFont";

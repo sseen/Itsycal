@@ -627,6 +627,12 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 
     // Does user want outline icon or solid icon?
     BOOL useOutlineIcon = [[NSUserDefaults standardUserDefaults] boolForKey:kUseOutlineIcon];
+    
+    // Does want big menu font ?
+    BOOL useBigMenuFont = [[NSUserDefaults standardUserDefaults] boolForKey:kUseBigMenuFont];
+    CGFloat menuTitleSize = useBigMenuFont ? 13 : 11.5;
+    CGFloat menuHeight = useBigMenuFont ? 18 : 16;
+    CGFloat menuTitleOffset = useBigMenuFont ? -3 : -1;
 
     // Return cached icon if one is available.
     NSString *iconName = [text stringByAppendingString:useOutlineIcon ? @" outline" : @" solid"];
@@ -636,12 +642,12 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     }
 
     // Measure text width
-    NSFont *font = [NSFont systemFontOfSize:11.5 weight:NSFontWeightBold];
+    NSFont *font = [NSFont systemFontOfSize:menuTitleSize weight:NSFontWeightBold];
     CGRect textRect = [[[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: font}] boundingRectWithSize:CGSizeMake(999, 999) options:0 context:nil];
 
     // Icon width is at least 23 pts with 3 pt outside margins, 4 pt inside margins.
     CGFloat width = MAX(3 + 4 + ceilf(NSWidth(textRect)) + 4 + 3, 23);
-    CGFloat height = 16;
+    CGFloat height = menuHeight;
     iconImage = [NSImage imageWithSize:NSMakeSize(width, height) flipped:NO drawingHandler:^BOOL (NSRect rect) {
 
         // Get image's context.
@@ -660,7 +666,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
             // Draw text.
             NSMutableParagraphStyle *pstyle = [NSMutableParagraphStyle new];
             pstyle.alignment = NSTextAlignmentCenter;
-            [text drawInRect:NSOffsetRect(rect, 0, -1) withAttributes:@{NSFontAttributeName: [NSFont systemFontOfSize:11.5 weight:NSFontWeightSemibold], NSParagraphStyleAttributeName: pstyle, NSForegroundColorAttributeName: [NSColor blackColor]}];
+            [text drawInRect:NSOffsetRect(rect, 0, menuTitleOffset) withAttributes:@{NSFontAttributeName: [NSFont systemFontOfSize:menuTitleSize weight:NSFontWeightSemibold], NSParagraphStyleAttributeName: pstyle, NSForegroundColorAttributeName: [NSColor blackColor]}];
         }
         else {
 
@@ -674,7 +680,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
             CGFloat height = scale * NSHeight(rect);
             CGFloat outsideMargin = scale * 3;
             CGFloat radius = scale * 2;
-            CGFloat fontSize = scale > 1 ? 24 : 11.5;
+            CGFloat fontSize = scale > 1 ? scale * menuTitleSize : 11.5;
 
             // Create a grayscale context for the mask
             CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceGray();
@@ -694,7 +700,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
             // Draw text.
             NSMutableParagraphStyle *pstyle = [NSMutableParagraphStyle new];
             pstyle.alignment = NSTextAlignmentCenter;
-            [text drawInRect:NSOffsetRect(deviceRect, 0, -1) withAttributes:@{NSFontAttributeName: [NSFont systemFontOfSize:fontSize weight:NSFontWeightBold], NSForegroundColorAttributeName: [NSColor blackColor], NSParagraphStyleAttributeName: pstyle}];
+            [text drawInRect:NSOffsetRect(deviceRect, 0, menuTitleOffset) withAttributes:@{NSFontAttributeName: [NSFont systemFontOfSize:fontSize weight:NSFontWeightBold], NSForegroundColorAttributeName: [NSColor blackColor], NSParagraphStyleAttributeName: pstyle}];
 
             // Switch back to the image's context.
             [NSGraphicsContext restoreGraphicsState];
