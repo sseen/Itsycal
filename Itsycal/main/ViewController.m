@@ -637,9 +637,9 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     // Return cached icon if one is available.
     NSString *iconName = [text stringByAppendingString:useOutlineIcon ? @" outline" : @" solid"];
     NSImage *iconImage = [NSImage imageNamed:iconName];
-    if (iconImage != nil) {
-        return iconImage;
-    }
+//    if (iconImage != nil) {
+//        return iconImage;
+//    }
 
     // Measure text width
     NSFont *font = [NSFont systemFontOfSize:menuTitleSize weight:NSFontWeightBold];
@@ -1230,7 +1230,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     }];
 
     // Observe NSUserDefaults for preference changes
-    for (NSString *keyPath in @[kShowEventDays, kUseOutlineIcon, kUseEmojiIcon, kUseEmojiIconHideFace, kShowMonthInIcon, kShowDayOfWeekInIcon, kHideIcon, kClockFormat, kShowCnLunar, kshowCnNationDays]) {
+    for (NSString *keyPath in @[kShowEventDays, kUseOutlineIcon, kUseEmojiIcon, kUseEmojiIconHideFace, kShowMonthInIcon, kShowDayOfWeekInIcon, kHideIcon, kClockFormat, kShowCnLunar, kshowCnNationDays, kUseBigMenuFont]) {
         [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:NULL];
     }
 }
@@ -1251,7 +1251,8 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
              [keyPath isEqualToString:kUseEmojiIconHideFace] ||
              [keyPath isEqualToString:kShowMonthInIcon] ||
              [keyPath isEqualToString:kShowDayOfWeekInIcon] ||
-             [keyPath isEqualToString:kHideIcon]) {
+             [keyPath isEqualToString:kHideIcon] ||
+             [keyPath isEqualToString:kUseBigMenuFont]) {
         [self updateMenubarIcon];
     }
     else if ([keyPath isEqualToString:kClockFormat]) {
