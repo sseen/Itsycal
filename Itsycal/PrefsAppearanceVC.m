@@ -47,12 +47,14 @@
     [v addSubview:separator1];
 
     // Checkboxes
-    NSButton *useBigMenuFont = chkbx(NSLocalizedString(@"Use larger text for menu bar", @""));
+    NSButton *useBigMenuFont = chkbx(NSLocalizedString(@"Use larger text in icon", @""));
     NSButton *useOutlineIcon = chkbx(NSLocalizedString(@"Use outline icon", @""));
     NSButton *useEmojiIcon = chkbx(NSLocalizedString(@"Use Emoji icon", @""));
     NSButton *useEmojiIconHideFace = chkbx(NSLocalizedString(@"Hide face Emoji", @""));
     NSButton *showMonth = chkbx(NSLocalizedString(@"Show month in icon", @""));
     NSButton *showDayOfWeek = chkbx(NSLocalizedString(@"Show day of week in icon", @""));
+    NSButton *showCnLunarInIcon = chkbx(NSLocalizedString(@"Show Chinese lunar in icon", @""));
+    
     NSButton *showEventDots = chkbx(NSLocalizedString(@"Show event dots", @""));
     NSButton *useColoredDots = chkbx(NSLocalizedString(@"Use colored dots", @""));
     NSButton *showWeeks = chkbx(NSLocalizedString(@"Show calendar weeks", @""));
@@ -115,8 +117,8 @@
 //    [vfl :@"H:|-m-[showLocation]-(>=m)-|"];
 //    [vfl :@"H:|-m-[bigger]-(>=m)-|"];
     
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20, @"mm": @40, @"m3m":@60} views:NSDictionaryOfVariableBindings(menubarLabel, calendarLabel, separator0, separator1, useOutlineIcon, useEmojiIcon, useEmojiIconHideFace, showMonth, showDayOfWeek, showEventDots, useColoredDots, showWeeks, showLocation, showCnLunar, showCnNationDays, _dateTimeFormat, helpButton, _hideIcon, themeLabel, themePopup, useBigMenuFont)];
-    [vfl :@"V:|-m-[menubarLabel]-10-[useBigMenuFont]-[useOutlineIcon]-[useEmojiIcon]-[useEmojiIconHideFace]-[showMonth]-[showDayOfWeek]-[_dateTimeFormat]-[_hideIcon]-m-[calendarLabel]-10-[themePopup]-m-[showEventDots]-[useColoredDots]-[showLocation]-[showWeeks]-[showCnLunar]-[showCnNationDays]-m-|"];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20, @"mm": @40, @"m3m":@60} views:NSDictionaryOfVariableBindings(menubarLabel, calendarLabel, separator0, separator1, useOutlineIcon, useEmojiIcon, useEmojiIconHideFace, showMonth, showDayOfWeek, showEventDots, useColoredDots, showWeeks, showLocation, showCnLunar, showCnNationDays, _dateTimeFormat, helpButton, _hideIcon, themeLabel, themePopup, useBigMenuFont, showCnLunarInIcon)];
+    [vfl :@"V:|-m-[menubarLabel]-10-[useBigMenuFont]-[useOutlineIcon]-[useEmojiIcon]-[useEmojiIconHideFace]-[showMonth]-[showDayOfWeek]-[showCnLunarInIcon]-[_dateTimeFormat]-[_hideIcon]-m-[calendarLabel]-10-[themePopup]-m-[showEventDots]-[useColoredDots]-[showLocation]-[showWeeks]-[showCnLunar]-[showCnNationDays]-m-|"];
     [vfl :@"H:|-m-[menubarLabel]-[separator0(>=175)]-m-|" :NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[calendarLabel]-[separator1]-m-|" :NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-mm-[useBigMenuFont]-(>=m)-|"];
