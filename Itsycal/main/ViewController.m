@@ -632,14 +632,16 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     BOOL useBigMenuFont = [[NSUserDefaults standardUserDefaults] boolForKey:kUseBigMenuFont];
     CGFloat menuTitleSize = useBigMenuFont ? 13 : 11.5;
     CGFloat menuHeight = useBigMenuFont ? 18 : 16;
-    CGFloat menuTitleOffset = useBigMenuFont ? -3 : -1;
+    CGFloat menuTitleOffsetSolid = useBigMenuFont ? -3 : -2;
+    CGFloat menuTitleOffsetOutline = useBigMenuFont ? -0.5 : -1;
 
     // Return cached icon if one is available.
     NSString *iconName = [text stringByAppendingString:useOutlineIcon ? @" outline" : @" solid"];
     NSImage *iconImage = [NSImage imageNamed:iconName];
-//    if (iconImage != nil) {
-//        return iconImage;
-//    }
+    // 添加menubar大字体后，这个不能用了，不然切换大小字体后，图片不能更新
+    // if (iconImage != nil) {
+    //     return iconImage;
+    // }
 
     // Measure text width
     NSFont *font = [NSFont systemFontOfSize:menuTitleSize weight:NSFontWeightBold];
@@ -666,7 +668,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
             // Draw text.
             NSMutableParagraphStyle *pstyle = [NSMutableParagraphStyle new];
             pstyle.alignment = NSTextAlignmentCenter;
-            [text drawInRect:NSOffsetRect(rect, 0, menuTitleOffset) withAttributes:@{NSFontAttributeName: [NSFont systemFontOfSize:menuTitleSize weight:NSFontWeightSemibold], NSParagraphStyleAttributeName: pstyle, NSForegroundColorAttributeName: [NSColor blackColor]}];
+            [text drawInRect:NSOffsetRect(rect, 0, menuTitleOffsetOutline) withAttributes:@{NSFontAttributeName: [NSFont systemFontOfSize:menuTitleSize weight:NSFontWeightSemibold], NSParagraphStyleAttributeName: pstyle, NSForegroundColorAttributeName: [NSColor blackColor]}];
         }
         else {
 
@@ -700,7 +702,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
             // Draw text.
             NSMutableParagraphStyle *pstyle = [NSMutableParagraphStyle new];
             pstyle.alignment = NSTextAlignmentCenter;
-            [text drawInRect:NSOffsetRect(deviceRect, 0, menuTitleOffset) withAttributes:@{NSFontAttributeName: [NSFont systemFontOfSize:fontSize weight:NSFontWeightBold], NSForegroundColorAttributeName: [NSColor blackColor], NSParagraphStyleAttributeName: pstyle}];
+            [text drawInRect:NSOffsetRect(deviceRect, 0, menuTitleOffsetSolid) withAttributes:@{NSFontAttributeName: [NSFont systemFontOfSize:fontSize weight:NSFontWeightBold], NSForegroundColorAttributeName: [NSColor blackColor], NSParagraphStyleAttributeName: pstyle}];
 
             // Switch back to the image's context.
             [NSGraphicsContext restoreGraphicsState];
