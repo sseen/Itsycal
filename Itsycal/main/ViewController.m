@@ -1232,7 +1232,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     }];
 
     // Observe NSUserDefaults for preference changes
-    for (NSString *keyPath in @[kShowEventDays, kUseOutlineIcon, kUseEmojiIcon, kUseEmojiIconHideFace, kShowMonthInIcon, kShowDayOfWeekInIcon, kHideIcon, kClockFormat, kShowCnLunar, kshowCnNationDays, kUseBigMenuFont]) {
+    for (NSString *keyPath in @[kShowEventDays, kUseOutlineIcon, kUseEmojiIcon, kUseEmojiIconHideFace, kShowMonthInIcon, kShowDayOfWeekInIcon, kHideIcon, kClockFormat, kShowCnLunar, kshowCnNationDays, kUseBigMenuFont, kShowCnLunarInIcon]) {
         [[NSUserDefaults standardUserDefaults] addObserver:self forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:NULL];
     }
 }
@@ -1254,7 +1254,8 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
              [keyPath isEqualToString:kShowMonthInIcon] ||
              [keyPath isEqualToString:kShowDayOfWeekInIcon] ||
              [keyPath isEqualToString:kHideIcon] ||
-             [keyPath isEqualToString:kUseBigMenuFont]) {
+             [keyPath isEqualToString:kUseBigMenuFont] ||
+             [keyPath isEqualToString:kShowCnLunarInIcon]) {
         [self updateMenubarIcon];
     }
     else if ([keyPath isEqualToString:kClockFormat]) {
