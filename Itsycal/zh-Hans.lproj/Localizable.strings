@@ -193,7 +193,7 @@ Please quit Swittee Calendar, move it to the Applications folder, and relaunch."
 请退出 Swittee Calendar，将其移动到应用程序文件夹，然后重新启动。";
 
 /* No comment provided by engineer. */
-"Keyboard shortcut" = "键盘快捷键";
+"Keyboard shortcut:" = "键盘快捷键：";
 
 /* No comment provided by engineer. */
 "Launch at login" = "登录时启动";
