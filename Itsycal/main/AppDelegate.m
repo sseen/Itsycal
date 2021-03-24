@@ -88,9 +88,9 @@
     // Having the user manually move Itsycal to /Applications turns off
     // Gatekeeper Path Randomization (introduced in 10.12) and allows
     // Itsycal to be updated with Sparkle. :P
-#ifndef DEBUG
-    [self checkIfRunFromApplicationsFolder];
-#endif
+//#ifndef DEBUG
+//    [self checkIfRunFromApplicationsFolder];
+//#endif
 
     // Initialize the 'Theme' global variable which can be
     // used throught the app instead of '[Themer shared]'.
