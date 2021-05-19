@@ -184,6 +184,9 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 - (void)viewWillAppear
 {
     [super viewWillAppear];
+    
+    self.view.window.opaque = false;
+    self.view.window.alphaValue = 0.99;
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     _btnPin.state = [defaults boolForKey:kPinItsycal] ? NSControlStateValueOn : NSControlStateValueOff;
