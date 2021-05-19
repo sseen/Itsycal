@@ -110,7 +110,7 @@
     CGFloat inset = 1;
     CGFloat radius = [[Sizer shared] cellRadius];
     if (self.isToday) {
-        [Theme.todayCellColor setFill];
+        [Theme.todayCellColor set];
         NSRect r = NSInsetRect(self.bounds, inset, inset);
         //[Theme.todayCellOutlineColor setStroke];
         //NSRect r = NSOffsetRect(r0, offsetx, offsety);
@@ -139,7 +139,7 @@
         CGFloat dotWidth = [[Sizer shared] cellDotWidth];
         CGFloat dotSpacing = 1.5*dotWidth;
         NSRect r = NSMakeRect(0, 0, dotWidth, dotWidth);
-        r.origin.y = self.bounds.origin.y + dotWidth - 2.5;
+        r.origin.y = self.bounds.origin.y + dotWidth - 4;
         if (self.dotColors.count == 0) {
             [self.textField.textColor set];
             r.origin.x = self.bounds.origin.x + sz/2.0 - dotWidth/2.0;
