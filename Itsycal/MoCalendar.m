@@ -391,7 +391,23 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             // date number big font, lunar string small font
             NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithString: lunarWithNewLine];
             // weekend color
-            if ((col == 0 || col == 6) && cell.isInCurrentMonth) {
+            // 根据星期开始于星期几来标记周末的颜色
+            // 0 1 56 7 - 2
+            // 1 2 45 7 - 3
+            // 2 3 34 7 - 4
+            // 3 4 23 7 - 5
+            // 4 5 12 7 - 6
+            // 5 6 01 7 - 7
+            // 6 7 60 7 - 1
+            int oneWeekend = 0;
+            int anotherWeekend = 6;
+            if (self.weekStartDOW != 0) {
+                oneWeekend =  7 - (int)self.weekStartDOW - 1;
+                anotherWeekend = oneWeekend + 1;
+            }
+            //NSLog(@"%ld, %ld, %ld, %d, %d",(long)self.weekStartDOW,COL_DOW(self.weekStartDOW, col), (long)col, oneWeekend, anotherWeekend);
+            
+            if ((col == oneWeekend || col == anotherWeekend) && cell.isInCurrentMonth) {
                 [self changeDateAndLunarColor:colorTitle dateString:dateString lunarWithNewLine:lunarWithNewLine color:Theme.currentMonthWeekEndText];
             }
             // 农历初一显示为月份
