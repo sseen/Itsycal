@@ -326,11 +326,12 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
         dows = @[@"D", @"L", @"M", @"M", @"Ĵ", @"V", @"S"];
     }
     for (NSInteger col = 0; col < 7; col++) {
-        NSString *dow = [NSString stringWithFormat:@"%@", dows[COL_DOW(self.weekStartDOW, col)]];
+        int dowInt = COL_DOW(self.weekStartDOW, col);
+        NSString *dow = [NSString stringWithFormat:@"%@", dows[dowInt]];
         [[_dowGrid.cells[col] textField] setStringValue:dow];
         NSColor *dowColor = Theme.DOWTextColor;
         // dow weekend font color
-        if (col == 0 || col == 6) {
+        if (dowInt == 0 || dowInt == 6) {
             dowColor = Theme.DOWWeekEndTextColor;
         }
         [[_dowGrid.cells[col] textField] setTextColor:dowColor];
@@ -392,6 +393,9 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithString: lunarWithNewLine];
             // weekend color
             // 根据星期开始于星期几来标记周末的颜色
+            // 目前看来完全没有必要了，找了已经有的方法了 COL_DOW(self.weekStartDOW, col)
+            
+            /*
             // 0 1 56 7 - 2
             // 1 2 45 7 - 3
             // 2 3 34 7 - 4
@@ -399,17 +403,20 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             // 4 5 12 7 - 6
             // 5 6 01 7 - 7
             // 6 7 60 7 - 1
-            int oneWeekend = 0;
-            int anotherWeekend = 6;
-            if (self.weekStartDOW != 0) {
-                oneWeekend =  7 - (int)self.weekStartDOW - 1;
-                anotherWeekend = oneWeekend + 1;
-            }
-            //NSLog(@"%ld, %ld, %ld, %d, %d",(long)self.weekStartDOW,COL_DOW(self.weekStartDOW, col), (long)col, oneWeekend, anotherWeekend);
+            // int oneWeekend = 0;
+            // int anotherWeekend = 6;
+            // if (self.weekStartDOW != 0) {
+            //     oneWeekend =  7 - (int)self.weekStartDOW - 1;
+            //     anotherWeekend = oneWeekend + 1;
+            // }
+            */
             
-            if ((col == oneWeekend || col == anotherWeekend) && cell.isInCurrentMonth) {
+            int dowInt = COL_DOW(self.weekStartDOW, col);
+            //NSLog(@"%ld, %ld, %ld, %d, %d",(long)self.weekStartDOW,COL_DOW(self.weekStartDOW, col), (long)col, oneWeekend, anotherWeekend);
+            if ((dowInt == 0 || dowInt == 6) && cell.isInCurrentMonth) {
                 [self changeDateAndLunarColor:colorTitle dateString:dateString lunarWithNewLine:lunarWithNewLine color:Theme.currentMonthWeekEndText];
             }
+            
             // 农历初一显示为月份
             if (lunarDay == 1 ) {
                 cell.lineLayer.hidden = false;
