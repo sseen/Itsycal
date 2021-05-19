@@ -73,7 +73,7 @@ NSString * const kSizeDidChangeNotification = @"SizeDidChangeNotification";
 }
 
 - (NSFont *)dowFont {
-    return [NSFont systemFontOfSize:[self dowFontSize] weight:NSFontWeightMedium];
+    return [NSFont systemFontOfSize:[self dowFontSize] weight:NSFontWeightRegular];
 }
 
 - (NSFont *)weekFont {
@@ -85,11 +85,11 @@ NSString * const kSizeDidChangeNotification = @"SizeDidChangeNotification";
 }
 
 - (NSFont *)dateLunarFont {
-    return [NSFont systemFontOfSize:[self dateLunarSize] weight:NSFontWeightMedium];
+    return [NSFont systemFontOfSize:[self dateLunarSize] weight:NSFontWeightRegular];
 }
 
 
 - (NSFont *)arialWithSize:(CGFloat)size {
-    return [NSFont fontWithName:@"Arial" size:size];
+    return  [NSFont systemFontOfSize:size];//[NSFont fontWithName:@"Arial" size:size];
 }
 @end
