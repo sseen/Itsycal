@@ -49,6 +49,7 @@
 		F851E0A625ADEDE200357B8F /* CNationDays.plist in Resources */ = {isa = PBXBuildFile; fileRef = F851E0A525ADEDE200357B8F /* CNationDays.plist */; };
 		F851E0AB25AE881A00357B8F /* SNPlister.m in Sources */ = {isa = PBXBuildFile; fileRef = F851E0AA25AE881A00357B8F /* SNPlister.m */; };
 		F8C3C24524BFD576007B2A65 /* NSImage+TintColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C3C24424BFD576007B2A65 /* NSImage+TintColor.m */; };
+		F8C804A62655614700284DE2 /* AgendaViewHolidayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C804A52655614700284DE2 /* AgendaViewHolidayCell.m */; };
 		F8CEDE5925B5966400EB14DE /* MoLoginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CEDE5825B5966400EB14DE /* MoLoginItem.m */; };
 		F8CEDE6025B5A37700EB14DE /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8CEDE5D25B5A35600EB14DE /* MASShortcut.framework */; };
 		F8CEDE6125B5A37700EB14DE /* MASShortcut.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8CEDE5D25B5A35600EB14DE /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -162,6 +163,8 @@
 		F851E0AA25AE881A00357B8F /* SNPlister.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SNPlister.m; sourceTree = "<group>"; };
 		F8C3C24324BFD575007B2A65 /* NSImage+TintColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+TintColor.h"; sourceTree = "<group>"; };
 		F8C3C24424BFD576007B2A65 /* NSImage+TintColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+TintColor.m"; sourceTree = "<group>"; };
+		F8C804A52655614700284DE2 /* AgendaViewHolidayCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AgendaViewHolidayCell.m; sourceTree = "<group>"; };
+		F8C804A72655616A00284DE2 /* AgendaViewHolidayCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AgendaViewHolidayCell.h; sourceTree = "<group>"; };
 		F8CEDE5725B5966400EB14DE /* MoLoginItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoLoginItem.h; sourceTree = "<group>"; };
 		F8CEDE5825B5966400EB14DE /* MoLoginItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoLoginItem.m; sourceTree = "<group>"; };
 		F8CEDE5D25B5A35600EB14DE /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = _frameworks/MASShortcut.framework; sourceTree = "<group>"; };
@@ -345,6 +348,8 @@
 				F8E3276425B2BA2E004894C6 /* SCUtils.m */,
 				F8CEDE5725B5966400EB14DE /* MoLoginItem.h */,
 				F8CEDE5825B5966400EB14DE /* MoLoginItem.m */,
+				F8C804A72655616A00284DE2 /* AgendaViewHolidayCell.h */,
+				F8C804A52655614700284DE2 /* AgendaViewHolidayCell.m */,
 			);
 			path = other;
 			sourceTree = "<group>";
@@ -481,6 +486,7 @@
 				925B471B1A93CD2A00E0329A /* TooltipViewController.m in Sources */,
 				F8E3276525B2BA2E004894C6 /* SCUtils.m in Sources */,
 				921E62D01E26B9D2007B029F /* PrefsAppearanceVC.m in Sources */,
+				F8C804A62655614700284DE2 /* AgendaViewHolidayCell.m in Sources */,
 				9242A5961A82BE5E005AA4B3 /* Itsycal.m in Sources */,
 				9242A5931A82A40B005AA4B3 /* MoCalendar.m in Sources */,
 				9242A5911A82A40B005AA4B3 /* MoCalCell.m in Sources */,
