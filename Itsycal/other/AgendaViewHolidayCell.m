@@ -46,13 +46,13 @@
 {
     // Convenience function for making labels.
     TagField* (^label)(void) = ^TagField* () {
-        TagField *lbl = [[TagField alloc] initWithFrame:NSMakeRect(10, 15, 30, 20)];
+        TagField *lbl = [[TagField alloc] initWithFrame:NSMakeRect(10, 15, 30, 16)];
         lbl.font = [NSFont systemFontOfSize:[[Sizer shared] dowFontSize]];
         [lbl setButtonType: NSButtonTypeMomentaryPushIn];
-        [lbl setBezelStyle:NSBezelStyleTexturedRounded];
+        [lbl setBezelStyle:NSBezelStyleTexturedSquare];
         lbl.enabled = true;
-        lbl.cornerRadius = 3;
-        [lbl setBordered:false];
+        lbl.cornerRadius = 10;
+//        [lbl setBordered:false];
         lbl.bgColor = NSColor.systemBlueColor;
         lbl.highlightColor = NSColor.systemBlueColor;
         lbl.foreColor = NSColor.whiteColor;
@@ -73,15 +73,17 @@
         
         [NSLayoutConstraint activateConstraints:@[
             [[_title topAnchor] constraintEqualToAnchor:self.topAnchor constant:2],
-            [_title.heightAnchor constraintEqualToConstant:20],
+            [_title.heightAnchor constraintEqualToConstant:16],
             [[_title leadingAnchor] constraintEqualToAnchor:self.leadingAnchor constant:10]
         ]];
         [NSLayoutConstraint activateConstraints:@[
             [[_info topAnchor] constraintEqualToAnchor:_title.topAnchor],
             [_info.heightAnchor constraintEqualToAnchor:_title.heightAnchor],
-            [[_title leadingAnchor] constraintEqualToAnchor:self.leadingAnchor constant:30]
+            [[_info leadingAnchor] constraintEqualToAnchor:_title.trailingAnchor constant:10]
         ]];
 
+//        [_title setContentCompressionResistancePriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
+//        [_info setContentCompressionResistancePriority:NSLayoutPriorityDefaultLow forOrientation:NSLayoutConstraintOrientationHorizontal];
     }
     return self;
 }

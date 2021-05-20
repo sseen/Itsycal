@@ -681,10 +681,10 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
         [_resizeHandle dim:YES];
     }
     else { // userData[area] == "dateGrid"
-//        _hoveredCell.isHovered = NO;
-//        _hoveredCell = nil;
-//        [_tooltipWC hideTooltip];
-//        [self setNeedsDisplay:YES];
+        _hoveredCell.isHovered = NO;
+        _hoveredCell = nil;
+        [_tooltipWC hideTooltip];
+        [self setNeedsDisplay:YES];
     }
 }
 
