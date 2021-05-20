@@ -15,10 +15,12 @@
 #import "Sizer.h"
 #import "MoCalCell.h"
 #import "SCUtils.h"
+#import "AgendaViewHolidayCell.h"
 
 static NSString *kColumnIdentifier    = @"Column";
 static NSString *kDateCellIdentifier  = @"DateCell";
 static NSString *kEventCellIdentifier = @"EventCell";
+static NSString *kHolidayCellIdentifier = @"HolidayCell";
 
 @interface ThemedScroller : NSScroller
 @end
@@ -290,13 +292,8 @@ static NSString *kEventCellIdentifier = @"EventCell";
     id obj = self.events[row];
     
     if ([obj isKindOfClass:[NSNumber class]]) {
-        AgendaEventCell *cell = [_tv makeViewWithIdentifier:kEventCellIdentifier owner:self];
-        if (!cell) cell = [AgendaEventCell new];
-        
-        // clear style 清理样式
-        cell.eventInfo = _cnNationEI;
-        cell.locationTextField.stringValue = @"";
-        cell.durationTextField.stringValue = @"";
+        AgendaViewHolidayCell *cell = [_tv makeViewWithIdentifier:kHolidayCellIdentifier owner:self];
+        if (!cell) cell = [AgendaViewHolidayCell new];
         
         NSColor *nationColor = Theme.cnWork;
         NSString *nationStr = @"班";
@@ -305,16 +302,37 @@ static NSString *kEventCellIdentifier = @"EventCell";
         if ([obj intValue] == KCNATIONSTATUSrelax) {
             nationStr = @"休";
             nationColor = Theme.cnRelax;
-            // nationStrColor = NSColor.whiteColor;
         }
-        nationStr = [NSString stringWithFormat:@"%@ %@",nationStr, SCUtils.holidayName];
-        NSMutableAttributedString *maStr = [[NSMutableAttributedString alloc] initWithString:nationStr];
-        [maStr addAttributes:@{NSBackgroundColorAttributeName:nationColor,NSForegroundColorAttributeName:nationStrColor} range:NSMakeRange(0,1)];
-        [maStr addAttributes:@{NSBackgroundColorAttributeName:nationColor,NSForegroundColorAttributeName:nationStrColor} range:NSMakeRange(2,nationStr.length-2)];
-        cell.titleTextField.attributedStringValue = maStr;
-        cell.eventInfo.event.calendar.color = nationColor;
+        
+        [cell setTitleName:nationStr bgColor:nationColor];
+        [cell setInfoName:SCUtils.holidayName bgColor:nationColor];
         
         v = cell;
+//        AgendaEventCell *cell = [_tv makeViewWithIdentifier:kEventCellIdentifier owner:self];
+//        if (!cell) cell = [AgendaEventCell new];
+//
+//        // clear style 清理样式
+//        cell.eventInfo = _cnNationEI;
+//        cell.locationTextField.stringValue = @"";
+//        cell.durationTextField.stringValue = @"";
+//
+//        NSColor *nationColor = Theme.cnWork;
+//        NSString *nationStr = @"班";
+//        NSColor *nationStrColor = [NSColor colorWithRed:0 green:0 blue:0 alpha:0.85];
+//        nationStrColor = NSColor.whiteColor;
+//        if ([obj intValue] == KCNATIONSTATUSrelax) {
+//            nationStr = @"休";
+//            nationColor = Theme.cnRelax;
+//            // nationStrColor = NSColor.whiteColor;
+//        }
+//        nationStr = [NSString stringWithFormat:@"%@ %@",nationStr, SCUtils.holidayName];
+//        NSMutableAttributedString *maStr = [[NSMutableAttributedString alloc] initWithString:nationStr];
+//        [maStr addAttributes:@{NSBackgroundColorAttributeName:nationColor,NSForegroundColorAttributeName:nationStrColor} range:NSMakeRange(0,1)];
+//        [maStr addAttributes:@{NSBackgroundColorAttributeName:nationColor,NSForegroundColorAttributeName:nationStrColor} range:NSMakeRange(2,nationStr.length-2)];
+//        cell.titleTextField.attributedStringValue = maStr;
+//        cell.eventInfo.event.calendar.color = nationColor;
+//
+//        v = cell;
     } else if ([obj isKindOfClass:[NSDate class]]) {
         AgendaDateCell *cell = [_tv makeViewWithIdentifier:kDateCellIdentifier owner:self];
         if (cell == nil) cell = [AgendaDateCell new];

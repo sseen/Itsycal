@@ -16,7 +16,8 @@
 
 @property (nonatomic) TagField *title;
 @property (nonatomic) TagField *info;
-
+- (void)setInfoName:(NSString *)str bgColor:(NSColor *)color;
+- (void)setTitleName:(NSString *)str bgColor:(NSColor *)color;
 @end
 
 #endif /* AgendaViewHolidayCell_h */
