@@ -51,8 +51,9 @@
         [lbl setButtonType: NSButtonTypeMomentaryPushIn];
         [lbl setBezelStyle:NSBezelStyleTexturedSquare];
         lbl.enabled = true;
-        lbl.cornerRadius = 10;
-//        [lbl setBordered:false];
+        lbl.cornerRadius = 4;
+        // 这里设置后，按钮的背景尺寸会变小
+        // [lbl setBordered:false];
         lbl.bgColor = NSColor.systemBlueColor;
         lbl.highlightColor = NSColor.systemBlueColor;
         lbl.foreColor = NSColor.whiteColor;
