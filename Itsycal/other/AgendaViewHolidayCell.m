@@ -49,11 +49,14 @@
         TagField *lbl = [[TagField alloc] initWithFrame:NSMakeRect(10, 15, 30, 16)];
         lbl.font = [NSFont systemFontOfSize:[[Sizer shared] dowFontSize]];
         [lbl setButtonType: NSButtonTypeMomentaryPushIn];
-        [lbl setBezelStyle:NSBezelStyleTexturedSquare];
+        // 加上border之后，texture效果里文字部分还是会有灰色的背景
+        // 去掉boder，整个按钮轮廓缩小
+        // 调整整体按钮大小来平衡
+        [lbl setBezelStyle:NSBezelStyleTexturedSquare];//NSBezelStyleShadowlessSquare效果一样，就是必须去掉 border
         lbl.enabled = true;
-        lbl.cornerRadius = 4;
+        lbl.cornerRadius = 2;
         // 这里设置后，按钮的背景尺寸会变小
-        // [lbl setBordered:false];
+        [lbl setBordered:false];
         lbl.bgColor = NSColor.systemBlueColor;
         lbl.highlightColor = NSColor.systemBlueColor;
         lbl.foreColor = NSColor.whiteColor;
@@ -74,7 +77,7 @@
         
         [NSLayoutConstraint activateConstraints:@[
             [[_title topAnchor] constraintEqualToAnchor:self.topAnchor constant:2],
-            [_title.heightAnchor constraintEqualToConstant:16],
+            [_title.heightAnchor constraintEqualToConstant:20],
             [[_title leadingAnchor] constraintEqualToAnchor:self.leadingAnchor constant:10]
         ]];
         [NSLayoutConstraint activateConstraints:@[
