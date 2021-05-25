@@ -27,6 +27,11 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 @property (nonatomic, strong) NSImage *cornerImage;
 @end
 
+
+@interface ColorOverlayView : NSView
+
+@end
+
 #pragma mark -
 #pragma mark ItsycalWindow
 
@@ -93,8 +98,11 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     if (!_vibrant) {
 //        [_vibrant removeFromSuperview];
 //        _vibrant = nil;
+        ColorOverlayView *colorView = [ColorOverlayView new];
+        colorView.translatesAutoresizingMaskIntoConstraints = false;
         _vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSMakeRect(0, 0, 2, 2)];
         _vibrant.translatesAutoresizingMaskIntoConstraints = NO;
+        _vibrant.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
         _vibrant.material = NSVisualEffectMaterialHUDWindow;
         [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
         [frameView addSubview:_vibrant];// positioned:NSWindowBelow relativeTo:nil];
@@ -323,6 +331,20 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     NSLog(@"** %@,%@", NSStringFromRect(self.bounds),NSStringFromSize(newSize));
     [super setFrameSize:newSize];
     [self invalidateCornerImage];
+}
+
+@end
+
+
+@implementation ColorOverlayView
+
+- (void)drawRect:(NSRect)dirtyRect {
+    [NSColor.clearColor setFill];
+    NSRectFill(dirtyRect);
+}
+
+- (BOOL)allowsVibrancy {
+    return  true;
 }
 
 @end
