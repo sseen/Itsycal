@@ -54,7 +54,7 @@
         // 调整整体按钮大小来平衡
         [lbl setBezelStyle:NSBezelStyleTexturedSquare];//NSBezelStyleShadowlessSquare效果一样，就是必须去掉 border
         lbl.enabled = true;
-        lbl.cornerRadius = 2;
+        lbl.cornerRadius = 4;
         // 这里设置后，按钮的背景尺寸会变小
         [lbl setBordered:false];
         lbl.bgColor = NSColor.systemBlueColor;

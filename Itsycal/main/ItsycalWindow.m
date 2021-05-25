@@ -51,6 +51,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
         [self setCollectionBehavior:NSWindowCollectionBehaviorMoveToActiveSpace];
         // Fade out when -[NSWindow orderOut:] is called.
         [self setAnimationBehavior:NSWindowAnimationBehaviorUtilityWindow];
+        //self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
     }
     return self;
 }
@@ -94,7 +95,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 //        _vibrant = nil;
         _vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSMakeRect(0, 0, 2, 2)];
         _vibrant.translatesAutoresizingMaskIntoConstraints = NO;
-        _vibrant.material = NSVisualEffectMaterialPopover;
+        _vibrant.material = NSVisualEffectMaterialHUDWindow;
         [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
         [frameView addSubview:_vibrant];// positioned:NSWindowBelow relativeTo:nil];
         [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_vibrant]|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
