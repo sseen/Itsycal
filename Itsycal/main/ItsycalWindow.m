@@ -52,8 +52,30 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
         // Fade out when -[NSWindow orderOut:] is called.
         [self setAnimationBehavior:NSWindowAnimationBehaviorUtilityWindow];
         //self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+        [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(interfaceModeChanged:) name:@"AppleInterfaceThemeChangedNotification" object:nil];
     }
     return self;
+}
+
++ (BOOL)isDarkMode {
+    NSAppearance *appearance = NSAppearance.currentAppearance;
+    if (@available(*, macOS 10.14)) {
+        return appearance.name == NSAppearanceNameDarkAqua;
+    }
+
+    return NO;
+}
+
+// 貌似增加了vibrant效果没有很好
+// 而且window reload 也貌似没有执行
+// 先去掉好了
+- (void)interfaceModeChanged:(NSNotification *)sender {
+//    if ([ItsycalWindow isDarkMode]) {
+//        self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+//    } else {
+//        self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+//    }
+//    [self viewsNeedDisplay];
 }
 
 - (BOOL)canBecomeMainWindow
