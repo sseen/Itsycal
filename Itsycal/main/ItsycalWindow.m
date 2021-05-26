@@ -295,7 +295,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     _cornerImage = [[NSImage alloc] initWithSize:self.bounds.size];
     [_cornerImage lockFocus];
 
-//    rect = NSMakeRect(0, 0, 300, 300);
+//    rect = NSMakeRect(20, 20, 200, 200);
     NSLog(@"%@,%f", NSStringFromRect(rect),_arrowMidX);
 
 
@@ -324,8 +324,9 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
         [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, -kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, -kArrowHeight)];
         [rectPath appendBezierPath:arrowPath];
     }
-//    [Theme.windowBorderColor setStroke];
-//    [rectPath setLineWidth:0*kBorderWidth];
+    //[Theme.windowBorderColor setStroke];
+//    [NSColor.whiteColor setStroke];
+//    [rectPath setLineWidth:1*kBorderWidth];
 //    [rectPath stroke];
 //    [NSColor.whiteColor setFill]; //278打开的话这个必须有 [[NSColor clearColor] set];
     [rectPath addClip];
@@ -338,12 +339,15 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 
 - (void)viewDidMoveToSuperview {
     [super viewDidMoveToSuperview];
+//    self.maskImage = [NSImage imageWithSystemSymbolName:@"hammer.fill" accessibilityDescription:nil];
     [self invalidateCornerImage];
 }
 
 - (void)setFrameSize:(NSSize)newSize {
     NSLog(@"** %@,%@", NSStringFromRect(self.bounds),NSStringFromSize(newSize));
-    [super setFrameSize:newSize];
+    [super setFrameSize: newSize];
+    self.translatesAutoresizingMaskIntoConstraints = false;
+//    self.maskImage = [NSImage imageWithSystemSymbolName:@"hammer.fill" accessibilityDescription:nil];
     [self invalidateCornerImage];
 }
 
