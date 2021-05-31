@@ -57,8 +57,16 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
         // Fade out when -[NSWindow orderOut:] is called.
         [self setAnimationBehavior:NSWindowAnimationBehaviorUtilityWindow];
         //self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+        
+        [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(darkModeChanged:) name:@"AppleInterfaceThemeChangedNotification" object:nil];
     }
     return self;
+}
+
+-(void)darkModeChanged:(NSNotification *)notif
+{
+    NSLog(@"Dark mode changed"); // set Appearance to the right theme here?
+    [self displayIfNeeded];
 }
 
 - (BOOL)canBecomeMainWindow
@@ -102,7 +110,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
         colorView.translatesAutoresizingMaskIntoConstraints = false;
         _vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSMakeRect(0, 0, 2, 2)];
         _vibrant.translatesAutoresizingMaskIntoConstraints = NO;
-        _vibrant.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+//        _vibrant.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
         _vibrant.material = NSVisualEffectMaterialHUDWindow;
         [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
         [frameView addSubview:_vibrant];// positioned:NSWindowBelow relativeTo:nil];
