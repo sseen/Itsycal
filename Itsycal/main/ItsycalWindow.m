@@ -57,16 +57,30 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
         // Fade out when -[NSWindow orderOut:] is called.
         [self setAnimationBehavior:NSWindowAnimationBehaviorUtilityWindow];
         //self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
-        
-        [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(darkModeChanged:) name:@"AppleInterfaceThemeChangedNotification" object:nil];
+        [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(interfaceModeChanged:) name:@"AppleInterfaceThemeChangedNotification" object:nil];
     }
     return self;
 }
 
--(void)darkModeChanged:(NSNotification *)notif
-{
-    NSLog(@"Dark mode changed"); // set Appearance to the right theme here?
-    [self displayIfNeeded];
++ (BOOL)isDarkMode {
+    NSAppearance *appearance = NSAppearance.currentAppearance;
+    if (@available(*, macOS 10.14)) {
+        return appearance.name == NSAppearanceNameDarkAqua;
+    }
+
+    return NO;
+}
+
+// 貌似增加了vibrant效果没有很好
+// 而且window reload 也貌似没有执行
+// 先去掉好了
+- (void)interfaceModeChanged:(NSNotification *)sender {
+//    if ([ItsycalWindow isDarkMode]) {
+//        self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+//    } else {
+//        self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+//    }
+//    [self viewsNeedDisplay];
 }
 
 - (BOOL)canBecomeMainWindow
@@ -289,7 +303,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     _cornerImage = [[NSImage alloc] initWithSize:self.bounds.size];
     [_cornerImage lockFocus];
 
-//    rect = NSMakeRect(0, 0, 300, 300);
+//    rect = NSMakeRect(20, 20, 200, 200);
     NSLog(@"%@,%f", NSStringFromRect(rect),_arrowMidX);
 
 
@@ -318,8 +332,9 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
         [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, -kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, -kArrowHeight)];
         [rectPath appendBezierPath:arrowPath];
     }
-//    [Theme.windowBorderColor setStroke];
-//    [rectPath setLineWidth:0*kBorderWidth];
+    //[Theme.windowBorderColor setStroke];
+//    [NSColor.whiteColor setStroke];
+//    [rectPath setLineWidth:1*kBorderWidth];
 //    [rectPath stroke];
 //    [NSColor.whiteColor setFill]; //278打开的话这个必须有 [[NSColor clearColor] set];
     [rectPath addClip];
@@ -332,12 +347,15 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 
 - (void)viewDidMoveToSuperview {
     [super viewDidMoveToSuperview];
+//    self.maskImage = [NSImage imageWithSystemSymbolName:@"hammer.fill" accessibilityDescription:nil];
     [self invalidateCornerImage];
 }
 
 - (void)setFrameSize:(NSSize)newSize {
     NSLog(@"** %@,%@", NSStringFromRect(self.bounds),NSStringFromSize(newSize));
-    [super setFrameSize:newSize];
+    [super setFrameSize: newSize];
+    self.translatesAutoresizingMaskIntoConstraints = false;
+//    self.maskImage = [NSImage imageWithSystemSymbolName:@"hammer.fill" accessibilityDescription:nil];
     [self invalidateCornerImage];
 }
 
