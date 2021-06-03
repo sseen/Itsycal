@@ -25,13 +25,28 @@ static CGFloat kToolipWindowWidth = 200;
 @implementation MoCalToolTipWC
 {
     NSTimer *_fadeTimer;
+    NSVisualEffectView *visualView;
     NSRect   _positioningRect;
     NSRect   _screenFrame;
 }
 
 - (instancetype)init
 {
-    return [super initWithWindow:[MoCalTooltipWindow new]];
+    self = [super initWithWindow:[MoCalTooltipWindow new]];
+    
+    
+    visualView = [[NSVisualEffectView alloc] initWithFrame:NSZeroRect];
+    visualView.maskImage = [self maskImage:4];
+    visualView.material = NSVisualEffectMaterialPopover;
+    visualView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
+    visualView.state = NSVisualEffectStateActive;
+    
+    // 空白view
+    // 加上这个view 放在 visualeffect 后面
+    // 使 effect 起作用
+    //[self.window.contentView  addSubview:visualView positioned:NSWindowBelow relativeTo:nil];
+    
+    return self;
 }
 
 - (void)showTooltipForDate:(MoDate)date relativeToRect:(NSRect)rect screenFrame:(NSRect)screenFrame
@@ -69,6 +84,24 @@ static CGFloat kToolipWindowWidth = 200;
         frame.origin.x = screenMaxX - NSWidth(frame) - 5;
     }
     [self.window setFrame:frame display:YES animate:NO];
+    
+    visualView.frame = NSInsetRect((NSRect){0, 0,  frame.size}, 1, 1);
+    [self.window.contentView  addSubview:visualView positioned:NSWindowBelow relativeTo:nil];
+}
+
+- (NSImage *)maskImage:(CGFloat)cornerRadius {
+    CGFloat edgeLength = 2.0 * cornerRadius + 1.0;
+    NSImage *img = [NSImage imageWithSize:NSMakeSize(edgeLength, edgeLength) flipped:false drawingHandler:^BOOL(NSRect dstRect) {
+        NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:dstRect xRadius:cornerRadius yRadius:cornerRadius];
+        [NSColor.redColor set];
+        [path fill];
+        return true;
+    }];
+    
+    img.capInsets = NSEdgeInsetsMake(cornerRadius, cornerRadius, cornerRadius, cornerRadius);
+    img.resizingMode = NSImageResizingModeStretch;
+    
+    return img;
 }
 
 - (void)showTooltip
@@ -80,6 +113,7 @@ static CGFloat kToolipWindowWidth = 200;
 
 - (void)endTooltip
 {
+    [visualView removeFromSuperview];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showTooltip) object:nil];
     [_fadeTimer invalidate];
     _fadeTimer = nil;
