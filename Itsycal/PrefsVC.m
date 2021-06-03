@@ -33,6 +33,26 @@
     self.view = [NSView new];
 }
 
+- (void)makeWindowBlur {
+    
+    // 这里可以不设置
+    // 打开后就是可以使window的背景透明
+    // self.view.window.contentView.wantsLayer = true;
+    // self.view.window.backgroundColor = [NSColor.purpleColor colorWithAlphaComponent:0.2];
+    // self.view.window.opaque = false;
+    // [self.view.window makeKeyAndOrderFront:nil];
+    // [self.view.window makeKeyWindow];
+    
+    self.view.window.styleMask |= NSWindowStyleMaskFullSizeContentView;
+    
+    self.view.window.titlebarAppearsTransparent = true;
+    NSVisualEffectView *visualView = [[NSVisualEffectView alloc] initWithFrame:NSMakeRect(0, 0, self.view.window.contentView.frame.size.width, self.view.window.contentView.frame.size.height)];
+    visualView.material = NSVisualEffectMaterialHUDWindow;
+    visualView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
+    visualView.state = NSVisualEffectStateActive;
+    [self.view.window.contentView  addSubview:visualView positioned:NSWindowBelow relativeTo:nil];
+}
+
 - (void)viewDidAppear
 {
     [super viewDidAppear];
@@ -48,19 +68,7 @@
         self.view.window.toolbar = _toolbar;
         if (@available(macOS 11.0, *)) {
             self.view.window.toolbarStyle = NSWindowToolbarStylePreference;
-            
-            self.view.window.contentView.wantsLayer = true;
-            self.view.window.backgroundColor = [NSColor.purpleColor colorWithAlphaComponent:0.2];
-            self.view.window.opaque = false;
-            [self.view.window makeKeyAndOrderFront:nil];
-            [self.view.window makeKeyWindow];
-            
-            self.view.window.titlebarAppearsTransparent = true;
-            NSVisualEffectView *visualView = [[NSVisualEffectView alloc] initWithFrame:NSMakeRect(0, 0, self.view.window.contentView.frame.size.width, self.view.window.contentView.frame.size.height)];
-            visualView.material = NSVisualEffectMaterialHUDWindow;
-            visualView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
-            visualView.state = NSVisualEffectStateActive;
-            [self.view.window.contentView addSubview: visualView];
+            [self makeWindowBlur];
         }
     }
 }
@@ -135,9 +143,10 @@
     NSViewController *toVC = [self viewControllerForItemIdentifier:item.itemIdentifier];
     if (toVC) {
 
-        if (self.view.subviews[0] == toVC.view) return;
+        if (self.view.subviews[1] == toVC.view) return;
 
         NSWindow *window = self.view.window;
+        NSView *blurView = self.view.subviews[0];
         NSRect contentRect = (NSRect){0, 0, toVC.view.fittingSize};
         NSRect contentFrame = [window frameRectForContentRect:contentRect];
         CGFloat windowHeightDelta = window.frame.size.height - contentFrame.size.height;
@@ -152,9 +161,10 @@
             [context setDuration:animated ? 0.2 : 0];
             [window.animator setFrame:newFrame display:NO];
             [toVC.view.animator setAlphaValue:1];
-            [self.view.subviews[0].animator setAlphaValue:0];
+            [blurView.animator setFrame:newFrame];
+            [self.view.subviews[1].animator setAlphaValue:0];
         } completionHandler:^{
-            [self.view.subviews[0] removeFromSuperview];
+            [self.view.subviews[1] removeFromSuperview];
         }];
     }
 }
