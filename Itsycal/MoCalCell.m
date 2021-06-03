@@ -139,7 +139,7 @@
         CGFloat dotWidth = [[Sizer shared] cellDotWidth];
         CGFloat dotSpacing = 1.5*dotWidth;
         NSRect r = NSMakeRect(0, 0, dotWidth, dotWidth);
-        r.origin.y = self.bounds.origin.y ;//+ dotWidth - 4;
+        r.origin.y = self.bounds.origin.y + 1;//+ dotWidth - 4;
         if (self.dotColors.count == 0) {
             [self.textField.textColor set];
             r.origin.x = self.bounds.origin.x + sz/2.0 - dotWidth/2.0;
@@ -208,6 +208,8 @@
     [[NSBezierPath bezierPathWithOvalInRect:r] fill];
 }
 
+/// 添加阴影
+/// 或者添加 border
 - (void)dotColorShadow:(NSColor *)dotColor rect:(NSRect)r {
     NSColor *shadowColor = [dotColor colorWithAlphaComponent:0.5];
     
@@ -223,20 +225,20 @@
     [path setClip];
 
     // Create and stroke the shadow
-    NSShadow * shadow = [[NSShadow alloc] init];
-    [shadow setShadowColor:shadowColor];
-    [shadow setShadowOffset: CGSizeMake(0.1, -0.1)]; //
-    [shadow setShadowBlurRadius: 1]; // 10
-    [shadow set];
-    [path stroke];
+//    NSShadow * shadow = [[NSShadow alloc] init];
+//    [shadow setShadowColor:shadowColor];
+//    [shadow setShadowOffset: CGSizeMake(0.1, -0.1)]; //
+//    [shadow setShadowBlurRadius: 1]; // 10
+//    [shadow set];
+//    [path stroke];
 
     // Restore the graphics state
     [NSGraphicsContext restoreGraphicsState];
 
     // Add a nice stroke for a border
-    [path setLineWidth:1.0];
-    [[NSColor grayColor] set];
-    [path stroke];
+//    [path setLineWidth:1.0];
+//    [shadowColor set];
+//    [path stroke];
 }
 
 @end
