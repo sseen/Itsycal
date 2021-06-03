@@ -6,6 +6,7 @@
 #import "PrefsVC.h"
 #import "NSImage+TintColor.h"
 #import "SNToolbarItem.h"
+#import <CoreImage/CoreImage.h>
 
 @implementation PrefsVC
 {
@@ -35,12 +36,57 @@
 - (void)viewDidAppear
 {
     [super viewDidAppear];
+    
+//    let visualEffectView = NSVisualEffectView(frame: NSMakeRect(0, 0, 0, 0))//<---the width and height is set to 0, as this doesn't matter.
+//    visualEffectView.material = NSVisualEffectMaterial.AppearanceBased//Dark,MediumLight,PopOver,UltraDark,AppearanceBased,Titlebar,Menu
+//    visualEffectView.blendingMode = NSVisualEffectBlendingMode.BehindWindow//I think if you set this to WithinWindow you get the effect safari has in its TitleBar. It should have an Opaque background behind it or else it will not work well
+//    visualEffectView.state = NSVisualEffectState.Active//FollowsWindowActiveState,Inactive
+//    self.contentView = visualEffectView/*you can also add the visualEffectView to the contentview, just add some width and height to the visualEffectView, you also need to flip the view if you like to work from TopLeft, do this through subclassing*/
+//    [self.view.window.contentView addSubview: visualView];
+    
     if (self.view.window.toolbar == nil) {
         self.view.window.toolbar = _toolbar;
         if (@available(macOS 11.0, *)) {
             self.view.window.toolbarStyle = NSWindowToolbarStylePreference;
+            
+            self.view.window.contentView.wantsLayer = true;
+            self.view.window.backgroundColor = [NSColor.purpleColor colorWithAlphaComponent:0.2];
+            self.view.window.opaque = false;
+            [self.view.window makeKeyAndOrderFront:nil];
+            [self.view.window makeKeyWindow];
+            
+            self.view.window.titlebarAppearsTransparent = true;
+            NSVisualEffectView *visualView = [[NSVisualEffectView alloc] initWithFrame:NSMakeRect(0, 0, self.view.window.contentView.frame.size.width, self.view.window.contentView.frame.size.height)];
+            visualView.material = NSVisualEffectMaterialHUDWindow;
+            visualView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
+            visualView.state = NSVisualEffectStateActive;
+            [self.view.window.contentView addSubview: visualView];
         }
     }
+}
+
+- (void)blurView:(NSView *)view
+{
+    NSView *blurView = [[NSView alloc] initWithFrame:view.bounds];
+    blurView.wantsLayer = YES;
+    blurView.layer.backgroundColor = [NSColor clearColor].CGColor;
+    blurView.layer.masksToBounds = YES;
+    blurView.layerUsesCoreImageFilters = YES;
+    blurView.layer.needsDisplayOnBoundsChange = YES;
+
+    CIFilter *saturationFilter = [CIFilter filterWithName:@"CIColorControls"];
+    [saturationFilter setDefaults];
+    [saturationFilter setValue:@2.0 forKey:@"inputSaturation"];
+
+    CIFilter *blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"]; // Other blur types are available
+    [blurFilter setDefaults];
+    [blurFilter setValue:@2.0 forKey:@"inputRadius"];
+
+    blurView.layer.backgroundFilters = @[saturationFilter, blurFilter];
+
+    [view addSubview:blurView];
+
+    [blurView.layer setNeedsDisplay];
 }
 
 - (void)showAbout
