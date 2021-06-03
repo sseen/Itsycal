@@ -211,7 +211,7 @@
 /// 添加阴影
 /// 或者添加 border
 - (void)dotColorShadow:(NSColor *)dotColor rect:(NSRect)r {
-    NSColor *shadowColor = [dotColor colorWithAlphaComponent:0.5];
+//    NSColor *shadowColor = [dotColor colorWithAlphaComponent:0.5];
     
     [dotColor set];
     NSBezierPath *path = [NSBezierPath bezierPathWithOvalInRect:r];
