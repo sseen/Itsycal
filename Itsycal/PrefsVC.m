@@ -33,6 +33,7 @@
     self.view = [NSView new];
 }
 
+
 - (void)makeWindowBlur {
     
     // 这里可以不设置
@@ -47,22 +48,23 @@
     
     self.view.window.titlebarAppearsTransparent = true;
     NSVisualEffectView *visualView = [[NSVisualEffectView alloc] initWithFrame:NSMakeRect(0, 0, self.view.window.contentView.frame.size.width, self.view.window.contentView.frame.size.height)];
+    [visualView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
     visualView.material = NSVisualEffectMaterialHUDWindow;
     visualView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
     visualView.state = NSVisualEffectStateActive;
-    [self.view.window.contentView  addSubview:visualView positioned:NSWindowBelow relativeTo:nil];
+    
+    // 空白view
+    // 加上这个view 放在 visualeffect 后面
+    // 使 effect 起作用
+    NSView *bgview = [NSView new];
+    bgview.frame = visualView.frame;
+    [self.view.window.contentView  addSubview:visualView positioned:NSWindowBelow relativeTo:self.view];
+    [self.view.window.contentView addSubview:bgview positioned:NSWindowBelow relativeTo:self.view];
 }
 
 - (void)viewDidAppear
 {
     [super viewDidAppear];
-    
-//    let visualEffectView = NSVisualEffectView(frame: NSMakeRect(0, 0, 0, 0))//<---the width and height is set to 0, as this doesn't matter.
-//    visualEffectView.material = NSVisualEffectMaterial.AppearanceBased//Dark,MediumLight,PopOver,UltraDark,AppearanceBased,Titlebar,Menu
-//    visualEffectView.blendingMode = NSVisualEffectBlendingMode.BehindWindow//I think if you set this to WithinWindow you get the effect safari has in its TitleBar. It should have an Opaque background behind it or else it will not work well
-//    visualEffectView.state = NSVisualEffectState.Active//FollowsWindowActiveState,Inactive
-//    self.contentView = visualEffectView/*you can also add the visualEffectView to the contentview, just add some width and height to the visualEffectView, you also need to flip the view if you like to work from TopLeft, do this through subclassing*/
-//    [self.view.window.contentView addSubview: visualView];
     
     if (self.view.window.toolbar == nil) {
         self.view.window.toolbar = _toolbar;
@@ -143,10 +145,9 @@
     NSViewController *toVC = [self viewControllerForItemIdentifier:item.itemIdentifier];
     if (toVC) {
 
-        if (self.view.subviews[1] == toVC.view) return;
+        if (self.view.subviews[2] == toVC.view) return;
 
         NSWindow *window = self.view.window;
-        NSView *blurView = self.view.subviews[0];
         NSRect contentRect = (NSRect){0, 0, toVC.view.fittingSize};
         NSRect contentFrame = [window frameRectForContentRect:contentRect];
         CGFloat windowHeightDelta = window.frame.size.height - contentFrame.size.height;
@@ -159,12 +160,13 @@
 
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
             [context setDuration:animated ? 0.2 : 0];
-            [window.animator setFrame:newFrame display:NO];
+            [window.animator setFrame:newFrame display:false];
             [toVC.view.animator setAlphaValue:1];
-            [blurView.animator setFrame:newFrame];
-            [self.view.subviews[1].animator setAlphaValue:0];
+            // 所有的view都加在 visualeffectview 上面
+            // 所以index是2
+            [self.view.subviews[2].animator setAlphaValue:0];
         } completionHandler:^{
-            [self.view.subviews[1] removeFromSuperview];
+            [self.view.subviews[2] removeFromSuperview];
         }];
     }
 }
