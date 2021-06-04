@@ -117,7 +117,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:nil views:NSDictionaryOfVariableBindings(_moCal, _btnExit, _btnAdd, _btnCal, _btnOpt, _btnPin, agenda)];
     [vfl :@"H:|[_moCal]|"];
     [vfl :@"H:|-4-[agenda]-4-|"];
-    [vfl :@"H:|-6-[_btnExit]-(>=0)-[_btnPin]-10-[_btnAdd]-10-[_btnCal]-10-[_btnOpt]-6-|" :NSLayoutFormatAlignAllCenterY];
+    [vfl :@"H:|-10-[_btnExit]-(>=0)-[_btnPin]-10-[_btnAdd]-10-[_btnCal]-10-[_btnOpt]-10-|" :NSLayoutFormatAlignAllCenterY];
     [vfl :@"V:|[_moCal]-6-[_btnOpt]"];
     [vfl :@"V:[agenda]-(-1)-|"];
     

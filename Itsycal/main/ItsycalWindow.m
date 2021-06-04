@@ -11,7 +11,7 @@
 
 static const CGFloat kMinimumSpaceBetweenWindowAndScreenEdge = 10;
 static const CGFloat kArrowHeight  = 8;
-static const CGFloat kCornerRadius = 10;
+static const CGFloat kCornerRadius = 8;
 static const CGFloat kBorderWidth  = 1;
 static const CGFloat kMarginWidth  = 2;
 static const CGFloat kWindowTopMargin    = kCornerRadius + kBorderWidth + kArrowHeight;
@@ -118,14 +118,13 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     
     // blur
     if (!_vibrant) {
-//        [_vibrant removeFromSuperview];
-//        _vibrant = nil;
+        
         ColorOverlayView *colorView = [ColorOverlayView new];
         colorView.translatesAutoresizingMaskIntoConstraints = false;
         _vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSMakeRect(0, 0, 2, 2)];
         _vibrant.translatesAutoresizingMaskIntoConstraints = NO;
-//        _vibrant.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
-        _vibrant.material = NSVisualEffectMaterialHUDWindow;
+        // _vibrant.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+        _vibrant.material = NSVisualEffectMaterialPopover;
         [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
         [frameView addSubview:_vibrant];// positioned:NSWindowBelow relativeTo:nil];
         [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_vibrant]|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
@@ -220,50 +219,50 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     
     // The rectangular part of frame view must be inset and
     // shortened to make room for the border and arrow.
-//    NSRect rect = NSInsetRect(self.bounds, kBorderWidth, kBorderWidth);
-//    rect.size.height -= kArrowHeight;
-//
-//    NSLog(@"———— %@,%f", NSStringFromRect(rect),_arrowMidX);
-//
-//    // Do we need to draw the whole window?
-//    // If dirtyRect is inside the body of the window, we can just fill it.
-//    NSRect bodyRect = NSInsetRect(rect, 1, kCornerRadius);
-//    if (NSContainsRect(bodyRect, dirtyRect)) {
-////        [Theme.mainBackgroundColor setFill];
-//        NSRectFill(dirtyRect);
-//        return;
-//    }
-//
-//    // We need to draw the whole window.
-//
-//    [[NSColor clearColor] set];
-//    NSRectFill(self.bounds);
-//
-//    NSBezierPath *rectPath = [NSBezierPath bezierPathWithRoundedRect:rect xRadius:kCornerRadius yRadius:kCornerRadius];
-//
-//    // Append the arrow to the body if its right ege is inside
-//    // the right edge of the body (taking into account the corner
-//    // radius). This accounts for the edge-case where Itsycal is
-//    // all the way to the right in the menu bar. This is possible
-//    // if the user has a 3rd party app like Bartender.
-//    CGFloat curveOffset = 5;
-//    CGFloat arrowMidX = (_arrowMidX == 0) ? NSMidX(self.frame) : _arrowMidX;
-//    CGFloat arrowRightEdge = arrowMidX + curveOffset + kArrowHeight;
-//    CGFloat bodyRightEdge = NSMaxX(rect) - kCornerRadius;
-//    if (arrowRightEdge < bodyRightEdge) {
-//        NSBezierPath *arrowPath = [NSBezierPath bezierPath];
-//        CGFloat x = arrowMidX - kArrowHeight - curveOffset;
-//        CGFloat y = NSHeight(self.frame) - kArrowHeight - kBorderWidth;
-//        [arrowPath moveToPoint:NSMakePoint(x, y)];
-//        [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, kArrowHeight)];
-//        [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, -kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, -kArrowHeight)];
-//        [rectPath appendBezierPath:arrowPath];
-//    }
-//    [Theme.windowBorderColor setStroke];
-//    [rectPath setLineWidth:1*kBorderWidth];
-//    [rectPath stroke];
-//    [Theme.mainBackgroundColor setFill];
-//    [rectPath fill];
+    NSRect rect = NSInsetRect(self.bounds, kBorderWidth, kBorderWidth);
+    rect.size.height -= kArrowHeight;
+
+    // NSLog(@"———— %@,%f", NSStringFromRect(rect),_arrowMidX);
+
+    // Do we need to draw the whole window?
+    // If dirtyRect is inside the body of the window, we can just fill it.
+    NSRect bodyRect = NSInsetRect(rect, 1, kCornerRadius);
+    if (NSContainsRect(bodyRect, dirtyRect)) {
+        [Theme.mainBackgroundColor setFill];
+        NSRectFill(dirtyRect);
+        return;
+    }
+
+    // We need to draw the whole window.
+
+    [[NSColor clearColor] set];
+    NSRectFill(self.bounds);
+
+    NSBezierPath *rectPath = [NSBezierPath bezierPathWithRoundedRect:rect xRadius:kCornerRadius yRadius:kCornerRadius];
+
+    // Append the arrow to the body if its right ege is inside
+    // the right edge of the body (taking into account the corner
+    // radius). This accounts for the edge-case where Itsycal is
+    // all the way to the right in the menu bar. This is possible
+    // if the user has a 3rd party app like Bartender.
+    CGFloat curveOffset = 2;
+    CGFloat arrowMidX = (_arrowMidX == 0) ? NSMidX(self.frame) : _arrowMidX;
+    CGFloat arrowRightEdge = arrowMidX + curveOffset + kArrowHeight;
+    CGFloat bodyRightEdge = NSMaxX(rect) - kCornerRadius;
+    if (arrowRightEdge < bodyRightEdge) {
+        NSBezierPath *arrowPath = [NSBezierPath bezierPath];
+        CGFloat x = arrowMidX - kArrowHeight - curveOffset;
+        CGFloat y = NSHeight(self.frame) - kArrowHeight - kBorderWidth;
+        [arrowPath moveToPoint:NSMakePoint(x, y)];
+        [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, kArrowHeight)];
+        [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, -kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, -kArrowHeight)];
+        [rectPath appendBezierPath:arrowPath];
+    }
+    [Theme.windowBorderColor setStroke];
+    [rectPath setLineWidth:1*kBorderWidth];
+    [rectPath stroke];
+    [Theme.windowBorderColor setFill];
+    [rectPath fill];
 }
 
 @end
