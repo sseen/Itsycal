@@ -92,6 +92,7 @@ static NSString * const kCalendarCellId = @"CalendarCell";
     
     // Calendars table view
     _calendarsTV = [NSTableView new];
+    // _calendarsTV.backgroundColor = NSColor.clearColor;
     _calendarsTV.headerView = nil;
     _calendarsTV.allowsColumnResizing = NO;
     _calendarsTV.intercellSpacing = NSMakeSize(0, 0);
@@ -101,6 +102,22 @@ static NSString * const kCalendarCellId = @"CalendarCell";
 
     // Calendars enclosing scrollview
     NSScrollView *tvContainer = [NSScrollView new];
+    
+    // 1/2 drawsbackground false
+    // 2/2 set background clear
+    // 3/3 set tableview background clear
+    // will make the visual effect show
+    // tvContainer.backgroundColor = NSColor.clearColor;
+    // tvContainer.drawsBackground = false;
+    
+    // Give the NSScrollView a backing layer and set it's corner radius.
+    [tvContainer setWantsLayer:YES];
+    [tvContainer.layer setCornerRadius:8.0f];
+
+    // Give the NSScrollView's internal clip view a backing layer and set it's corner radius.
+    [tvContainer.contentView setWantsLayer:YES];
+    [tvContainer.contentView.layer setCornerRadius:8.0f];
+    
     tvContainer.scrollerStyle = NSScrollerStyleLegacy;
     tvContainer.hasVerticalScroller = YES;
     tvContainer.documentView = _calendarsTV;
@@ -133,7 +150,7 @@ static NSString * const kCalendarCellId = @"CalendarCell";
 //    [vfl :@"H:|-m-[tvContainer]-m-|"];
 //    [vfl :@"H:|-m-[agendaDaysLabel]-[_agendaDaysPopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
     
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20,@"top": @80} views:NSDictionaryOfVariableBindings(_login, firstDayLabel,shortcutLabel, _firstDayPopup, tvContainer, agendaDaysLabel, _agendaDaysPopup, shortcutView)];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20,@"top": @90} views:NSDictionaryOfVariableBindings(_login, firstDayLabel,shortcutLabel, _firstDayPopup, tvContainer, agendaDaysLabel, _agendaDaysPopup, shortcutView)];
     [vfl :@"V:|-top-[_login]-10-[shortcutView]-10-[_firstDayPopup]-20-[tvContainer(170)]-[_agendaDaysPopup]-m-|"];
     [vfl :@"H:|-m-[shortcutLabel]-[shortcutView]-|" : NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[_login]-(>=m)-|"];

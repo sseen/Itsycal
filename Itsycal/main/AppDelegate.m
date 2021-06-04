@@ -36,7 +36,7 @@
 
 + (void)initialize
 {
-    [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+//     [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
     
     // Get the default firstWeekday for user's locale.
     // User can change this in preferences.

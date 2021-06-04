@@ -44,12 +44,13 @@
     // [self.view.window makeKeyAndOrderFront:nil];
     // [self.view.window makeKeyWindow];
     
+//    self.view.window.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
     self.view.window.styleMask |= NSWindowStyleMaskFullSizeContentView;
     
     self.view.window.titlebarAppearsTransparent = true;
     NSVisualEffectView *visualView = [[NSVisualEffectView alloc] initWithFrame:NSMakeRect(0, 0, self.view.window.contentView.frame.size.width, self.view.window.contentView.frame.size.height)];
     [visualView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-    visualView.material = NSVisualEffectMaterialHUDWindow;
+    visualView.material = NSVisualEffectMaterialUnderWindowBackground;
     visualView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
     visualView.state = NSVisualEffectStateActive;
     

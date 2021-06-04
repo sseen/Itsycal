@@ -77,7 +77,7 @@
 //
 //    [smile.centerXAnchor constraintEqualToAnchor:v.centerXAnchor].active = YES;
     
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @25,@"top": @80} views:NSDictionaryOfVariableBindings(imv, appName, version, mail)];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @25,@"top": @90} views:NSDictionaryOfVariableBindings(imv, appName, version, mail)];
     [vfl :@"V:|-top-[imv(42)]-8-[version]-8-[mail]-m-|"];
     [vfl :@"H:|-m-[imv(42)]-20-[appName]-(>=70)-|": NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[version]-(>=m)-|"];

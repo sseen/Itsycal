@@ -139,7 +139,8 @@ static NSString *kHolidayCellIdentifier = @"HolidayCell";
     // ignored, so we use a non-zero value that has the same
     // effect. Without this, the size won't shrink to zero when
     // transitioning from an agenda with events to one without.
-    height = MAX(height + 15, 0.001);
+    CGFloat deltar = rows <= 0 ? 5 : 15;
+    height = MAX(height + deltar, 0.001);
     self.preferredContentSize = NSMakeSize(NSWidth(_tv.frame), height);
 }
 
