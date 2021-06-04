@@ -245,7 +245,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     // radius). This accounts for the edge-case where Itsycal is
     // all the way to the right in the menu bar. This is possible
     // if the user has a 3rd party app like Bartender.
-    CGFloat curveOffset = 2;
+    CGFloat curveOffset = 5;
     CGFloat arrowMidX = (_arrowMidX == 0) ? NSMidX(self.frame) : _arrowMidX;
     CGFloat arrowRightEdge = arrowMidX + curveOffset + kArrowHeight;
     CGFloat bodyRightEdge = NSMaxX(rect) - kCornerRadius;
@@ -320,15 +320,17 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     // if the user has a 3rd party app like Bartender.
     CGFloat curveOffset = 5;
     CGFloat arrowMidX = (_arrowMidX == 0) ? NSMidX(rect) : _arrowMidX;
-    CGFloat arrowRightEdge = arrowMidX + curveOffset + kArrowHeight;
+    
+    CGFloat kArrowHeightTmp = kArrowHeight;
+    CGFloat arrowRightEdge = arrowMidX + curveOffset + kArrowHeightTmp;
     CGFloat bodyRightEdge = NSMaxX(rect) - kCornerRadius;
     if (arrowRightEdge < bodyRightEdge) {
         NSBezierPath *arrowPath = [NSBezierPath bezierPath];
-        CGFloat x = arrowMidX - kArrowHeight - curveOffset;
-        CGFloat y = NSHeight(rect) + 2 - kBorderWidth;
+        CGFloat x = arrowMidX - kArrowHeightTmp - curveOffset - 0.5;
+        CGFloat y = NSHeight(rect) - kBorderWidth + 2;
         [arrowPath moveToPoint:NSMakePoint(x, y)];
-        [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, kArrowHeight)];
-        [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, -kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, -kArrowHeight)];
+        [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeightTmp + curveOffset, kArrowHeightTmp) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeightTmp, kArrowHeightTmp)];
+        [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeightTmp + curveOffset, -kArrowHeightTmp) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeightTmp, -kArrowHeightTmp)];
         [rectPath appendBezierPath:arrowPath];
     }
     //[Theme.windowBorderColor setStroke];
