@@ -123,6 +123,8 @@ static NSString * const kCalendarCellId = @"CalendarCell";
     tvContainer.documentView = _calendarsTV;
     [v addSubview:tvContainer];
     
+    // agenda event label
+    NSTextField *agendaEventLabel = label(NSLocalizedString(@"Event list:", @""));
     // Agenda days label
     NSTextField *agendaDaysLabel = label(NSLocalizedString(@"Event list shows:", @""));
     
@@ -150,12 +152,12 @@ static NSString * const kCalendarCellId = @"CalendarCell";
 //    [vfl :@"H:|-m-[tvContainer]-m-|"];
 //    [vfl :@"H:|-m-[agendaDaysLabel]-[_agendaDaysPopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
     
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20,@"top": @90} views:NSDictionaryOfVariableBindings(_login, firstDayLabel,shortcutLabel, _firstDayPopup, tvContainer, agendaDaysLabel, _agendaDaysPopup, shortcutView)];
-    [vfl :@"V:|-top-[_login]-10-[shortcutView]-10-[_firstDayPopup]-20-[tvContainer(170)]-[_agendaDaysPopup]-m-|"];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20,@"top": @90} views:NSDictionaryOfVariableBindings(_login, firstDayLabel,shortcutLabel, _firstDayPopup, tvContainer, agendaDaysLabel, _agendaDaysPopup, shortcutView, agendaEventLabel)];
+    [vfl :@"V:|-top-[_login]-20-[shortcutView]-10-[_firstDayPopup]-20-[tvContainer(170)]-[_agendaDaysPopup]-m-|"];
     [vfl :@"H:|-m-[shortcutLabel]-[shortcutView]-|" : NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[_login]-(>=m)-|"];
     [vfl :@"H:|-m-[firstDayLabel]-[_firstDayPopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
-    [vfl :@"H:|-m-[tvContainer(>=220)]-m-|"];
+    [vfl :@"H:|-m-[agendaEventLabel]-[tvContainer(>=220)]-m-|" :NSLayoutFormatAlignAllTop];
     [vfl :@"H:|-m-[agendaDaysLabel]-[_agendaDaysPopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
 
     // Center shortcutLabel

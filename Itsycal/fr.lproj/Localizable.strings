@@ -197,6 +197,7 @@ S'il vous plaît quitter Swittee Calendar, le déplacer dans le dossier Applicat
 
 /* No comment provided by engineer. */
 "Launch at login" = "Lancer automatiquement à la connexion";
+"Launch at login:" = "Lancer automatiquement à la connexion:";
 
 /* Light theme name */
 "Light" = "Thème Clair";

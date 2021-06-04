@@ -68,10 +68,10 @@
 "Appearance" = "外观";
 
 /* No comment provided by engineer. */
-"Are you sure you want to delete this event?" = "你确定要删除此事件吗？";
+"Are you sure you want to delete this event?" = "你确定要删除此日程吗？";
 
 /* No comment provided by engineer. */
-"At time of event" = "在事件开始时";
+"At time of event" = "在日程开始时";
 
 /* No comment provided by engineer. */
 "Automatically check for updates" = "自动检查更新";
@@ -84,7 +84,7 @@
 
 Swittee Calendar is more useful when it can display events from your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy" = "日历访问被拒绝。
 
-当 Swittee Calendar 可以显示你的日历事件时会更好用。你可以在 “系统偏好设置>安全隐私>隐私” 中更改此设置。";
+当 Swittee Calendar 可以显示你的日历日程时会更好用。你可以在 “系统偏好设置>安全隐私>隐私” 中更改此设置。";
 
 /* No comment provided by engineer. */
 "Calendar access was denied." = "日历访问被拒绝。";
@@ -111,16 +111,16 @@ Swittee Calendar is more useful when it can display events from your calendars. 
 "Delete" = "删除";
 
 /* No comment provided by engineer. */
-"Delete All Future Events" = "删除所有未来事件";
+"Delete All Future Events" = "删除所有未来日程";
 
 /* No comment provided by engineer. */
-"Delete Only This Event" = "仅删除此事件";
+"Delete Only This Event" = "仅删除此日程";
 
 /* No comment provided by engineer. */
-"Delete This Event" = "删除此事件";
+"Delete This Event" = "删除此日程";
 
 /* No comment provided by engineer. */
-"Do you want to delete this and all future occurrences of this event, or only the selected occurrence?" = "要删除此事件以及将来发生的事件，还是只删除所选的事件？";
+"Do you want to delete this and all future occurrences of this event, or only the selected occurrence?" = "要删除此日程以及将来发生的日程，还是只删除所选的日程？";
 
 /* No comment provided by engineer. */
 "Donate with" = "Donate with";
@@ -132,7 +132,10 @@ Swittee Calendar is more useful when it can display events from your calendars. 
 "Ends:" = "结束时间：";
 
 /* No comment provided by engineer. */
-"Event list shows:" = "显示事件列表：";
+"Event list shows:" = "显示日程范围：";
+
+/* No comment provided by engineer. */
+"Event list:" = "显示日程：";
 
 /* No comment provided by engineer. */
 "Every %zd Days" = "每 %zd 天";
@@ -180,10 +183,10 @@ Swittee Calendar is more useful when it can display events from your calendars. 
 "Highlight:" = "高亮：";
 
 /* No comment provided by engineer. */
-"Swittee Calendar cannot create a new event unless there is at least one calendar you have permission to modify." = "除非有至少一个有权限修改的日历，否则 Swittee Calendar 无法创建新事件。";
+"Swittee Calendar cannot create a new event unless there is at least one calendar you have permission to modify." = "除非有至少一个有权限修改的日历，否则 Swittee Calendar 无法创建新日程。";
 
 /* No comment provided by engineer. */
-"Swittee Calendar is more useful when you allow it to add events to your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy." = "当你允许 Swittee Calendar 将事件添加到你的日历中时会更好用。 你可以在 “系统偏好设置>安全隐私>隐私” 中更改此设置。";
+"Swittee Calendar is more useful when you allow it to add events to your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy." = "当你允许 Swittee Calendar 将日程添加到你的日历中时会更好用。 你可以在 “系统偏好设置>安全隐私>隐私” 中更改此设置。";
 
 /* No comment provided by engineer. */
 "Swittee Calendar must be run from the Applications folder in order to work properly.
@@ -197,6 +200,7 @@ Please quit Swittee Calendar, move it to the Applications folder, and relaunch."
 
 /* No comment provided by engineer. */
 "Launch at login" = "登录时启动";
+"Launch at login:" = "登录时启动:";
 
 /* Light theme name */
 "Light" = "浅色";
@@ -214,10 +218,10 @@ Please quit Swittee Calendar, move it to the Applications folder, and relaunch."
 "Never" = "从不";
 
 /* No comment provided by engineer. */
-"New Event" = "新事件";
+"New Event" = "新日程";
 
 /* No comment provided by engineer. */
-"New Event… ⌘N" = "新事件… ⌘N";
+"New Event… ⌘N" = "新日程… ⌘N";
 
 /* No comment provided by engineer. */
 "No events" = "不显示";
@@ -254,7 +258,7 @@ Please quit Swittee Calendar, move it to the Applications folder, and relaunch."
 "Saturday" = "星期六";
 
 /* No comment provided by engineer. */
-"Save Event" = "保存事件";
+"Save Event" = "保存日程";
 
 /* No comment provided by engineer. */
 "Show calendar weeks" = "显示日历周";
@@ -263,10 +267,10 @@ Please quit Swittee Calendar, move it to the Applications folder, and relaunch."
 "Show day of week in icon" = "在图标中显示星期几";
 
 /* No comment provided by engineer. */
-"Show event dots" = "显示事件圆点";
+"Show event dots" = "显示日程圆点";
 
 /* No comment provided by engineer. */
-"Show event location" = "显示事件位置";
+"Show event location" = "显示日程位置";
 
 /* No comment provided by engineer. */
 "Show month in icon" = "在图标中显示月份";
@@ -310,7 +314,7 @@ Please quit Swittee Calendar, move it to the Applications folder, and relaunch."
 "Wednesday" = "星期三";
 
 /* No comment provided by engineer. */
-"You're deleting an event." = "你正在删除事件。";
+"You're deleting an event." = "你正在删除日程。";
 
 /* Spanning event ends */
 "ends" = "结束时间";

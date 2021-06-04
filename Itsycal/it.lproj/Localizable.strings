@@ -197,6 +197,7 @@ Si prega di esci da Swittee Calendar, spostarlo nella cartella Applicazioni, e r
 
 /* No comment provided by engineer. */
 "Launch at login" = "Apri automaticamente con il login";
+"Launch at login:" = "Apri automaticamente con il login:";
 
 /* Light theme name */
 "Light" = "Tema chiaro";

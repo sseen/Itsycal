@@ -197,6 +197,7 @@ Bitte beenden Sie Swittee Calendar, es in den Programme-Ordner zu verschieben, u
 
 /* No comment provided by engineer. */
 "Launch at login" = "Starte Swittee Calendar bei der Anmeldung";
+"Launch at login:" = "Starte Swittee Calendar bei der Anmeldung:";
 
 /* Light theme name */
 "Light" = "Helles Design";

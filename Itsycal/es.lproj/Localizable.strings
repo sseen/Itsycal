@@ -197,6 +197,7 @@ Por favor, cerrar Swittee Calendar, trasladar a la carpeta Aplicaciones, y volve
 
 /* No comment provided by engineer. */
 "Launch at login" = "Abrir automáticamente al iniciar sesión";
+"Launch at login:" = "Abrir automáticamente al iniciar sesión:";
 
 /* Light theme name */
 "Light" = "Tema claro";
