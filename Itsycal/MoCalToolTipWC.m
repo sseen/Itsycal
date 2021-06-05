@@ -12,8 +12,8 @@
 static CGFloat kToolipWindowWidth = 200;
 
 // Implementation at bottom.
-@interface MoCalTooltipWindow : NSWindow @end
-@interface MoCalTooltipContentView : NSView @end
+@interface MoCalTooltipWindow : NSWindow  @end
+@interface MoCalTooltipContentView : NSView {NSVisualEffectView *visualView;}@end
 
 #pragma mark -
 #pragma mark MoCalTooltipWC
@@ -25,7 +25,6 @@ static CGFloat kToolipWindowWidth = 200;
 @implementation MoCalToolTipWC
 {
     NSTimer *_fadeTimer;
-    NSVisualEffectView *visualView;
     NSRect   _positioningRect;
     NSRect   _screenFrame;
 }
@@ -33,13 +32,6 @@ static CGFloat kToolipWindowWidth = 200;
 - (instancetype)init
 {
     self = [super initWithWindow:[MoCalTooltipWindow new]];
-    
-    
-    visualView = [[NSVisualEffectView alloc] initWithFrame:NSZeroRect];
-    visualView.maskImage = [self maskImage:4];
-    visualView.material = NSVisualEffectMaterialPopover;
-    visualView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
-    visualView.state = NSVisualEffectStateActive;
     
     // 空白view
     // 加上这个view 放在 visualeffect 后面
@@ -85,23 +77,7 @@ static CGFloat kToolipWindowWidth = 200;
     }
     [self.window setFrame:frame display:YES animate:NO];
     
-    visualView.frame = NSInsetRect((NSRect){0, 0,  frame.size}, 1, 1);
-    [self.window.contentView  addSubview:visualView positioned:NSWindowBelow relativeTo:nil];
-}
-
-- (NSImage *)maskImage:(CGFloat)cornerRadius {
-    CGFloat edgeLength = 2.0 * cornerRadius + 1.0;
-    NSImage *img = [NSImage imageWithSize:NSMakeSize(edgeLength, edgeLength) flipped:false drawingHandler:^BOOL(NSRect dstRect) {
-        NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:dstRect xRadius:cornerRadius yRadius:cornerRadius];
-        [NSColor.redColor set];
-        [path fill];
-        return true;
-    }];
-    
-    img.capInsets = NSEdgeInsetsMake(cornerRadius, cornerRadius, cornerRadius, cornerRadius);
-    img.resizingMode = NSImageResizingModeStretch;
-    
-    return img;
+    //NSLog(@"%@", self.window.contentView.subviews);
 }
 
 - (void)showTooltip
@@ -113,7 +89,6 @@ static CGFloat kToolipWindowWidth = 200;
 
 - (void)endTooltip
 {
-    [visualView removeFromSuperview];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showTooltip) object:nil];
     [_fadeTimer invalidate];
     _fadeTimer = nil;
@@ -122,6 +97,7 @@ static CGFloat kToolipWindowWidth = 200;
 
 - (void)hideTooltip
 {
+
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showTooltip) object:nil];
     if (self.window.occlusionState & NSWindowOcclusionStateVisible &&
         _fadeTimer == nil) {
@@ -177,13 +153,44 @@ static CGFloat kToolipWindowWidth = 200;
 
 @implementation MoCalTooltipContentView
 
+- (instancetype)initWithFrame:(NSRect)frameRect {
+    self = [super initWithFrame:frameRect];
+    
+    visualView = [[NSVisualEffectView alloc] initWithFrame:NSMakeRect(0, 0, 30, 10)];
+    [visualView setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+    visualView.maskImage = [self maskImage:4];
+    visualView.material = NSVisualEffectMaterialHUDWindow;
+    visualView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
+    visualView.state = NSVisualEffectStateActive;
+    
+    
+    return self;
+}
+
+- (NSImage *)maskImage:(CGFloat)cornerRadius {
+    CGFloat edgeLength = 2.0 * cornerRadius + 1.0;
+    NSImage *img = [NSImage imageWithSize:NSMakeSize(edgeLength, edgeLength) flipped:false drawingHandler:^BOOL(NSRect dstRect) {
+        NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:dstRect xRadius:cornerRadius yRadius:cornerRadius];
+        [NSColor.redColor set];
+        [path fill];
+        return true;
+    }];
+    
+    img.capInsets = NSEdgeInsetsMake(cornerRadius, cornerRadius, cornerRadius, cornerRadius);
+    img.resizingMode = NSImageResizingModeStretch;
+    
+    return img;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
+    visualView.frame = NSInsetRect(dirtyRect, 1, 1);
+    [self addSubview:visualView positioned:NSWindowBelow relativeTo:nil];
     // A rounded rect with a light gray border.
     NSRect r = NSInsetRect(self.bounds, 1, 1);
     NSBezierPath *p = [NSBezierPath bezierPathWithRoundedRect:r xRadius:4 yRadius:4];
     [Theme.windowBorderColor setStroke];
-    [p setLineWidth:2];
+    [p setLineWidth:1];
     [p stroke];
     [Theme.tooltipBackgroundColor setFill];
     [p fill];
