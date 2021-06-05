@@ -80,8 +80,9 @@
     //NSStackView *mainStack = [[NSStackView alloc] init];
     
     MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @30,@"top": @100} views:NSDictionaryOfVariableBindings(imv, appName, version, mail)];
-    [vfl :@"V:|-top-[imv(68)]-(-45)-[version]-15-[mail]-40-|"];
-    [vfl :@"H:|-m-[imv(68)]-m-[appName]-(>=70)-|": NSLayoutFormatAlignAllTop];
+    [vfl :@"V:|-top-[appName]-(-10)-[imv(68)]-(-60)-[version]-m-[mail]-40-|"];
+    [vfl :@"H:|-(130)-[appName]-(70)-|"];
+    [vfl :@"H:|-m-[imv(68)]-(>=m)-|"];
     [vfl :@"H:|-(>=m)-[version]-(>=m)-|"];
     [vfl :@"H:|-(>=m)-[mail]-(>=m)-|"];
     
