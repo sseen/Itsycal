@@ -36,9 +36,9 @@
 
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
     NSTextField *appName = label(@"Swittee Calendar", NO);
-    appName.font = [NSFont systemFontOfSize:16 weight:NSFontWeightBold];
+    appName.font = [NSFont systemFontOfSize:20 weight:NSFontWeightMedium];
     NSTextField *version = label([NSString stringWithFormat:@"%@ (%@)", infoDict[@"CFBundleShortVersionString"], infoDict[@"CFBundleVersion"]], NO);
-    version.font = [NSFont systemFontOfSize:11 weight:NSFontWeightMedium];
+    version.font = [NSFont systemFontOfSize:12 weight:NSFontWeightRegular];
     version.textColor = [NSColor secondaryLabelColor];
     NSTextField *mail = label(@"swittee.app@gmail.com", YES);
 //    NSTextField *donateWith = label(NSLocalizedString(@"Donate with", nil), NO);
@@ -77,11 +77,18 @@
 //
 //    [smile.centerXAnchor constraintEqualToAnchor:v.centerXAnchor].active = YES;
     
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @25,@"top": @90} views:NSDictionaryOfVariableBindings(imv, appName, version, mail)];
-    [vfl :@"V:|-top-[imv(42)]-8-[version]-8-[mail]-m-|"];
-    [vfl :@"H:|-m-[imv(42)]-20-[appName]-(>=70)-|": NSLayoutFormatAlignAllCenterY];
-    [vfl :@"H:|-m-[version]-(>=m)-|"];
-    [vfl :@"H:|-m-[mail]-(>=m)-|"];
+    //NSStackView *mainStack = [[NSStackView alloc] init];
+    
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @30,@"top": @100} views:NSDictionaryOfVariableBindings(imv, appName, version, mail)];
+    [vfl :@"V:|-top-[imv(68)]-(-45)-[version]-15-[mail]-40-|"];
+    [vfl :@"H:|-m-[imv(68)]-m-[appName]-(>=70)-|": NSLayoutFormatAlignAllTop];
+    [vfl :@"H:|-(>=m)-[version]-(>=m)-|"];
+    [vfl :@"H:|-(>=m)-[mail]-(>=m)-|"];
+    
+    NSLayoutConstraint *leadingVersionMargin = [NSLayoutConstraint constraintWithItem:appName attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:version attribute:NSLayoutAttributeLeading multiplier:1 constant:0];
+    NSLayoutConstraint *leadingMailMargin = [NSLayoutConstraint constraintWithItem:appName attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:mail attribute:NSLayoutAttributeLeading multiplier:1 constant:0];
+    [v addConstraint:leadingMailMargin];
+    [v addConstraint:leadingVersionMargin];
 
     self.view = v;
 }

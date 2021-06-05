@@ -117,9 +117,9 @@
 //    [vfl :@"H:|-m-[showLocation]-(>=m)-|"];
 //    [vfl :@"H:|-m-[bigger]-(>=m)-|"];
     
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20, @"mm": @40, @"m3m":@60, @"top": @90} views:NSDictionaryOfVariableBindings(menubarLabel, calendarLabel, separator0, separator1, useOutlineIcon, useEmojiIcon, useEmojiIconHideFace, showMonth, showDayOfWeek, showEventDots, useColoredDots, showWeeks, showLocation, showCnLunar, showCnNationDays, _dateTimeFormat, helpButton, _hideIcon, themeLabel, themePopup, useBigMenuFont)];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @25, @"mm": @50, @"m3m":@65, @"top": @100} views:NSDictionaryOfVariableBindings(menubarLabel, calendarLabel, separator0, separator1, useOutlineIcon, useEmojiIcon, useEmojiIconHideFace, showMonth, showDayOfWeek, showEventDots, useColoredDots, showWeeks, showLocation, showCnLunar, showCnNationDays, _dateTimeFormat, helpButton, _hideIcon, themeLabel, themePopup, useBigMenuFont)];
     [vfl :@"V:|-top-[menubarLabel]-10-[useBigMenuFont]-[useOutlineIcon]-[useEmojiIcon]-[useEmojiIconHideFace]-[showMonth]-[showDayOfWeek]-[_dateTimeFormat]-[_hideIcon]-m-[calendarLabel]-10-[themePopup]-m-[showEventDots]-[useColoredDots]-[showLocation]-[showWeeks]-[showCnLunar]-[showCnNationDays]-m-|"];
-    [vfl :@"H:|-m-[menubarLabel]-[separator0(>=175)]-m-|" :NSLayoutFormatAlignAllCenterY];
+    [vfl :@"H:|-m-[menubarLabel]-[separator0(>=205)]-m-|" :NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[calendarLabel]-[separator1]-m-|" :NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-mm-[useBigMenuFont]-(>=m)-|"];
     [vfl :@"H:|-mm-[useOutlineIcon]-(>=m)-|"];

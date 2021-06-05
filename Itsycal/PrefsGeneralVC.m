@@ -152,7 +152,7 @@ static NSString * const kCalendarCellId = @"CalendarCell";
 //    [vfl :@"H:|-m-[tvContainer]-m-|"];
 //    [vfl :@"H:|-m-[agendaDaysLabel]-[_agendaDaysPopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
     
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20,@"top": @90} views:NSDictionaryOfVariableBindings(_login, firstDayLabel,shortcutLabel, _firstDayPopup, tvContainer, agendaDaysLabel, _agendaDaysPopup, shortcutView, agendaEventLabel)];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @25,@"top": @100} views:NSDictionaryOfVariableBindings(_login, firstDayLabel,shortcutLabel, _firstDayPopup, tvContainer, agendaDaysLabel, _agendaDaysPopup, shortcutView, agendaEventLabel)];
     [vfl :@"V:|-top-[_login]-20-[shortcutView]-10-[_firstDayPopup]-20-[tvContainer(170)]-[_agendaDaysPopup]-m-|"];
     [vfl :@"H:|-m-[shortcutLabel]-[shortcutView]-|" : NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[_login]-(>=m)-|"];
