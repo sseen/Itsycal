@@ -186,4 +186,31 @@ static NSArray<NSString *> *_lunarYearChars;
 + (void)setHolidayName:(NSString *)holidayName {
     _holidayStr = holidayName;
 }
+
+
+/// 因为添加中国法定节假日显示
+/// 所以agendaview里也要显示这个状态
+/// 然后统一都添加到日程的列表里，放在第一个位置
+/// @param events 日程列表
+/// @param date 选中的日期
++ (NSArray *)tansformCnholidayToEvents:(NSArray *)events date:(MoDate)date{
+    NSArray *arr = events;
+    Boolean isShowCnNationDays= [[NSUserDefaults standardUserDefaults] boolForKey:kshowCnNationDays];
+    if (isShowCnNationDays) {
+        NSString *todayDateStr = NSStringFromMoDateWithoutJulian(date);
+        KCNATIONSTATUS todayType = [SCUtils whichNationDays:todayDateStr];
+        NSNumber *typeNum = [NSNumber numberWithInteger:todayType];
+        if (todayType & (KCNATIONSTATUSrelax | KCNATIONSTATUSwork)) {
+            if (events) {
+                NSMutableArray *addTypeArr = [NSMutableArray arrayWithObject:typeNum];
+                [addTypeArr addObjectsFromArray:events];
+                arr = addTypeArr;
+            } else {
+                arr = [NSArray arrayWithObject:typeNum];
+            }
+        }
+    }
+    
+    return arr;
+}
 @end

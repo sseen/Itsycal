@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)getLunarMonth:(NSDate *)day;
 - (NSString *)getLunarYear:(NSDate *)day;
 + (NSDateComponents *)getCNLunarComponentsWithDay:(NSDate *)day;
++ (NSArray *)tansformCnholidayToEvents:(NSArray *)events date:(MoDate)date;
 @end
 
 NS_ASSUME_NONNULL_END

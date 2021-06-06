@@ -19,21 +19,7 @@
     self.tv.enclosingScrollView.hasVerticalScroller = NO; // in case user has System Prefs set to always show scroller
     self.events = [self.tooltipDelegate eventsForDate:date];
     
-    Boolean isShowCnNationDays= [[NSUserDefaults standardUserDefaults] boolForKey:kshowCnNationDays];
-    if (isShowCnNationDays) {
-        NSString *todayDateStr = NSStringFromMoDateWithoutJulian(date);
-        KCNATIONSTATUS todayType = [SCUtils whichNationDays:todayDateStr];
-        NSNumber *typeNum = [NSNumber numberWithInteger:todayType];
-        if (todayType & (KCNATIONSTATUSrelax | KCNATIONSTATUSwork)) {
-            if (self.events) {
-                NSMutableArray *addTypeArr = [NSMutableArray arrayWithObject:typeNum];
-                [addTypeArr addObjectsFromArray:self.events];
-                self.events = addTypeArr;
-            } else {
-                self.events = [NSArray arrayWithObject:typeNum];
-            }
-        }
-    }
+    self.events = [SCUtils tansformCnholidayToEvents:self.events date:date];
     if (self.events) {
         [self reloadData];
         return YES;
