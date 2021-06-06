@@ -19,6 +19,7 @@
 #import "MoButton.h"
 #import "MoVFLHelper.h"
 #import "MoUtils.h"
+#import "SCUtils.h"
 
 static NSString const *emojiMonth[13]  = {@"",@"♒️",@"♓️",@"♈️",@"♉️",@"♊️",@"♋️",@"♌️",@"♍️",@"♎️",@"♏️",@"♐️",@"♑️"};
 static NSString const *emojiWeekday[8] = {@"",@"🥺",@"😭",@"🙄",@"😁",@"😎",@"🥳",@"😍"};
@@ -1019,9 +1020,6 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 
 - (NSArray *)datesAndEventsForDate:(MoDate)date days:(NSInteger)days
 {
-    /// 所有日程的入口
-    /// 在这里获得所有日程数据
-    /// 新加上是否当天有中国法定节假日的标志，如果有也添加到最上面
     NSMutableArray *datesAndEvents = [NSMutableArray new];
     MoDate endDate = AddDaysToDate(days, date);
     while (CompareDates(date, endDate) < 0) {
@@ -1073,6 +1071,12 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 {
     NSInteger days = [self daysToShowInAgenda];
     _agendaVC.events = [self datesAndEventsForDate:_moCal.selectedDate days:days];
+    
+    /// 所有日程的入口
+    /// 在这里获得所有日程数据
+    /// 新加上是否当天有中国法定节假日的标志，如果有也添加到最上面
+    _agendaVC.events = [SCUtils tansformCnholidayToEvents:_agendaVC.events date:_moCal.selectedDate];
+    
     [_agendaVC reloadData];
     _bottomMargin.constant = _agendaVC.events.count == 0 ? 25 : 30;
 }
