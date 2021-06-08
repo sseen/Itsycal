@@ -8,6 +8,7 @@
 
 #import "MoCalToolTipWC.h"
 #import "Themer.h"
+#import "Sizer.h"
 
 static CGFloat kToolipWindowWidth = 200;
 
@@ -158,7 +159,7 @@ static CGFloat kToolipWindowWidth = 200;
     
     visualView = [[NSVisualEffectView alloc] initWithFrame:NSMakeRect(0, 0, 30, 10)];
     [visualView setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
-    visualView.maskImage = [self maskImage:4];
+    visualView.maskImage = [self maskImage:[[Sizer shared] cellRadius]];
     visualView.material = NSVisualEffectMaterialHUDWindow;
     visualView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
     visualView.state = NSVisualEffectStateActive;
@@ -184,15 +185,17 @@ static CGFloat kToolipWindowWidth = 200;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    visualView.frame = NSInsetRect(dirtyRect, 1, 1);
+    // 在这里添加
+    // 因为每次都会清空所有的subviews
+    visualView.frame = NSInsetRect(dirtyRect, 1.5, 1.5);
     [self addSubview:visualView positioned:NSWindowBelow relativeTo:nil];
     // A rounded rect with a light gray border.
     NSRect r = NSInsetRect(self.bounds, 1, 1);
-    NSBezierPath *p = [NSBezierPath bezierPathWithRoundedRect:r xRadius:4 yRadius:4];
+    NSBezierPath *p = [NSBezierPath bezierPathWithRoundedRect:r xRadius:[[Sizer shared] cellRadius] yRadius:[[Sizer shared] cellRadius]];
     [Theme.windowBorderColor setStroke];
     [p setLineWidth:1];
     [p stroke];
-    [Theme.tooltipBackgroundColor setFill];
+    [Theme.windowBorderColor setFill];
     [p fill];
 }
 

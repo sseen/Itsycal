@@ -61,7 +61,7 @@ NSString * const kSizeDidChangeNotification = @"SizeDidChangeNotification";
 }
 
 - (CGFloat)cellRadius {
-    return SMALL_OR_BIG(2, 3);
+    return SMALL_OR_BIG(8, 10);
 }
 
 - (CGFloat)agendaDotWidth {
