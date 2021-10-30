@@ -1,5 +1,5 @@
 // Created by Sanjay Madan on 7/27/18
-// Copyright (c) 2018 mowglii.com
+// Copyright (c) 2018 Swittee.com
 
 #import "Sizer.h"
 #import <AppKit/AppKit.h>

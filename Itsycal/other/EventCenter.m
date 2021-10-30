@@ -3,7 +3,7 @@
 //  Itsycal
 //
 //  Created by Sanjay Madan on 2/12/15.
-//  Copyright (c) 2015 mowglii.com. All rights reserved.
+//  Copyright (c) 2015 Swittee.com. All rights reserved.
 //
 
 #import <os/log.h>
@@ -37,9 +37,9 @@ static NSString *kSelectedCalendars = @"SelectedCalendars";
         _eventsForDate  = [NSMutableDictionary new];
         _filteredEventsForDate = [NSDictionary new];
         _previouslyFetchedDates = [NSMutableIndexSet new];
-        _queueWork = dispatch_queue_create("com.mowglii.Itsycal.queueWork", DISPATCH_QUEUE_SERIAL);
-        _queueIsol = dispatch_queue_create("com.mowglii.Itsycal.queueIsol", DISPATCH_QUEUE_SERIAL);
-        _queueIsol2 = dispatch_queue_create("com.mowglii.Itsycal.queueIsol2", DISPATCH_QUEUE_SERIAL);
+        _queueWork = dispatch_queue_create("com.Swittee.Itsycal.queueWork", DISPATCH_QUEUE_SERIAL);
+        _queueIsol = dispatch_queue_create("com.Swittee.Itsycal.queueIsol", DISPATCH_QUEUE_SERIAL);
+        _queueIsol2 = dispatch_queue_create("com.Swittee.Itsycal.queueIsol2", DISPATCH_QUEUE_SERIAL);
         _store = [EKEventStore new];
         [_store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
             if (granted) {

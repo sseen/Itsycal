@@ -3,7 +3,7 @@
 //  Itsycal
 //
 //  Created by Sanjay Madan on 12/14/14.
-//  Copyright (c) 2014 mowglii.com. All rights reserved.
+//  Copyright (c) 2014 Swittee.com. All rights reserved.
 //
 
 #import "ItsycalWindow.h"

@@ -3,7 +3,7 @@
 //  Itsycal
 //
 //  Created by Sanjay Madan on 2/4/15.
-//  Copyright (c) 2015 mowglii.com. All rights reserved.
+//  Copyright (c) 2015 Swittee.com. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -166,7 +166,7 @@
 
 - (BOOL)alertShowHelp:(NSAlert *)alert
 {
-    NSURL *url = [NSURL URLWithString:@"https://mowglii.com/itsycal/appfolder.html"];
+    NSURL *url = [NSURL URLWithString:@"https://Swittee.com/itsycal/appfolder.html"];
     [[NSWorkspace sharedWorkspace] openURL:url];
     return YES;
 }

@@ -3,7 +3,7 @@
 //  Swittee Calendar
 //
 //  Created by solo on 2021/1/18.
-//  Copyright © 2021 mowglii.com. All rights reserved.
+//  Copyright © 2021 Swittee.com. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

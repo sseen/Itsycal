@@ -3,7 +3,7 @@
 //
 //
 //  Created by Sanjay Madan on 11/13/14.
-//  Copyright (c) 2014 mowglii.com. All rights reserved.
+//  Copyright (c) 2014 Swittee.com. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

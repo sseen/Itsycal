@@ -471,7 +471,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1310;
 				ORGANIZATIONNAME = swittee;
 				TargetAttributes = {
 					9242A55B1A82A136005AA4B3 = {
@@ -766,6 +766,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
 		};

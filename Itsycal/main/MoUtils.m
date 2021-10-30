@@ -3,7 +3,7 @@
 //  
 //
 //  Created by Sanjay Madan on 10/31/16.
-//  Copyright © 2016 mowglii.com. All rights reserved.
+//  Copyright © 2016 Swittee.com. All rights reserved.
 //
 
 #import <time.h>

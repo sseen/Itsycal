@@ -3,7 +3,7 @@
 //  Itsycal
 //
 //  Created by Sanjay Madan on 2/4/15.
-//  Copyright (c) 2015 mowglii.com. All rights reserved.
+//  Copyright (c) 2015 Swittee.com. All rights reserved.
 //
 
 #import <os/log.h>
@@ -428,7 +428,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 
 - (void)navigateToHelp:(id)sender
 {
-    NSURL *url = [NSURL URLWithString:@"https://www.mowglii.com/itsycal/help.html"];
+    NSURL *url = [NSURL URLWithString:@"https://www.Swittee.com/itsycal/help.html"];
     [NSWorkspace.sharedWorkspace openURL:url];
 }
 

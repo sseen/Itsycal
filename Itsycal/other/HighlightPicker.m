@@ -1,6 +1,6 @@
 //
 //  Created by Sanjay Madan on 1/16/17.
-//  Copyright © 2017 mowglii.com. All rights reserved.
+//  Copyright © 2017 Swittee.com. All rights reserved.
 //
 
 #import "HighlightPicker.h"

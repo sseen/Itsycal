@@ -3,7 +3,7 @@
 //  calentte
 //
 //  Created by sunxuiMac on 2020/3/11.
-//  Copyright © 2020 mowglii.com. All rights reserved.
+//  Copyright © 2020 Swittee.com. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
