@@ -17,6 +17,7 @@
 #import "MoDate.h"
 #import "SCUtils.h"
 #import "Itsycal.h"
+#import "SNPlister.h"
 
 NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 
@@ -797,6 +798,11 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     BOOL didChangeMonth = NO;
     
     monthDate = MakeDate(monthDate.year, monthDate.month, 1);
+    
+    // 中国假期多年份判断更新
+    if (monthDate.year != self.monthDate.year) {
+        [SNPlist reset:monthDate.year];
+    }
     
     if (CompareDates(monthDate, self.monthDate) != 0) {
         _monthDate = monthDate;

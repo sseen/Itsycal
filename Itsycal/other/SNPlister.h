@@ -19,6 +19,7 @@ extern SNPlister *SNPlist;
 @property (nonatomic) NSDictionary* cNationRelaxDays;
 
 + (instancetype)shared;
+- (void)reset:(NSInteger)year;
 @end
 
 NS_ASSUME_NONNULL_END

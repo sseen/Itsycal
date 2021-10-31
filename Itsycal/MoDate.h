@@ -151,3 +151,5 @@ MoDate AddDaysToDate(NSInteger days, MoDate date);
  *          MoDate struct is 1.
  */
 MoDate AddMonthsToMonth(NSInteger months, MoDate date);
+
+MoDate todayDate(void);

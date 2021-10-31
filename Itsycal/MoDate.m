@@ -204,3 +204,10 @@ MoDate AddMonthsToMonth(NSInteger months, MoDate date)
     }
     return MakeDate(newYear, newMonth, 1);
 }
+
+MoDate todayDate(void)
+{
+    NSCalendar *nsCal = [NSCalendar autoupdatingCurrentCalendar];
+    NSDateComponents *c = [nsCal components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:[NSDate new]];
+    return MakeDate(c.year, c.month-1, c.day);
+}

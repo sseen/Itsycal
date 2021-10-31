@@ -7,6 +7,7 @@
 //
 
 #import "SNPlister.h"
+#import "MoDate.h"
 
 @implementation SNPlister
 
@@ -46,11 +47,22 @@ static NSDictionary *nationRelaxdays = nil;
 
 /// 生成中国官方节假日，包括放假，补班信息
 - (void)cNationDays {
-    NSDictionary *dic = [self getPlistDatas:@"CNationDays"];
-    nationRelaxdays = dic[@"relax"];
-    nationWorkDays  = dic[@"work"];
+    MoDate today = todayDate();
+    [self cNationDays:today.year];
 }
 
+- (void)cNationDays:(NSInteger)year {
+    NSString *yearStr = [NSString stringWithFormat:@"%ld", (long)year];
+    NSDictionary *dic = [self getPlistDatas:@"CNationDays"];
+    NSDictionary *yearData = dic[yearStr];
+
+    nationRelaxdays = yearData[@"relax"];
+    nationWorkDays  = yearData[@"work"];
+}
+
+- (void)reset:(NSInteger)year {
+    [self cNationDays:year];
+}
 
 /// 读取 plist 文件
 /// @param fileName the name of plist file
