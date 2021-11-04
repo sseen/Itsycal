@@ -119,7 +119,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     [vfl :@"H:|[_moCal]|"];
     [vfl :@"H:|-4-[agenda]-4-|"];
     [vfl :@"H:|-10-[_btnExit]-(>=0)-[_btnPin]-10-[_btnAdd]-10-[_btnCal]-10-[_btnOpt]-10-|" :NSLayoutFormatAlignAllCenterY];
-    [vfl :@"V:|[_moCal]-6-[_btnOpt]"];
+    [vfl :@"V:|-6-[_moCal]-6-[_btnOpt]"];
     [vfl :@"V:[agenda]-(-1)-|"];
     
     // Margin between bottom of _moCal and top of agenda. When the agenda
@@ -895,6 +895,11 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
         [_moCal unhighlightCells];
     }
     else {
+        // 添加了中国节假日现实，导致数据结构变化
+        // 0 的时候，个数是奇数，肯定是表示中国节假日的
+        if (row == 0 && _agendaVC.events.count % 2) {
+            return;
+        }
         EventInfo *info = _agendaVC.events[row];
         MoDate startDate = MakeDateWithNSDate(info.event.startDate, _nsCal);
         MoDate endDate   = MakeDateWithNSDate(info.event.endDate,   _nsCal);
