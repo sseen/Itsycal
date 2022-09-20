@@ -63,6 +63,7 @@
         kThemePreference:      @0, // System=0, Light=1, Dark=2
         kShowCnLunar:          @(isCn),
         kshowCnNationDays:     @(isCn),
+        kShowLocation: @(NO),
         kHideIcon:             @(NO)
     }];
     

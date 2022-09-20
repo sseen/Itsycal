@@ -468,8 +468,14 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
     [_tooltipWC endTooltip];
 }
 
+
+/// hover选择event列表，将高亮calendar上的对应日期
+/// @param startDate 开始日期
+/// @param endDate 结束日期
+/// @param color 颜色
 - (void)highlightCellsFromDate:(MoDate)startDate toDate:(MoDate)endDate withColor:(NSColor *)color
 {
+    NSLog(@"__ highligt cell_ start %d, end %d", startDate.day, endDate.day);
     MoCalCell *startCell=nil, *endCell=nil;
     for (MoCalCell *cell in _dateGrid.cells) {
         if (!startCell && CompareDates(startDate, cell.date) <= 0) {
@@ -479,9 +485,14 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             endCell = cell;
         }
     }
+    ///
+    /// 这里这个判断是做什么都忘记了
+    /// 导致目前出现，如果hover日历下面的事件就出现程序无法响应
+    /// 先注释掉
+    ///
     if (startCell && endCell) {
         CGFloat radius = [[Sizer shared] cellRadius];
-        _highlightPath = [self bezierPathWithStartCell:startCell endCell:endCell radius:radius inset:3 useRects:YES];
+        _highlightPath = [self bezierPathWithStartCell:startCell endCell:endCell radius:radius inset:6 useRects:YES];
         _highlightColor = color;
         // Normalize location of _highlightPath. We will tranlsate it
         // again in drawRect to the correct location.
@@ -966,8 +977,12 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
              useRects) {
         NSRect rect = NSMakeRect(x, y, rightEdge - x, NSHeight(startRect));
         p = [NSBezierPath bezierPathWithRoundedRect:rect xRadius:r yRadius:r];
-        CGFloat yStep = 2 * inset + NSHeight(startRect);
-        for (y = y - yStep; y != NSMinY(endRect); y -= yStep) {
+        ///
+        /// 之前都没有这个问题，不知道什么时候开始有问题
+        /// startrect 26,startcell 38
+        ///
+        CGFloat yStep = 2 * inset + NSHeight(startCell.frame);
+        for (y = y - yStep; y > NSMinY(endRect); y -= yStep) {
             rect = NSMakeRect(leftEdge, y, rightEdge - leftEdge, NSHeight(startRect));
             [p appendBezierPathWithRoundedRect:rect xRadius:r yRadius:r];
         }
