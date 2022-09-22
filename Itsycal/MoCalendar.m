@@ -393,7 +393,10 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             
             // attributed string lunar and date
             // date number big font, lunar string small font
-            NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithString: lunarWithNewLine];
+            NSMutableParagraphStyle *pstyle = [NSMutableParagraphStyle new];
+            pstyle.alignment = NSTextAlignmentCenter;
+            
+            NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithString: lunarWithNewLine attributes:@{NSParagraphStyleAttributeName:pstyle}];
             // weekend color
             // 根据星期开始于星期几来标记周末的颜色
             // 目前看来完全没有必要了，找了已经有的方法了 COL_DOW(self.weekStartDOW, col)
@@ -431,7 +434,10 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             // date and lunar font size
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateFont] range:NSMakeRange(0, dateString.length)];
             [colorTitle addAttribute:NSFontAttributeName value:[[Sizer shared] dateLunarFont] range:NSMakeRange(dateString.length, lunarWithNewLine.length - dateString.length)];
-            [colorTitle setAlignment:NSTextAlignmentCenter range:NSMakeRange(0, lunarWithNewLine.length)];
+            
+            
+            
+            //[colorTitle setAlignment:NSTextAlignmentCenter range:NSMakeRange(0, lunarWithNewLine.length/2)];
             cell.textField.attributedStringValue = colorTitle;
             if (date.month == self.monthDate.month) {
                 if (date.day == 1) {

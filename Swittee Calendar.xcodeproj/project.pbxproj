@@ -48,13 +48,7 @@
 		F845758224ECCA1D007921D0 /* SNToolbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F845758124ECCA1D007921D0 /* SNToolbarItem.m */; };
 		F851E0A625ADEDE200357B8F /* CNationDays.plist in Resources */ = {isa = PBXBuildFile; fileRef = F851E0A525ADEDE200357B8F /* CNationDays.plist */; };
 		F851E0AB25AE881A00357B8F /* SNPlister.m in Sources */ = {isa = PBXBuildFile; fileRef = F851E0AA25AE881A00357B8F /* SNPlister.m */; };
-		F8997872265CD92A007B96B4 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8997871265CD92A007B96B4 /* WidgetKit.framework */; };
-		F8997874265CD92A007B96B4 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8997873265CD92A007B96B4 /* SwiftUI.framework */; };
-		F8997877265CD92A007B96B4 /* soWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8997876265CD92A007B96B4 /* soWidget.swift */; };
-		F899787A265CD92C007B96B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8997879265CD92C007B96B4 /* Assets.xcassets */; };
-		F899787D265CD92C007B96B4 /* soWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = F8997878265CD92A007B96B4 /* soWidget.intentdefinition */; };
 		F899787E265CD92C007B96B4 /* soWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = F8997878265CD92A007B96B4 /* soWidget.intentdefinition */; };
-		F8997881265CD92C007B96B4 /* soWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F899786F265CD92A007B96B4 /* soWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F8C3C24524BFD576007B2A65 /* NSImage+TintColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C3C24424BFD576007B2A65 /* NSImage+TintColor.m */; };
 		F8C804A62655614700284DE2 /* AgendaViewHolidayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C804A52655614700284DE2 /* AgendaViewHolidayCell.m */; };
 		F8CEDE5925B5966400EB14DE /* MoLoginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CEDE5825B5966400EB14DE /* MoLoginItem.m */; };
@@ -64,16 +58,6 @@
 		F8EAFBA625ACA6F400C9660F /* NSBezierPath+quartz.m in Sources */ = {isa = PBXBuildFile; fileRef = F8EAFBA525ACA6F300C9660F /* NSBezierPath+quartz.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		F899787F265CD92C007B96B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9242A5541A82A136005AA4B3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F899786E265CD92A007B96B4;
-			remoteInfo = soWidgetExtension;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		F8997885265CD92C007B96B4 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -81,7 +65,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				F8997881265CD92C007B96B4 /* soWidgetExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,7 +172,6 @@
 		F851E0A525ADEDE200357B8F /* CNationDays.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CNationDays.plist; sourceTree = "<group>"; };
 		F851E0A925AE881900357B8F /* SNPlister.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SNPlister.h; sourceTree = "<group>"; };
 		F851E0AA25AE881A00357B8F /* SNPlister.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SNPlister.m; sourceTree = "<group>"; };
-		F899786F265CD92A007B96B4 /* soWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = soWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8997871265CD92A007B96B4 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		F8997873265CD92A007B96B4 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		F8997876265CD92A007B96B4 /* soWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soWidget.swift; sourceTree = "<group>"; };
@@ -219,15 +201,6 @@
 				F80B46F32412010900A72DCF /* AppCenterCrashes.framework in Frameworks */,
 				F8CEDE6025B5A37700EB14DE /* MASShortcut.framework in Frameworks */,
 				F80B46F52412010900A72DCF /* AppCenterAnalytics.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F899786C265CD92A007B96B4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F8997874265CD92A007B96B4 /* SwiftUI.framework in Frameworks */,
-				F8997872265CD92A007B96B4 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,7 +251,6 @@
 			isa = PBXGroup;
 			children = (
 				9242A55C1A82A136005AA4B3 /* Swittee Calendar.app */,
-				F899786F265CD92A007B96B4 /* soWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -440,29 +412,11 @@
 			buildRules = (
 			);
 			dependencies = (
-				F8997880265CD92C007B96B4 /* PBXTargetDependency */,
 			);
 			name = "Swittee Calendar";
 			productName = Moon;
 			productReference = 9242A55C1A82A136005AA4B3 /* Swittee Calendar.app */;
 			productType = "com.apple.product-type.application";
-		};
-		F899786E265CD92A007B96B4 /* soWidgetExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F8997882265CD92C007B96B4 /* Build configuration list for PBXNativeTarget "soWidgetExtension" */;
-			buildPhases = (
-				F899786B265CD92A007B96B4 /* Sources */,
-				F899786C265CD92A007B96B4 /* Frameworks */,
-				F899786D265CD92A007B96B4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = soWidgetExtension;
-			productName = soWidgetExtension;
-			productReference = F899786F265CD92A007B96B4 /* soWidgetExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -483,11 +437,6 @@
 								enabled = 1;
 							};
 						};
-					};
-					F899786E265CD92A007B96B4 = {
-						CreatedOnToolsVersion = 12.5;
-						DevelopmentTeam = 4N44FM69KH;
-						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -510,7 +459,6 @@
 			projectRoot = "";
 			targets = (
 				9242A55B1A82A136005AA4B3 /* Swittee Calendar */,
-				F899786E265CD92A007B96B4 /* soWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -527,14 +475,6 @@
 				F851E0A625ADEDE200357B8F /* CNationDays.plist in Resources */,
 				9242A56A1A82A136005AA4B3 /* MainMenu.xib in Resources */,
 				F80FAABF24FA87C5007AFC84 /* NSDiyMenuTipsViewController.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F899786D265CD92A007B96B4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F899787A265CD92C007B96B4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,24 +546,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F899786B265CD92A007B96B4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F899787D265CD92C007B96B4 /* soWidget.intentdefinition in Sources */,
-				F8997877265CD92A007B96B4 /* soWidget.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		F8997880265CD92C007B96B4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F899786E265CD92A007B96B4 /* soWidgetExtension */;
-			targetProxy = F899787F265CD92C007B96B4 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		922B6BC01A87EDBD00DEA9CD /* Localizable.strings */ = {
@@ -791,7 +714,7 @@
 				INFOPLIST_FILE = Itsycal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.2;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte;
@@ -823,7 +746,7 @@
 				INFOPLIST_FILE = Itsycal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.2;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte;
@@ -831,70 +754,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VALIDATE_PRODUCT = NO;
 				VALIDATE_WORKSPACE = NO;
-			};
-			name = Release;
-		};
-		F8997883265CD92C007B96B4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = soWidget/soWidget.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 4N44FM69KH;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = soWidget/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
-				MARKETING_VERSION = 2.1;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte.soWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		F8997884265CD92C007B96B4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = soWidget/soWidget.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = 4N44FM69KH;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = soWidget/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
-				MARKETING_VERSION = 2.1;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte.soWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -915,15 +774,6 @@
 			buildConfigurations = (
 				9242A57A1A82A136005AA4B3 /* Debug */,
 				9242A57B1A82A136005AA4B3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F8997882265CD92C007B96B4 /* Build configuration list for PBXNativeTarget "soWidgetExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F8997883265CD92C007B96B4 /* Debug */,
-				F8997884265CD92C007B96B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

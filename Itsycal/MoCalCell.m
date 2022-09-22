@@ -28,11 +28,17 @@
         [_textField setTranslatesAutoresizingMaskIntoConstraints:NO];
 
         [self addSubview:_textField];
-
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_textField]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textField)]];
+        [_textField.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = true;
+        [_textField.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = true;
         
-        _textFieldVerticalSpace = [NSLayoutConstraint constraintWithItem:_textField attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1 constant:[[Sizer shared] cellTextFieldVerticalSpace]];
-        [self addConstraint:_textFieldVerticalSpace];
+        ///
+        /// 之前的布局约束
+        /// 增加了cell尺寸后（农历），导致没有剧中
+        /// 审核打回优化
+        ///
+        // [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_textField]|" options:NSLayoutFormatAlignAllCenterY metrics:0 views:NSDictionaryOfVariableBindings(_textField)]];
+        // _textFieldVerticalSpace = [NSLayoutConstraint constraintWithItem:_textField attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1 constant:[[Sizer shared] cellTextFieldVerticalSpace]];
+        // [self addConstraint:_textFieldVerticalSpace];
 
         // highlight line
         self.wantsLayer = true;
