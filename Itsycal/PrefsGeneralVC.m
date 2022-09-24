@@ -142,20 +142,18 @@ static NSString * const kCalendarCellId = @"CalendarCell";
                                      NSLocalizedString(@"31 days", @"")]];
     [v addSubview:_agendaDaysPopup];
 
-//    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20} views:NSDictionaryOfVariableBindings(_login, _checkUpdates, firstDayLabel, _firstDayPopup, shortcutLabel, shortcutView, tvContainer, agendaDaysLabel, _agendaDaysPopup)];
-//    [vfl :@"V:|-m-[_login]-[_checkUpdates]-20-[_firstDayPopup]-20-[shortcutLabel]-3-[shortcutView(25)]-20-[tvContainer(170)]-[_agendaDaysPopup]-m-|"];
-//    [vfl :@"H:|-m-[_login]-(>=m)-|"];
-//    [vfl :@"H:|-m-[_checkUpdates]-(>=m)-|"];
-//    [vfl :@"H:|-m-[firstDayLabel]-[_firstDayPopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
-//    [vfl :@"H:|-(>=m)-[shortcutLabel]-(>=m)-|"];
-//    [vfl :@"H:|-m-[shortcutView(>=220)]-m-|"];
-//    [vfl :@"H:|-m-[tvContainer]-m-|"];
-//    [vfl :@"H:|-m-[agendaDaysLabel]-[_agendaDaysPopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
+    NSButton *btQuit = [[NSButton alloc] init];
+    [btQuit setButtonType:NSButtonTypeMomentaryPushIn];
+    [btQuit setBezelStyle:NSBezelStyleRounded];
+    btQuit.title = NSLocalizedString(@"Quite Swittee", @"");
+    btQuit.action = @selector(ckExit);
+    [v addSubview:btQuit];
     
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @25,@"top": @100} views:NSDictionaryOfVariableBindings(_login, firstDayLabel,shortcutLabel, _firstDayPopup, tvContainer, agendaDaysLabel, _agendaDaysPopup, shortcutView, agendaEventLabel)];
-    [vfl :@"V:|-top-[_login]-20-[shortcutView]-10-[_firstDayPopup]-20-[tvContainer(170)]-[_agendaDaysPopup]-m-|"];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @25,@"top": @100} views:NSDictionaryOfVariableBindings(_login, firstDayLabel,shortcutLabel, _firstDayPopup, tvContainer, agendaDaysLabel, _agendaDaysPopup, shortcutView, agendaEventLabel, btQuit)];
+    [vfl :@"V:|-top-[_login]-20-[shortcutView]-10-[_firstDayPopup]-20-[tvContainer(170)]-[_agendaDaysPopup]-m-[btQuit]-m-|"];
     [vfl :@"H:|-m-[shortcutLabel]-[shortcutView]-|" : NSLayoutFormatAlignAllCenterY];
     [vfl :@"H:|-m-[_login]-(>=m)-|"];
+    [vfl :@"H:|-m-[btQuit]"];
     [vfl :@"H:|-m-[firstDayLabel]-[_firstDayPopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
     [vfl :@"H:|-m-[agendaEventLabel]-[tvContainer(>=220)]-m-|" :NSLayoutFormatAlignAllTop];
     [vfl :@"H:|-m-[agendaDaysLabel]-[_agendaDaysPopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
@@ -173,6 +171,10 @@ static NSString * const kCalendarCellId = @"CalendarCell";
     [_agendaDaysPopup bind:@"selectedIndex" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kShowEventDays] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
 
     self.view = v;
+}
+
+- (void)ckExit {
+    [NSApp terminate:nil];
 }
 
 - (void)viewWillAppear

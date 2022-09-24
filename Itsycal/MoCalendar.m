@@ -386,6 +386,12 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             Boolean isShowCnNaitonDays = [[NSUserDefaults standardUserDefaults] boolForKey:kshowCnNationDays];
             if (isShowCnLunar) {
                 lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
+                /// 只有农历显示的时候才打开，默认关闭
+                /// 农历初一显示为月份
+                if (lunarDay == 1 ) {
+                    cell.lineLayer.hidden = false;
+                }
+
             }
             if (isShowCnNaitonDays) {
                 cell.cstatus = [SCUtils whichNationDays:todayDateStr];
@@ -423,10 +429,6 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
                 [self changeDateAndLunarColor:colorTitle dateString:dateString lunarWithNewLine:lunarWithNewLine color:Theme.currentMonthWeekEndText];
             }
             
-            // 农历初一显示为月份
-            if (lunarDay == 1 ) {
-                cell.lineLayer.hidden = false;
-            }
             // today date text color
             if (cell.isToday) {
                 [self changeDateAndLunarColor:colorTitle dateString:dateString lunarWithNewLine:lunarWithNewLine color:[NSColor whiteColor]];
