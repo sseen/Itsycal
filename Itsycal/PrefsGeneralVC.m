@@ -145,7 +145,7 @@ static NSString * const kCalendarCellId = @"CalendarCell";
     NSButton *btQuit = [[NSButton alloc] init];
     [btQuit setButtonType:NSButtonTypeMomentaryPushIn];
     [btQuit setBezelStyle:NSBezelStyleRounded];
-    btQuit.title = NSLocalizedString(@"Quite Swittee", @"");
+    btQuit.title = NSLocalizedString(@"Quit", @"");
     btQuit.action = @selector(ckExit);
     [v addSubview:btQuit];
     

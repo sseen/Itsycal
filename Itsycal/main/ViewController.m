@@ -20,6 +20,7 @@
 #import "MoVFLHelper.h"
 #import "MoUtils.h"
 #import "SCUtils.h"
+#import "Themer.h"
 
 static NSString const *emojiMonth[13]  = {@"",@"♒️",@"♓️",@"♈️",@"♉️",@"♊️",@"♋️",@"♌️",@"♍️",@"♎️",@"♏️",@"♐️",@"♑️"};
 static NSString const *emojiWeekday[8] = {@"",@"🥺",@"😭",@"🙄",@"😁",@"😎",@"🥳",@"😍"};
@@ -83,6 +84,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
         [btn setAction:action];
         [btn setToolTip:tip];
         [btn setImage:[NSImage imageNamed:imageName]];
+        [btn setImageScaling:NSImageScaleProportionallyUpOrDown];
         [btn setKeyEquivalent:key];
         [btn setKeyEquivalentModifierMask:NSEventModifierFlagCommand];
         [btn.image setTemplate:true];
@@ -113,12 +115,32 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     _agendaVC.identifier = @"AgendaVC";
     NSView *agenda = _agendaVC.view;
     [v addSubview:agenda];
+    
+    ///
+    /// new style quit button
+    /// 还是两个button放在一起，不然审核不通过
+    NSButton *btQuit = [[NSButton alloc] init];
+    [btQuit setButtonType:NSButtonTypeMomentaryChange];
+    [btQuit setBezelStyle:NSBezelStyleRounded];
+    NSString *title = NSLocalizedString(@"Quit", @"");
+    NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:NSColor.secondaryLabelColor}];
+    [btQuit setAttributedTitle:attrTitle];
+    //[btQuit setImage:[NSImage imageNamed:@"btnExit"]];
+    //[btQuit.image setTemplate:true];
+    //btQuit.imagePosition = NSImageLeft;
+    
+    [btQuit setBordered:false];
+    [btQuit setAction:@selector(exitApp:)];
+    [btQuit.effectiveAppearance bestMatchFromAppearancesWithNames:@[NSAppearanceNameVibrantDark, NSAppearanceNameVibrantLight]];
+    //btQuit.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
+    [v addSubview:btQuit];
 
     // Constraints
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:nil views:NSDictionaryOfVariableBindings(_moCal, _btnExit, _btnAdd, _btnCal, _btnOpt, _btnPin, agenda)];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:nil views:NSDictionaryOfVariableBindings(_moCal, _btnAdd, _btnCal, _btnOpt, _btnPin, agenda, btQuit, _btnExit)];
+    //[vfl :@"H:|-(>=0)-[btQuit]-10-|"];
     [vfl :@"H:|[_moCal]|"];
     [vfl :@"H:|-4-[agenda]-4-|"];
-    [vfl :@"H:|-10-[_btnExit]-(>=0)-[_btnPin]-10-[_btnAdd]-10-[_btnCal]-10-[_btnOpt]-10-|" :NSLayoutFormatAlignAllCenterY];
+    [vfl :@"H:|-10-[_btnExit(==18)]-2-[btQuit]-(>=0)-[_btnPin]-10-[_btnAdd]-10-[_btnCal]-10-[_btnOpt]-10-|" :NSLayoutFormatAlignAllCenterY];
     [vfl :@"V:|-6-[_moCal]-6-[_btnOpt]"];
     [vfl :@"V:[agenda]-(-1)-|"];
     
