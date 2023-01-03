@@ -153,6 +153,8 @@
                 <string>国庆节</string>
                 <key>2022-10-07</key>
                 <string>国庆节</string>
+                <key>2022-12-31</key>
+                <string>元旦</string>
             </dict>
             <key>work</key>
             <dict>
@@ -170,6 +172,85 @@
                 <string>国庆节</string>
                 <key>2022-10-09</key>
                 <string>国庆节</string>
+            </dict>
+        </dict>
+        <key>2023</key>
+        <dict>
+            <key>relax</key>
+            <dict>
+                <key>2023-01-01</key>
+                <string>元旦</string>
+                <key>2023-01-02</key>
+                <string>元旦</string>
+                <key>2023-01-21</key>
+                <string>春节</string>
+                <key>2023-01-22</key>
+                <string>春节</string>
+                <key>2023-01-23</key>
+                <string>春节</string>
+                <key>2023-01-24</key>
+                <string>春节</string>
+                <key>2023-01-25</key>
+                <string>春节</string>
+                <key>2023-01-26</key>
+                <string>春节</string>
+                <key>2023-01-27</key>
+                <string>春节</string>
+                <key>2023-04-05</key>
+                <string>清明节</string>
+                <key>2023-04-29</key>
+                <string>劳动节</string>
+                <key>2023-04-30</key>
+                <string>劳动节</string>
+                <key>2023-05-01</key>
+                <string>劳动节</string>
+                <key>2023-05-02</key>
+                <string>劳动节</string>
+                <key>2023-05-03</key>
+                <string>劳动节</string>
+
+                <key>2023-06-22</key>
+                <string>端午节</string>
+                <key>2023-06-23</key>
+                <string>端午节</string>
+                <key>2023-06-24</key>
+                <string>端午节</string>
+
+                <key>2023-09-29</key>
+                <string>中秋节、国庆节</string>
+                <key>2023-09-30</key>
+                <string>中秋节、国庆节</string>
+                <key>2023-10-01</key>
+                <string>中秋节、国庆节</string>
+                <key>2023-10-02</key>
+                <string>中秋节、国庆节</string>
+                <key>2023-10-03</key>
+                <string>中秋节、国庆节</string>
+                <key>2023-10-04</key>
+                <string>中秋节、国庆节</string>
+                <key>2023-10-05</key>
+                <string>中秋节、国庆节</string>
+                <key>2023-10-06</key>
+                <string>中秋节、国庆节</string>
+            </dict>
+            <key>work</key>
+            <dict>
+                <key>2023-01-28</key>
+                <string>春节</string>
+                <key>2023-01-29</key>
+                <string>春节</string>
+                <key>2022-04-02</key>
+                <string>清明节</string>
+                <key>2023-04-23</key>
+                <string>劳动节</string>
+                <key>2023-05-06</key>
+                <string>劳动节</string>
+                <key>2023-06-25</key>
+                <string>端午节</string>
+                <key>2023-10-07</key>
+                <string>中秋节、国庆节</string>
+                <key>2023-10-08</key>
+                <string>中秋节、国庆节</string>
             </dict>
         </dict>
     </dict>

@@ -109,8 +109,8 @@ static NSString *kHolidayCellIdentifier = @"HolidayCell";
     // cn nation day
     _cnNationEI = [EventInfo new];
     _cnNationEI.isAllDay = true;
-    _cnNationEI.event = [[EKEvent alloc] init];
-    _cnNationEI.event.calendar = [[EKCalendar alloc] init];
+    EKEventStore *store = [EKEventStore new];
+    _cnNationEI.event = [EKEvent eventWithEventStore:store];
     
     self.view = v;
 }
