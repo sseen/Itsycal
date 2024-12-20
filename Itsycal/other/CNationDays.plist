@@ -253,6 +253,100 @@
                 <string>中秋节、国庆节</string>
             </dict>
         </dict>
+        <key>2024</key>
+        <dict>
+            <key>relax</key>
+            <dict>
+                <key>2024-01-01</key>
+                <string>元旦</string>
+                <key>2024-02-10</key>
+                <string>春节</string>
+                <key>2024-02-11</key>
+                <string>春节</string>
+                <key>2024-02-12</key>
+                <string>春节</string>
+                <key>2024-02-13</key>
+                <string>春节</string>
+                <key>2024-02-14</key>
+                <string>春节</string>
+                <key>2024-02-15</key>
+                <string>春节</string>
+                <key>2024-02-16</key>
+                <string>春节</string>
+                <key>2024-02-17</key>
+                <string>春节</string>
+                <key>2024-04-04</key>
+                <string>清明节</string>
+                <key>2024-04-05</key>
+                <string>清明节</string>
+                <key>2024-04-06</key>
+                <string>清明节</string>
+                <key>2024-05-01</key>
+                <string>劳动节</string>
+                <key>2024-05-02</key>
+                <string>劳动节</string>
+                <key>2024-05-03</key>
+                <string>劳动节</string>
+                <key>2024-05-04</key>
+                <string>劳动节</string>
+                <key>2024-05-05</key>
+                <string>劳动节</string>
+
+                <key>2024-06-10</key>
+                <string>端午节</string>
+
+                <key>2024-09-15</key>
+                <string>中秋节</string>
+                <key>2024-09-16</key>
+                <string>中秋节</string>
+                <key>2024-09-17</key>
+                <string>中秋节</string>
+                
+                <key>2024-10-01</key>
+                <string>国庆节</string>
+                <key>2024-10-02</key>
+                <string>国庆节</string>
+                <key>2024-10-03</key>
+                <string>国庆节</string>
+                <key>2024-10-04</key>
+                <string>国庆节</string>
+                <key>2024-10-05</key>
+                <string>国庆节</string>
+                <key>2024-10-06</key>
+                <string>国庆节</string>
+                <key>2024-10-07</key>
+                <string>国庆节</string>
+            </dict>
+            <key>work</key>
+            <dict>
+                <key>2024-02-04</key>
+                <string>春节</string>
+                <key>2024-02-18</key>
+                <string>春节</string>
+                <key>2024-04-07</key>
+                <string>清明节</string>
+
+                <key>2024-04-28</key>
+                <string>劳动节</string>
+                <key>2024-05-11</key>
+                <string>劳动节</string>
+
+                <key>2024-09-14</key>
+                <string>中秋节</string>
+                <key>2024-09-29</key>
+                <string>国庆节</string>
+                <key>2024-10-12</key>
+                <string>国庆节</string>
+            </dict>
+        </dict>
+        <key>2025</key>
+        <dict></dict>
+        <key>2026</key>
+        <dict></dict>
+        <key>2027</key>
+        <dict></dict>
+        <key>2028</key>
+        <dict></dict>
         <key>2025</key>
         <dict>
             <key>relax</key>
