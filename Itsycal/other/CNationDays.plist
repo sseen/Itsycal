@@ -340,79 +340,69 @@
             </dict>
         </dict>
         <key>2025</key>
-        <dict></dict>
+        <dict>
+            <key>relax</key>
+            <dict>
+                <!-- 元旦：1月1日（周三） -->
+                <key>2025-01-01</key><string>元旦</string>
+
+                <!-- 春节：1月28日（除夕）至2月4日（初七），共8天 -->
+                <key>2025-01-28</key><string>春节</string>
+                <key>2025-01-29</key><string>春节</string>
+                <key>2025-01-30</key><string>春节</string>
+                <key>2025-01-31</key><string>春节</string>
+                <key>2025-02-01</key><string>春节</string>
+                <key>2025-02-02</key><string>春节</string>
+                <key>2025-02-03</key><string>春节</string>
+                <key>2025-02-04</key><string>春节</string>
+
+                <!-- 清明节：4月4日（周五）至6日（周日），共3天 -->
+                <key>2025-04-04</key><string>清明节</string>
+                <key>2025-04-05</key><string>清明节</string>
+                <key>2025-04-06</key><string>清明节</string>
+
+                <!-- 劳动节：5月1日（周四）至5日（周一），共5天 -->
+                <key>2025-05-01</key><string>劳动节</string>
+                <key>2025-05-02</key><string>劳动节</string>
+                <key>2025-05-03</key><string>劳动节</string>
+                <key>2025-05-04</key><string>劳动节</string>
+                <key>2025-05-05</key><string>劳动节</string>
+
+                <!-- 端午节：5月31日（周六）至6月2日（周一），共3天 -->
+                <key>2025-05-31</key><string>端午节</string>
+                <key>2025-06-01</key><string>端午节</string>
+                <key>2025-06-02</key><string>端午节</string>
+
+                <!-- 国庆节、中秋节：10月1日（周三）至8日（周三），共8天 -->
+                <key>2025-10-01</key><string>国庆节、中秋节</string>
+                <key>2025-10-02</key><string>国庆节、中秋节</string>
+                <key>2025-10-03</key><string>国庆节、中秋节</string>
+                <key>2025-10-04</key><string>国庆节、中秋节</string>
+                <key>2025-10-05</key><string>国庆节、中秋节</string>
+                <key>2025-10-06</key><string>国庆节、中秋节</string>
+                <key>2025-10-07</key><string>国庆节、中秋节</string>
+                <key>2025-10-08</key><string>国庆节、中秋节</string>
+            </dict>
+            <key>work</key>
+            <dict>
+                <!-- 春节调休：1月26日（周日）、2月8日（周六） -->
+                <key>2025-01-26</key><string>春节调休上班</string>
+                <key>2025-02-08</key><string>春节调休上班</string>
+
+                <!-- 劳动节调休：4月27日（周日） -->
+                <key>2025-04-27</key><string>劳动节调休上班</string>
+
+                <!-- 国庆节调休：9月28日（周日）、10月11日（周六） -->
+                <key>2025-09-28</key><string>国庆节、中秋节调休上班</string>
+                <key>2025-10-11</key><string>国庆节、中秋节调休上班</string>
+            </dict>
+        </dict>
         <key>2026</key>
         <dict></dict>
         <key>2027</key>
         <dict></dict>
         <key>2028</key>
         <dict></dict>
-        <key>2025</key>
-        <dict>
-            <key>relax</key>
-            <dict>
-                <key>2025-01-01</key>
-                <string>元旦</string>
-                <key>2025-01-28</key>
-                <string>春节</string>
-                <key>2025-02-02</key>
-                <string>春节</string>
-                <key>2025-02-03</key>
-                <string>春节</string>
-                <key>2025-02-04</key>
-                <string>春节</string>
-                <key>2025-04-04</key>
-                <string>清明节</string>
-                <key>2025-04-05</key>
-                <string>清明节</string>
-                <key>2025-04-06</key>
-                <string>清明节</string>
-                <key>2025-05-01</key>
-                <string>劳动节</string>
-                <key>2025-05-02</key>
-                <string>劳动节</string>
-                <key>2025-05-03</key>
-                <string>劳动节</string>
-                <key>2025-05-04</key>
-                <string>劳动节</string>
-                <key>2025-05-05</key>
-                <string>劳动节</string>
-                <key>2025-05-31</key>
-                <string>端午节</string>
-                <key>2025-06-01</key>
-                <string>端午节</string>
-                <key>2025-06-02</key>
-                <string>端午节</string>
-                <key>2025-10-01</key>
-                <string>国庆节、中秋节</string>
-                <key>2025-10-02</key>
-                <string>国庆节、中秋节</string>
-                <key>2025-10-03</key>
-                <string>国庆节、中秋节</string>
-                <key>2025-10-04</key>
-                <string>国庆节、中秋节</string>
-                <key>2025-10-05</key>
-                <string>国庆节、中秋节</string>
-                <key>2025-10-06</key>
-                <string>国庆节、中秋节</string>
-                <key>2025-10-07</key>
-                <string>国庆节、中秋节</string>
-                <key>2025-10-08</key>
-                <string>国庆节、中秋节</string>
-            </dict>
-            <key>work</key>
-            <dict>
-                <key>2025-01-26</key>
-                <string>春节调休上班</string>
-                <key>2025-02-08</key>
-                <string>春节调休上班</string>
-                <key>2025-04-27</key>
-                <string>劳动节调休上班</string>
-                <key>2025-09-28</key>
-                <string>国庆节、中秋节调休上班</string>
-                <key>2025-10-11</key>
-                <string>国庆节、中秋节调休上班</string>
-            </dict>
-        </dict>
+        
     </dict>
 </plist>
