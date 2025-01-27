@@ -64,6 +64,19 @@
 //    NSButton *bigger = chkbx(NSLocalizedString(@"Use larger text", @""));
     _hideIcon = chkbx(NSLocalizedString(@"Hide icon", @""));
 
+    NSColorWell *workColorWell = [[NSColorWell alloc] init];
+    NSColorWell *relaxColorWell = [[NSColorWell alloc] init];
+    
+    [workColorWell bind:@"value" 
+               toObject:[NSUserDefaultsController sharedUserDefaultsController]
+            withKeyPath:[@"values." stringByAppendingString:kHolidayWorkColor]
+                options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
+                
+    [relaxColorWell bind:@"value"
+                toObject:[NSUserDefaultsController sharedUserDefaultsController]
+             withKeyPath:[@"values." stringByAppendingString:kHolidayRelaxColor]
+                 options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
+
     // Datetime format text field
     _dateTimeFormat = [NSTextField textFieldWithString:@""];
     _dateTimeFormat.placeholderString = NSLocalizedString(@"Datetime pattern", @"");
@@ -100,22 +113,6 @@
     [themePopup itemAtIndex:2].tag = ThemePreferenceDark;
     [v addSubview:themePopup];
     
-//    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @20, @"mm": @40} views:NSDictionaryOfVariableBindings(menubarLabel, calendarLabel, separator0, separator1, bigger, useOutlineIcon, showMonth, showDayOfWeek, showEventDots, useColoredDots, showWeeks, showLocation, _dateTimeFormat, helpButton, _hideIcon, highlight, themeLabel, themePopup)];
-//    [vfl :@"V:|-m-[menubarLabel]-10-[useOutlineIcon]-[showMonth]-[showDayOfWeek]-[_dateTimeFormat]-[_hideIcon]-m-[calendarLabel]-10-[themePopup]-m-[highlight]-m-[showEventDots]-[useColoredDots]-[showLocation]-[showWeeks]-[bigger]-m-|"];
-//    [vfl :@"H:|-m-[menubarLabel]-[separator0]-m-|" :NSLayoutFormatAlignAllCenterY];
-//    [vfl :@"H:|-m-[calendarLabel]-[separator1]-m-|" :NSLayoutFormatAlignAllCenterY];
-//    [vfl :@"H:|-m-[useOutlineIcon]-(>=m)-|"];
-//    [vfl :@"H:|-m-[showMonth]-(>=m)-|"];
-//    [vfl :@"H:|-m-[showDayOfWeek]-(>=m)-|"];
-//    [vfl :@"H:|-m-[_dateTimeFormat]-[helpButton]-m-|" :NSLayoutFormatAlignAllCenterY];
-//    [vfl :@"H:|-m-[_hideIcon]-(>=m)-|"];
-//    [vfl :@"H:|-m-[highlight]-(>=m)-|"];
-//    [vfl :@"H:|-m-[themeLabel]-[themePopup]-(>=m)-|" :NSLayoutFormatAlignAllFirstBaseline];
-//    [vfl :@"H:|-m-[showEventDots]-(>=m)-|"];
-//    [vfl :@"H:|-mm-[useColoredDots]-(>=m)-|"];
-//    [vfl :@"H:|-m-[showWeeks]-(>=m)-|"];
-//    [vfl :@"H:|-m-[showLocation]-(>=m)-|"];
-//    [vfl :@"H:|-m-[bigger]-(>=m)-|"];
     
     MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @25, @"mm": @50, @"m3m":@65, @"top": @100} views:NSDictionaryOfVariableBindings(menubarLabel, calendarLabel, separator0, separator1, useOutlineIcon, useEmojiIcon, useEmojiIconHideFace, showMonth, showDayOfWeek, showEventDots, useColoredDots, showWeeks, showLocation, showCnLunar, showCnNationDays, _dateTimeFormat, helpButton, _hideIcon, themeLabel, themePopup, useBigMenuFont)];
     [vfl :@"V:|-top-[menubarLabel]-10-[useBigMenuFont]-[useOutlineIcon]-[useEmojiIcon]-[useEmojiIconHideFace]-[showMonth]-[showDayOfWeek]-[_dateTimeFormat]-[_hideIcon]-m-[calendarLabel]-10-[themePopup]-m-[showEventDots]-[useColoredDots]-[showLocation]-[showWeeks]-[showCnLunar]-[showCnNationDays]-m-|"];
@@ -191,6 +188,12 @@
     [showCnLunar bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kShowCnLunar] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
     [showCnNationDays bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kshowCnNationDays] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
     
+    // add work color
+    [workColorWell bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kHolidayWorkColor] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
+    
+    // add relax color
+    [relaxColorWell bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kHolidayRelaxColor] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
+
     self.view = v;
 }
 

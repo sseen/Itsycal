@@ -179,5 +179,16 @@ Themer *Theme = nil;
     return [NSColor colorNamed:@"WindowBorderColor"];
 }
 
+// Themer.m
+- (NSColor *)cnWork {
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:kHolidayWorkColor];
+    return [NSKeyedUnarchiver unarchiveObjectWithData:colorData] ?: [NSColor systemBlueColor];
+}
+
+- (NSColor *)cnRelax {
+    NSData *colorData = [[NSUserDefaults standardUserDefaults] objectForKey:kHolidayRelaxColor]; 
+    return [NSKeyedUnarchiver unarchiveObjectWithData:colorData] ?: [NSColor systemRedColor];
+}
+
 
 @end
