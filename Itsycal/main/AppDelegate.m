@@ -63,8 +63,8 @@
         kThemePreference:      @0, // System=0, Light=1, Dark=2
         kShowCnLunar:          @(isCn),
         kshowCnNationDays:     @(isCn),
-        kHolidayWorkColor: [NSKeyedArchiver archivedDataWithRootObject:[NSColor systemBlueColor]],
-        kHolidayRelaxColor: [NSKeyedArchiver archivedDataWithRootObject:[NSColor systemRedColor]], 
+//        kHolidayWorkColor: [NSKeyedArchiver archivedDataWithRootObject:[NSColor systemBlueColor]],
+//        kHolidayRelaxColor: [NSKeyedArchiver archivedDataWithRootObject:[NSColor systemRedColor]], 
         kShowLocation: @(NO),
         kHideIcon:             @(NO)
     }];

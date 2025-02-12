@@ -1301,10 +1301,11 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     }
     else if ([keyPath isEqualToString:kClockFormat]) {
         [self clockFormatDidChange];
-    }else if ([keyPath isEqualToString:kHolidayWorkColor] ||
-        [keyPath isEqualToString:kHolidayRelaxColor]) {
-        [_moCal updateCalendar];
     }
+//    else if ([keyPath isEqualToString:kHolidayWorkColor] ||
+//        [keyPath isEqualToString:kHolidayRelaxColor]) {
+//        [_moCal updateCalendar];
+//    }
 }
 
 @end

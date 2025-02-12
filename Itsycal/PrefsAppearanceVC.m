@@ -67,15 +67,15 @@
     NSColorWell *workColorWell = [[NSColorWell alloc] init];
     NSColorWell *relaxColorWell = [[NSColorWell alloc] init];
     
-    [workColorWell bind:@"value" 
-               toObject:[NSUserDefaultsController sharedUserDefaultsController]
-            withKeyPath:[@"values." stringByAppendingString:kHolidayWorkColor]
-                options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
-                
-    [relaxColorWell bind:@"value"
-                toObject:[NSUserDefaultsController sharedUserDefaultsController]
-             withKeyPath:[@"values." stringByAppendingString:kHolidayRelaxColor]
-                 options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
+//    [workColorWell bind:@"value" 
+//               toObject:[NSUserDefaultsController sharedUserDefaultsController]
+//            withKeyPath:[@"values." stringByAppendingString:kHolidayWorkColor]
+//                options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
+//                
+//    [relaxColorWell bind:@"value"
+//                toObject:[NSUserDefaultsController sharedUserDefaultsController]
+//             withKeyPath:[@"values." stringByAppendingString:kHolidayRelaxColor]
+//                 options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
 
     // Datetime format text field
     _dateTimeFormat = [NSTextField textFieldWithString:@""];
@@ -188,11 +188,11 @@
     [showCnLunar bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kShowCnLunar] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
     [showCnNationDays bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kshowCnNationDays] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
     
-    // add work color
-    [workColorWell bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kHolidayWorkColor] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
-    
-    // add relax color
-    [relaxColorWell bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kHolidayRelaxColor] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
+//    // add work color
+//    [workColorWell bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kHolidayWorkColor] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
+//    
+//    // add relax color
+//    [relaxColorWell bind:@"value" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kHolidayRelaxColor] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
 
     self.view = v;
 }
