@@ -483,7 +483,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 /// @param color 颜色
 - (void)highlightCellsFromDate:(MoDate)startDate toDate:(MoDate)endDate withColor:(NSColor *)color
 {
-    NSLog(@"__ highligt cell_ start %d, end %d", startDate.day, endDate.day);
+    //NSLog(@"__ highligt cell_ start %d, end %d", startDate.day, endDate.day);
     MoCalCell *startCell=nil, *endCell=nil;
     for (MoCalCell *cell in _dateGrid.cells) {
         if (!startCell && CompareDates(startDate, cell.date) <= 0) {

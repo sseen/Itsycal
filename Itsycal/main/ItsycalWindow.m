@@ -215,61 +215,49 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    [NSColor.clearColor set];
-    NSRectFill(dirtyRect);
     [super drawRect:dirtyRect];
-    // Draw the window background with the little arrow
-    // at the top.
-    
-    // The rectangular part of frame view must be inset and
-    // shortened to make room for the border and arrow.
-    NSRect rect = NSInsetRect(self.bounds, kBorderWidth, kBorderWidth);
-    rect.size.height -= kArrowHeight;
-
-    // NSLog(@"———— %@,%f", NSStringFromRect(rect),_arrowMidX);
-
-    // Do we need to draw the whole window?
-    // If dirtyRect is inside the body of the window, we can just fill it.
-    NSRect bodyRect = NSInsetRect(rect, 1, kCornerRadius);
-    if (NSContainsRect(bodyRect, dirtyRect)) {
-        [Theme.mainBackgroundColor setFill];
-        NSRectFill(dirtyRect);
-        return;
-    }
-
-    // We need to draw the whole window.
-
     [[NSColor clearColor] set];
-    NSRectFill(self.bounds);
-
-    NSBezierPath *rectPath = [NSBezierPath bezierPathWithRoundedRect:rect xRadius:kCornerRadius yRadius:kCornerRadius];
-
-    // Append the arrow to the body if its right ege is inside
-    // the right edge of the body (taking into account the corner
-    // radius). This accounts for the edge-case where Itsycal is
-    // all the way to the right in the menu bar. This is possible
-    // if the user has a 3rd party app like Bartender.
-    CGFloat curveOffset = 5;
-    CGFloat arrowMidX = (_arrowMidX == 0) ? NSMidX(self.frame) : _arrowMidX;
-
-    NSLog(@"ss1 %f",arrowMidX);
+    NSRectFill(dirtyRect);
     
-    CGFloat arrowRightEdge = arrowMidX + curveOffset + kArrowHeight;
-    CGFloat bodyRightEdge = NSMaxX(rect) - kCornerRadius;
-    if (arrowRightEdge < bodyRightEdge) {
-        NSBezierPath *arrowPath = [NSBezierPath bezierPath];
-        CGFloat x = arrowMidX - kArrowHeight - curveOffset;
-        CGFloat y = NSHeight(self.frame) - kArrowHeight - kBorderWidth;
-        [arrowPath moveToPoint:NSMakePoint(x, y)];
-        [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, kArrowHeight)];
-        [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + curveOffset, -kArrowHeight) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeight, -kArrowHeight)];
-        [rectPath appendBezierPath:arrowPath];
-    }
+    // ❶ 从 self.bounds 减去边框 & 箭头
+    NSRect rect = NSInsetRect(self.bounds, kBorderWidth, kBorderWidth);
+    rect.size.height -= kArrowHeight; // 让主体腾出箭头高度
+    
+    // ❷ 先做一个圆角矩形
+    NSBezierPath *rectPath = [NSBezierPath
+                              bezierPathWithRoundedRect:rect
+                              xRadius:kCornerRadius
+                              yRadius:kCornerRadius];
+    
+    // ❸ 在顶部追加箭头路径
+    CGFloat arrowMidX = (_arrowMidX == 0) ? NSMidX(self.bounds) : _arrowMidX;
+    CGFloat curveOffset = 5.0;
+    
+    // 箭头的“基线”就在主体 rect 的顶部
+    CGFloat arrowBaseY = NSMaxY(rect);
+    // 箭头左端 x 坐标 = (箭头中点) - (箭头宽度/2)
+    // 箭头宽度大约是 (kArrowHeight + curveOffset) * 2
+    CGFloat x = arrowMidX - (kArrowHeight + curveOffset);
+    
+    // 创建箭头的 BezierPath
+    NSBezierPath *arrowPath = [NSBezierPath bezierPath];
+    [arrowPath moveToPoint:NSMakePoint(x, arrowBaseY)];
+    [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight+curveOffset, kArrowHeight)
+                      controlPoint1:NSMakePoint(curveOffset, 0)
+                      controlPoint2:NSMakePoint(kArrowHeight, kArrowHeight)];
+    [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight+curveOffset, -kArrowHeight)
+                      controlPoint1:NSMakePoint(curveOffset, 0)
+                      controlPoint2:NSMakePoint(kArrowHeight, -kArrowHeight)];
+    
+    // ❹ 把箭头 append 到原先圆角矩形的路径里
+    [rectPath appendBezierPath:arrowPath];
+    
+    // ❺ 描边 & 填充
+    [rectPath setLineWidth:kBorderWidth];
     [Theme.windowBorderColor setStroke];
-    [rectPath setLineWidth:1*kBorderWidth];
-    [rectPath stroke];
     [Theme.windowBorderColor setFill];
     [rectPath fill];
+    [rectPath stroke];
 }
 
 @end
@@ -284,75 +272,41 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 @implementation ItsycalWindowVisualView
 
 - (void)invalidateCornerImage {
-    // 刚开始时候尺寸没有的话，报错
-    if (self.bounds.size.height == 0) {
-        return;
-    }
+    if (self.bounds.size.height == 0) return;
     
-    // Draw the window background with the little arrow
-    // at the top.
-
-    // The rectangular part of frame view must be inset and
-    // shortened to make room for the border and arrow.
+    // 跟 FrameView 同样的算法：
     NSRect rect = NSInsetRect(self.bounds, kBorderWidth, kBorderWidth);
     rect.size.height -= kArrowHeight;
     
-//    // Do we need to draw the whole window?
-//    // If dirtyRect is inside the body of the window, we can just fill it.
-//    NSRect bodyRect = NSInsetRect(rect, 1, kCornerRadius);
-//    if (NSContainsRect(bodyRect, dirtyRect)) {
-//        [Theme.mainBackgroundColor setFill];
-//        NSRectFill(dirtyRect);
-//        return;
-//    }
+    NSImage *img = [[NSImage alloc] initWithSize:self.bounds.size];
+    [img lockFocus];
     
-    _cornerImage = [[NSImage alloc] initWithSize:self.bounds.size];
-    [_cornerImage lockFocus];
-
-//    rect = NSMakeRect(20, 20, 200, 200);
-    NSLog(@"%@,%f", NSStringFromRect(rect),_arrowMidX);
-
-
-    // We need to draw the whole window.
-
-//    [[NSColor clearColor] set];
-//    NSRectFill(self.bounds);
-
-    NSBezierPath *rectPath = [NSBezierPath bezierPathWithRoundedRect:rect xRadius:kCornerRadius yRadius:kCornerRadius];
-
-    // Append the arrow to the body if its right ege is inside
-    // the right edge of the body (taking into account the corner
-    // radius). This accounts for the edge-case where Itsycal is
-    // all the way to the right in the menu bar. This is possible
-    // if the user has a 3rd party app like Bartender.
-    CGFloat curveOffset = 5;
-    CGFloat arrowMidX = (_arrowMidX == 0) ? NSMidX(rect) : _arrowMidX;
-
-    NSLog(@"ss2 %f",arrowMidX);
+    // 注意：保证跟上面的箭头曲线参数完全一致
+    NSBezierPath *rectPath =
+    [NSBezierPath bezierPathWithRoundedRect:rect
+                                    xRadius:kCornerRadius
+                                    yRadius:kCornerRadius];
     
-    CGFloat kArrowHeightTmp = kArrowHeight;
-    CGFloat arrowRightEdge = arrowMidX + curveOffset + kArrowHeightTmp;
-    CGFloat bodyRightEdge = NSMaxX(rect) - kCornerRadius;
-    if (arrowRightEdge < bodyRightEdge) {
-        NSBezierPath *arrowPath = [NSBezierPath bezierPath];
-        CGFloat x = arrowMidX - kArrowHeightTmp - curveOffset - 0.5;
-        CGFloat y = NSHeight(rect) - kBorderWidth + 2;
-        [arrowPath moveToPoint:NSMakePoint(x, y)];
-        [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeightTmp + curveOffset, kArrowHeightTmp) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeightTmp, kArrowHeightTmp)];
-        [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeightTmp + curveOffset, -kArrowHeightTmp) controlPoint1:NSMakePoint(curveOffset, 0) controlPoint2:NSMakePoint(kArrowHeightTmp, -kArrowHeightTmp)];
-        [rectPath appendBezierPath:arrowPath];
-    }
-    //[Theme.windowBorderColor setStroke];
-//    [NSColor.whiteColor setStroke];
-//    [rectPath setLineWidth:1*kBorderWidth];
-//    [rectPath stroke];
-//    [NSColor.whiteColor setFill]; //278 打开的话这个必须有 [[NSColor clearColor] set];
+    CGFloat arrowMidX = (_arrowMidX == 0) ? NSMidX(self.bounds) : _arrowMidX;
+    CGFloat curveOffset = 5.0;
+    CGFloat arrowBaseY = NSMaxY(rect);
+    
+    NSBezierPath *arrowPath = [NSBezierPath bezierPath];
+    CGFloat x = arrowMidX - (kArrowHeight + curveOffset);
+    [arrowPath moveToPoint:NSMakePoint(x, arrowBaseY)];
+    [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight+curveOffset, kArrowHeight)
+                      controlPoint1:NSMakePoint(curveOffset, 0)
+                      controlPoint2:NSMakePoint(kArrowHeight, kArrowHeight)];
+    [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight+curveOffset, -kArrowHeight)
+                      controlPoint1:NSMakePoint(curveOffset, 0)
+                      controlPoint2:NSMakePoint(kArrowHeight, -kArrowHeight)];
+    [rectPath appendBezierPath:arrowPath];
+    
     [rectPath addClip];
-    [rectPath fill];
-
-    [_cornerImage unlockFocus];
-
-    self.maskImage = _cornerImage;
+    [rectPath fill]; // 用透明色填充，表示可见区域
+    
+    [img unlockFocus];
+    self.maskImage = img;
 }
 
 - (void)viewDidMoveToSuperview {
@@ -362,7 +316,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 }
 
 - (void)setFrameSize:(NSSize)newSize {
-    NSLog(@"** %@,%@", NSStringFromRect(self.bounds),NSStringFromSize(newSize));
+    // NSLog(@"** %@,%@", NSStringFromRect(self.bounds),NSStringFromSize(newSize));
     [super setFrameSize: newSize];
     self.translatesAutoresizingMaskIntoConstraints = false;
 //    self.maskImage = [NSImage imageWithSystemSymbolName:@"hammer.fill" accessibilityDescription:nil];
