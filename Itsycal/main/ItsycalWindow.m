@@ -25,6 +25,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 @interface ItsycalWindowVisualView : NSVisualEffectView
 @property (nonatomic, assign) CGFloat arrowMidX;
 @property (nonatomic, strong) NSImage *cornerImage;
+- (void)invalidateCornerImage ;
 @end
 
 
@@ -71,8 +72,8 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     return NO;
 }
 
-// 貌似增加了vibrant效果没有很好
-// 而且window reload 也貌似没有执行
+// 貌似增加了 vibrant 效果没有很好
+// 而且 window reload 也貌似没有执行
 // 先去掉好了
 - (void)interfaceModeChanged:(NSNotification *)sender {
 //    if ([ItsycalWindow isDarkMode]) {
@@ -195,6 +196,9 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     frameView.arrowMidX = NSMidX([super convertRectFromScreen:rect]);
     [frameView setNeedsDisplay:YES];
     
+    _vibrant.arrowMidX = frameView.arrowMidX;
+    [_vibrant invalidateCornerImage];
+    
     [self invalidateShadow];
 }
 
@@ -247,6 +251,9 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     // if the user has a 3rd party app like Bartender.
     CGFloat curveOffset = 5;
     CGFloat arrowMidX = (_arrowMidX == 0) ? NSMidX(self.frame) : _arrowMidX;
+
+    NSLog(@"ss1 %f",arrowMidX);
+    
     CGFloat arrowRightEdge = arrowMidX + curveOffset + kArrowHeight;
     CGFloat bodyRightEdge = NSMaxX(rect) - kCornerRadius;
     if (arrowRightEdge < bodyRightEdge) {
@@ -320,6 +327,8 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     // if the user has a 3rd party app like Bartender.
     CGFloat curveOffset = 5;
     CGFloat arrowMidX = (_arrowMidX == 0) ? NSMidX(rect) : _arrowMidX;
+
+    NSLog(@"ss2 %f",arrowMidX);
     
     CGFloat kArrowHeightTmp = kArrowHeight;
     CGFloat arrowRightEdge = arrowMidX + curveOffset + kArrowHeightTmp;
@@ -337,7 +346,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 //    [NSColor.whiteColor setStroke];
 //    [rectPath setLineWidth:1*kBorderWidth];
 //    [rectPath stroke];
-//    [NSColor.whiteColor setFill]; //278打开的话这个必须有 [[NSColor clearColor] set];
+//    [NSColor.whiteColor setFill]; //278 打开的话这个必须有 [[NSColor clearColor] set];
     [rectPath addClip];
     [rectPath fill];
 
