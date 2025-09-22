@@ -2,7 +2,7 @@ import AppKit
 import QuartzCore
 import SwiftUI
 
-@available(macOS 15.0, *)
+@available(macOS 26.0, *)
 @objcMembers
 final class ItsycalGlassHostView: NSView {
 
@@ -151,7 +151,7 @@ final class ItsycalGlassHostView: NSView {
     }
 }
 
-@available(macOS 15.0, *)
+@available(macOS 26.0, *)
 private struct ItsycalGlassShell: View {
     let contentView: NSView
     let edgeInsets: EdgeInsets
@@ -171,7 +171,7 @@ private struct ItsycalGlassShell: View {
     }
 }
 
-@available(macOS 15.0, *)
+@available(macOS 26.0, *)
 private struct LegacyAppKitContent: NSViewRepresentable {
     let contentView: NSView
 
@@ -200,7 +200,7 @@ private struct LegacyAppKitContent: NSViewRepresentable {
     func updateNSView(_ nsView: NSView, context: Context) {}
 }
 
-@available(macOS 15.0, *)
+@available(macOS 26.0, *)
 private extension EdgeInsets {
     init(_ insets: NSEdgeInsets) {
         self.init(top: insets.top,
@@ -210,7 +210,7 @@ private extension EdgeInsets {
     }
 }
 
-@available(macOS 15.0, *)
+@available(macOS 26.0, *)
 private extension NSBezierPath {
     var cgPath: CGPath {
         let path = CGMutablePath()
@@ -238,5 +238,36 @@ private extension NSBezierPath {
         }
 
         return path
+    }
+}
+
+@available(macOS 26.0, *)
+@objcMembers
+final class ItsycalGlassBridge: NSObject {
+
+    static func makeGlassHost(contentView: NSView,
+                              top: CGFloat,
+                              left: CGFloat,
+                              bottom: CGFloat,
+                              right: CGFloat,
+                              cornerRadius: CGFloat,
+                              borderWidth: CGFloat,
+                              arrowHeight: CGFloat) -> NSView {
+
+        let insets = NSEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+        let host = ItsycalGlassHostView(contentView: contentView,
+                                        edgeInsets: insets,
+                                        cornerRadius: cornerRadius,
+                                        borderWidth: borderWidth,
+                                        arrowHeight: arrowHeight)
+        return host
+    }
+
+    static func updateBorderColor(forHost host: NSView, color: NSColor) {
+        (host as? ItsycalGlassHostView)?.setBorderColor(color)
+    }
+
+    static func setArrowMidX(forHost host: NSView, value: CGFloat) {
+        (host as? ItsycalGlassHostView)?.setArrowMidX(value)
     }
 }

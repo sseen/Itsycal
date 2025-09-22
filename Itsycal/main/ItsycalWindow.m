@@ -8,13 +8,7 @@
 
 #import "ItsycalWindow.h"
 #import "Themer.h"
-#if __has_include("Swittee_Calendar-Swift.h")
-#import "Swittee_Calendar-Swift.h"
-#elif __has_include("Itsycal-Swift.h")
-#import "Itsycal-Swift.h"
-#else
-@class ItsycalGlassHostView;
-#endif
+#import <objc/message.h>
 
 static const CGFloat kMinimumSpaceBetweenWindowAndScreenEdge = 10;
 static const CGFloat kArrowHeight  = 8;
@@ -122,32 +116,53 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 
     }
     
-    if (@available(macOS 15.0, *)) {
-        if (aView == nil) {
-            return;
-        }
-        if (_glassHost) {
-            [_glassHost removeFromSuperview];
-            _glassHost = nil;
-        }
-        _childContentView = aView;
-        [_childContentView removeFromSuperview];
 
-        NSEdgeInsets insets = NSEdgeInsetsMake(kWindowTopMargin, kWindowSideMargin, kWindowBottomMargin, kWindowSideMargin);
-        ItsycalGlassHostView *host = [[ItsycalGlassHostView alloc] initWithContentView:aView
-                                                                            edgeInsets:insets
-                                                                           cornerRadius:kCornerRadius
-                                                                           borderWidth:kBorderWidth
-                                                                           arrowHeight:kArrowHeight];
-        host.translatesAutoresizingMaskIntoConstraints = NO;
-        [host setBorderColor:Theme.windowBorderColor];
-        _glassHost = host;
-        [frameView addSubview:host positioned:NSWindowBelow relativeTo:nil];
-        NSDictionary *views = NSDictionaryOfVariableBindings(host);
-        [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[host]|" options:0 metrics:nil views:views]];
-        [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[host]|" options:0 metrics:nil views:views]];
-        return;
+    Class glassBridge = NSClassFromString(@"Swittee_Calendar.ItsycalGlassBridge");
+    if (@available(macOS 26.0, *)) {
+        SEL makeSel = @selector(makeGlassHostWithContentView:top:left:bottom:right:cornerRadius:borderWidth:arrowHeight:);
+        if ([glassBridge respondsToSelector:makeSel] && aView != nil) {
+            if (_glassHost) {
+                [_glassHost removeFromSuperview];
+                _glassHost = nil;
+            }
+            _childContentView = aView;
+            [_childContentView removeFromSuperview];
+
+            NSEdgeInsets insets = NSEdgeInsetsMake(kWindowTopMargin, kWindowSideMargin, kWindowBottomMargin, kWindowSideMargin);
+
+            typedef NSView *(*GlassMakeFunc)(Class, SEL, NSView *, CGFloat, CGFloat, CGFloat, CGFloat, CGFloat, CGFloat, CGFloat);
+            GlassMakeFunc makeFunc = (GlassMakeFunc)objc_msgSend;
+            NSView *host = makeFunc(glassBridge,
+                                    makeSel,
+                                    aView,
+                                    insets.top,
+                                    insets.left,
+                                    insets.bottom,
+                                    insets.right,
+                                    kCornerRadius,
+                                    kBorderWidth,
+                                    kArrowHeight);
+            if (host) {
+                host.translatesAutoresizingMaskIntoConstraints = NO;
+
+                SEL colorSel = @selector(updateBorderColorForHost:color:);
+                if ([glassBridge respondsToSelector:colorSel]) {
+                    typedef void (*GlassColorFunc)(Class, SEL, NSView *, NSColor *);
+                    GlassColorFunc colorFunc = (GlassColorFunc)objc_msgSend;
+                    colorFunc(glassBridge, colorSel, host, Theme.windowBorderColor);
+                }
+
+                _glassHost = host;
+                [frameView addSubview:host positioned:NSWindowBelow relativeTo:nil];
+                NSDictionary *views = NSDictionaryOfVariableBindings(host);
+                [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[host]|" options:0 metrics:nil views:views]];
+                [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[host]|" options:0 metrics:nil views:views]];
+                return;
+            }
+        }
     }
+
+    _glassHost = nil;
 
     // blur
     if (!_vibrant) {
@@ -223,12 +238,19 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     frameView.arrowMidX = NSMidX([super convertRectFromScreen:rect]);
     [frameView setNeedsDisplay:YES];
     
-    if (@available(macOS 15.0, *)) {
-        if ([_glassHost respondsToSelector:@selector(setArrowMidX:)]) {
-            [(ItsycalGlassHostView *)_glassHost setArrowMidX:frameView.arrowMidX];
+    BOOL handledBySwift = NO;
+    if (_glassHost && @available(macOS 26.0, *)) {
+        Class glassBridge = NSClassFromString(@"Swittee_Calendar.ItsycalGlassBridge");
+        SEL arrowSel = @selector(setArrowMidXForHost:value:);
+        if (glassBridge && [glassBridge respondsToSelector:arrowSel]) {
+            typedef void (*GlassArrowFunc)(Class, SEL, NSView *, CGFloat);
+            GlassArrowFunc arrowFunc = (GlassArrowFunc)objc_msgSend;
+            arrowFunc(glassBridge, arrowSel, _glassHost, frameView.arrowMidX);
+            handledBySwift = YES;
         }
     }
-    else {
+
+    if (!handledBySwift) {
         _vibrant.arrowMidX = frameView.arrowMidX;
         [_vibrant invalidateCornerImage];
     }
