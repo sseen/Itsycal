@@ -11,5 +11,6 @@
 @interface ItsycalWindow : NSPanel
 
 - (void)positionRelativeToRect:(NSRect)rect screenMaxX:(CGFloat)screenMaxX;
+- (BOOL)isUsingGlassShell;
 
 @end

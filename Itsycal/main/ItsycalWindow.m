@@ -19,6 +19,8 @@ static const CGFloat kWindowTopMargin    = kCornerRadius + kBorderWidth + kArrow
 static const CGFloat kWindowSideMargin   = kMarginWidth  + kBorderWidth;
 static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 
+@class ItsycalWindow;
+
 @interface ItsycalWindowFrameView : NSView
 @property (nonatomic, assign) CGFloat arrowMidX;
 @end
@@ -42,6 +44,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     NSView *_childContentView;
     ItsycalWindowVisualView *_vibrant;
     NSView *_glassHost;
+    BOOL _usingGlassShell;
 }
 
 - (id)init
@@ -117,10 +120,12 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     }
     
 
-    Class glassBridge = NSClassFromString(@"Swittee_Calendar.ItsycalGlassBridge");
+    _usingGlassShell = NO;
+
     if (@available(macOS 26.0, *)) {
-        SEL makeSel = @selector(makeGlassHostWithContentView:top:left:bottom:right:cornerRadius:borderWidth:arrowHeight:);
-        if ([glassBridge respondsToSelector:makeSel] && aView != nil) {
+        Class glassBridge = NSClassFromString(@"Swittee_Calendar.ItsycalGlassBridge");
+        SEL makeSel = @selector(makeGlassHostWithContentView:);
+        if (glassBridge && [glassBridge respondsToSelector:makeSel] && aView != nil) {
             if (_glassHost) {
                 [_glassHost removeFromSuperview];
                 _glassHost = nil;
@@ -128,41 +133,25 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
             _childContentView = aView;
             [_childContentView removeFromSuperview];
 
-            NSEdgeInsets insets = NSEdgeInsetsMake(kWindowTopMargin, kWindowSideMargin, kWindowBottomMargin, kWindowSideMargin);
-
-            typedef NSView *(*GlassMakeFunc)(Class, SEL, NSView *, CGFloat, CGFloat, CGFloat, CGFloat, CGFloat, CGFloat, CGFloat);
+            typedef NSView *(*GlassMakeFunc)(Class, SEL, NSView *);
             GlassMakeFunc makeFunc = (GlassMakeFunc)objc_msgSend;
-            NSView *host = makeFunc(glassBridge,
-                                    makeSel,
-                                    aView,
-                                    insets.top,
-                                    insets.left,
-                                    insets.bottom,
-                                    insets.right,
-                                    kCornerRadius,
-                                    kBorderWidth,
-                                    kArrowHeight);
+            NSView *host = makeFunc(glassBridge, makeSel, aView);
             if (host) {
-                host.translatesAutoresizingMaskIntoConstraints = NO;
-
-                SEL colorSel = @selector(updateBorderColorForHost:color:);
-                if ([glassBridge respondsToSelector:colorSel]) {
-                    typedef void (*GlassColorFunc)(Class, SEL, NSView *, NSColor *);
-                    GlassColorFunc colorFunc = (GlassColorFunc)objc_msgSend;
-                    colorFunc(glassBridge, colorSel, host, Theme.windowBorderColor);
-                }
-
                 _glassHost = host;
                 [frameView addSubview:host positioned:NSWindowBelow relativeTo:nil];
                 NSDictionary *views = NSDictionaryOfVariableBindings(host);
                 [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[host]|" options:0 metrics:nil views:views]];
                 [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[host]|" options:0 metrics:nil views:views]];
+                _usingGlassShell = YES;
+                [self setHasShadow:NO];
                 return;
             }
         }
     }
 
     _glassHost = nil;
+    _usingGlassShell = NO;
+    [self setHasShadow:YES];
 
     // blur
     if (!_vibrant) {
@@ -230,32 +219,32 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     // Set the window position.
     [self setFrameTopLeftPoint:NSMakePoint(x, y)];
 
-    // Tell the frame view where to draw the arrow.
     ItsycalWindowFrameView *frameView = [super contentView];
-    // We call super because we want the midX for the frame view,
-    // not the _childContentView, since we use the midX to draw
-    // the frame view.
-    frameView.arrowMidX = NSMidX([super convertRectFromScreen:rect]);
-    [frameView setNeedsDisplay:YES];
-    
-    BOOL handledBySwift = NO;
-    if (_glassHost && @available(macOS 26.0, *)) {
+
+    if (_usingGlassShell && @available(macOS 26.0, *)) {
         Class glassBridge = NSClassFromString(@"Swittee_Calendar.ItsycalGlassBridge");
-        SEL arrowSel = @selector(setArrowMidXForHost:value:);
-        if (glassBridge && [glassBridge respondsToSelector:arrowSel]) {
-            typedef void (*GlassArrowFunc)(Class, SEL, NSView *, CGFloat);
-            GlassArrowFunc arrowFunc = (GlassArrowFunc)objc_msgSend;
-            arrowFunc(glassBridge, arrowSel, _glassHost, frameView.arrowMidX);
-            handledBySwift = YES;
+        SEL refreshSel = @selector(refreshContentLayoutForHost:);
+        if (glassBridge && [glassBridge respondsToSelector:refreshSel]) {
+            typedef void (*GlassRefreshFunc)(Class, SEL, NSView *);
+            GlassRefreshFunc refreshFunc = (GlassRefreshFunc)objc_msgSend;
+            refreshFunc(glassBridge, refreshSel, _glassHost);
         }
+        return;
     }
 
-    if (!handledBySwift) {
-        _vibrant.arrowMidX = frameView.arrowMidX;
-        [_vibrant invalidateCornerImage];
-    }
+    // Tell the frame view where to draw the arrow (legacy path).
+    frameView.arrowMidX = NSMidX([super convertRectFromScreen:rect]);
+    [frameView setNeedsDisplay:YES];
+
+    _vibrant.arrowMidX = frameView.arrowMidX;
+    [_vibrant invalidateCornerImage];
     
     [self invalidateShadow];
+}
+
+- (BOOL)isUsingGlassShell
+{
+    return _usingGlassShell;
 }
 
 @end
@@ -271,15 +260,15 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    if (@available(macOS 15.0, *)) {
-        [[NSColor clearColor] set];
-        NSRectFill(dirtyRect);
-        return;
-    }
-
     [super drawRect:dirtyRect];
     [[NSColor clearColor] set];
     NSRectFill(dirtyRect);
+
+    if (@available(macOS 26.0, *)) {
+        if ([[self window] respondsToSelector:@selector(isUsingGlassShell)] && [(ItsycalWindow *)self.window isUsingGlassShell]) {
+            return;
+        }
+    }
     
     // ❶ 从 self.bounds 减去边框 & 箭头
     NSRect rect = NSInsetRect(self.bounds, kBorderWidth, kBorderWidth);

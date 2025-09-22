@@ -157,7 +157,12 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 {
     // The order of the statements is important! Subsequent statments
     // depend on previous ones.
-    
+
+    if (@available(macOS 26.0, *)) {
+        self.view.wantsLayer = YES;
+        self.view.layer.backgroundColor = NSColor.clearColor.CGColor;
+    }
+
     _iconDateFormatter = [NSDateFormatter new];
     _inactiveTime = 0;
 
