@@ -57,6 +57,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
         [self setCollectionBehavior:NSWindowCollectionBehaviorMoveToActiveSpace];
         // Fade out when -[NSWindow orderOut:] is called.
         [self setAnimationBehavior:NSWindowAnimationBehaviorUtilityWindow];
+        [self setHasShadow:YES];
         //self.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
         [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(interfaceModeChanged:) name:@"AppleInterfaceThemeChangedNotification" object:nil];
     }
@@ -128,11 +129,12 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
             _vibrant.material = NSVisualEffectMaterialMenu;
             _vibrant.state = NSVisualEffectStateActive;
             _vibrant.emphasized = YES;
+            _vibrant.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
         }
         else {
             _vibrant.material = NSVisualEffectMaterialPopover;
         }
-        [_vibrant setBlendingMode:NSVisualEffectBlendingModeWithinWindow];
+        [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
         [frameView addSubview:_vibrant];// positioned:NSWindowBelow relativeTo:nil];
         [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_vibrant]|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
         [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_vibrant]|" options:0 metrics:@{ @"tm" : @(kWindowTopMargin), @"bm" : @(kWindowBottomMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
@@ -258,11 +260,25 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     // ❹ 把箭头 append 到原先圆角矩形的路径里
     [rectPath appendBezierPath:arrowPath];
     
-    // ❺ 描边 & 填充
+    // ❺ 玻璃渐变与描边
     [rectPath setLineWidth:kBorderWidth];
-    [[NSColor clearColor] setFill];
-    [rectPath fill];
-    [Theme.windowBorderColor setStroke];
+    NSColor *accentColor = NSColor.controlAccentColor ?: [NSColor systemBlueColor];
+    NSColor *topBlend = [[NSColor whiteColor] blendedColorWithFraction:0.35 ofColor:accentColor];
+    NSColor *midBlend = [[NSColor whiteColor] blendedColorWithFraction:0.20 ofColor:accentColor];
+    NSColor *topTint = [[topBlend ?: accentColor] colorWithAlphaComponent:0.32];
+    NSColor *midTint = [[midBlend ?: accentColor] colorWithAlphaComponent:0.18];
+    NSColor *lowTint = [accentColor colorWithAlphaComponent:0.10];
+    NSColor *baseTint = [NSColor colorWithCalibratedWhite:1 alpha:0.05];
+
+    NSGradient *glassGradient = [[NSGradient alloc] initWithColorsAndLocations:
+                                 topTint, 0.0,
+                                 midTint, 0.45,
+                                 lowTint, 0.75,
+                                 baseTint, 1.0,
+                                 nil];
+    [glassGradient drawInBezierPath:rectPath angle:-90];
+
+    [[Theme.windowBorderColor colorWithAlphaComponent:0.18] setStroke];
     [rectPath stroke];
 }
 
@@ -309,7 +325,8 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     [rectPath appendBezierPath:arrowPath];
     
     [rectPath addClip];
-    [rectPath fill]; // 用透明色填充，表示可见区域
+    [[NSColor whiteColor] setFill];
+    [rectPath fill]; // 填充白色以确保整块区域完全可见
     
     [img unlockFocus];
     self.maskImage = img;
