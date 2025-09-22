@@ -12,6 +12,8 @@
 #import "Swittee_Calendar-Swift.h"
 #elif __has_include("Itsycal-Swift.h")
 #import "Itsycal-Swift.h"
+#else
+@class ItsycalGlassHostView;
 #endif
 
 static const CGFloat kMinimumSpaceBetweenWindowAndScreenEdge = 10;
