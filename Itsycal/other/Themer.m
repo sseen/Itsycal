@@ -176,7 +176,11 @@ Themer *Theme = nil;
 }
 
 - (NSColor *)windowBorderColor {
-    return [NSColor colorNamed:@"WindowBorderColor"];
+    if (@available(macOS 15.0, *)) {
+        return NSColor.separatorColor;
+    }
+    NSColor *namedColor = [NSColor colorNamed:@"WindowBorderColor"];
+    return namedColor ?: NSColor.separatorColor;
 }
 
 // Themer.m
