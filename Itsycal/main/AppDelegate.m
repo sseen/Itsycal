@@ -18,6 +18,12 @@
 
 #import "SNPlister.h"
 
+#if __has_include("Swittee_Calendar-Swift.h")
+#import "Swittee_Calendar-Swift.h"
+#elif __has_include("Itsycal-Swift.h")
+#import "Itsycal-Swift.h"
+#endif
+
 @import AppCenter;
 @import AppCenterAnalytics;
 @import AppCenterCrashes;
@@ -25,6 +31,9 @@
 @implementation AppDelegate
 {
     NSWindowController *_wc;
+#if __has_include("Swittee_Calendar-Swift.h") || __has_include("Itsycal-Swift.h")
+    id _swiftMenuCoordinator;
+#endif
 }
 
 - (NSMutableArray *)getPlistDatas {
@@ -88,7 +97,15 @@
       [MSACAnalytics class],
       [MSACCrashes class]
     ]];
-    
+
+#if __has_include("Swittee_Calendar-Swift.h") || __has_include("Itsycal-Swift.h")
+    if (@available(macOS 26.0, *)) {
+        _swiftMenuCoordinator = [ItsycalMenuBarCoordinator new];
+        [_swiftMenuCoordinator start];
+        return;
+    }
+#endif
+
     // Ensure the user has moved Itsycal to the /Applications folder.
     // Having the user manually move Itsycal to /Applications turns off
     // Gatekeeper Path Randomization (introduced in 10.12) and allows

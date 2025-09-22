@@ -26,6 +26,9 @@
 		9242A5841A82A189005AA4B3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9242A5831A82A189005AA4B3 /* ViewController.m */; };
 		9242A5871A82A1A1005AA4B3 /* ItsycalWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9242A5861A82A1A1005AA4B3 /* ItsycalWindow.m */; };
 		D6CF80012C9A5A7100AA1234 /* ItsycalLiquidShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF80002C9A5A7100AA1234 /* ItsycalLiquidShell.swift */; };
+		D6CF80042C9A5E8E00AA1234 /* ItsycalMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF80032C9A5E8E00AA1234 /* ItsycalMenuView.swift */; };
+		D6CF80072C9A5ED600AA1234 /* ItsycalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF80062C9A5ED600AA1234 /* ItsycalViewModel.swift */; };
+		D6CF800A2C9A5F2900AA1234 /* ItsycalMenuBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF80092C9A5F2900AA1234 /* ItsycalMenuBarCoordinator.swift */; };
 		9242A5901A82A40B005AA4B3 /* MoDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9242A5891A82A40B005AA4B3 /* MoDate.m */; };
 		9242A5911A82A40B005AA4B3 /* MoCalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9242A58B1A82A40B005AA4B3 /* MoCalCell.m */; };
 		9242A5921A82A40B005AA4B3 /* MoCalGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 9242A58D1A82A40B005AA4B3 /* MoCalGrid.m */; };
@@ -132,6 +135,9 @@
 		9242A5851A82A1A1005AA4B3 /* ItsycalWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItsycalWindow.h; sourceTree = "<group>"; };
 		9242A5861A82A1A1005AA4B3 /* ItsycalWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItsycalWindow.m; sourceTree = "<group>"; };
 		D6CF80002C9A5A7100AA1234 /* ItsycalLiquidShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsycalLiquidShell.swift; sourceTree = "<group>"; };
+		D6CF80032C9A5E8E00AA1234 /* ItsycalMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsycalMenuView.swift; sourceTree = "<group>"; };
+		D6CF80062C9A5ED600AA1234 /* ItsycalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsycalViewModel.swift; sourceTree = "<group>"; };
+		D6CF80092C9A5F2900AA1234 /* ItsycalMenuBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsycalMenuBarCoordinator.swift; sourceTree = "<group>"; };
 		9242A5881A82A40B005AA4B3 /* MoDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoDate.h; sourceTree = "<group>"; };
 		9242A5891A82A40B005AA4B3 /* MoDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoDate.m; sourceTree = "<group>"; };
 		9242A58A1A82A40B005AA4B3 /* MoCalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoCalCell.h; sourceTree = "<group>"; };
@@ -353,6 +359,9 @@
 				9242A5851A82A1A1005AA4B3 /* ItsycalWindow.h */,
 				9242A5861A82A1A1005AA4B3 /* ItsycalWindow.m */,
 				D6CF80002C9A5A7100AA1234 /* ItsycalLiquidShell.swift */,
+				D6CF80032C9A5E8E00AA1234 /* ItsycalMenuView.swift */,
+				D6CF80062C9A5ED600AA1234 /* ItsycalViewModel.swift */,
+				D6CF80092C9A5F2900AA1234 /* ItsycalMenuBarCoordinator.swift */,
 				922B6B911A856A7D00DEA9CD /* SBCalendar.h */,
 				9242A5611A82A136005AA4B3 /* AppDelegate.h */,
 				9242A5621A82A136005AA4B3 /* AppDelegate.m */,
@@ -522,6 +531,9 @@
 				925B47181A93B63100E0329A /* MoCalToolTipWC.m in Sources */,
 				9242A5871A82A1A1005AA4B3 /* ItsycalWindow.m in Sources */,
 				D6CF80012C9A5A7100AA1234 /* ItsycalLiquidShell.swift in Sources */,
+				D6CF80042C9A5E8E00AA1234 /* ItsycalMenuView.swift in Sources */,
+				D6CF80072C9A5ED600AA1234 /* ItsycalViewModel.swift in Sources */,
+				D6CF800A2C9A5F2900AA1234 /* ItsycalMenuBarCoordinator.swift in Sources */,
 				F845758224ECCA1D007921D0 /* SNToolbarItem.m in Sources */,
 				92CDDE7B1A955D7F00D7675C /* AgendaViewController.m in Sources */,
 				F851E0AB25AE881A00357B8F /* SNPlister.m in Sources */,
