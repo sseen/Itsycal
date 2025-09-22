@@ -5,10 +5,11 @@ import Combine
 @objcMembers
 final class ItsycalViewModel: NSObject, ObservableObject {
 
+    static let shared = ItsycalViewModel()
+
     @Published var today: Date = Date()
 
-    override init() {
+    override private init() {
         super.init()
     }
 }
-
