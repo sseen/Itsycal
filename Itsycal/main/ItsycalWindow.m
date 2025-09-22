@@ -8,6 +8,9 @@
 
 #import "ItsycalWindow.h"
 #import "Themer.h"
+#if __has_include("Itsycal-Swift.h")
+#import "Itsycal-Swift.h"
+#endif
 
 static const CGFloat kMinimumSpaceBetweenWindowAndScreenEdge = 10;
 static const CGFloat kArrowHeight  = 8;
@@ -29,10 +32,6 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 @end
 
 
-@interface ColorOverlayView : NSView
-
-@end
-
 #pragma mark -
 #pragma mark ItsycalWindow
 
@@ -44,6 +43,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 {
     NSView *_childContentView;
     ItsycalWindowVisualView *_vibrant;
+    NSView *_glassHost;
 }
 
 - (id)init
@@ -118,29 +118,44 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 
     }
     
+    if (@available(macOS 15.0, *)) {
+        if (aView == nil) {
+            return;
+        }
+        if (_glassHost) {
+            [_glassHost removeFromSuperview];
+            _glassHost = nil;
+        }
+        _childContentView = aView;
+        [_childContentView removeFromSuperview];
+
+        NSEdgeInsets insets = NSEdgeInsetsMake(kWindowTopMargin, kWindowSideMargin, kWindowBottomMargin, kWindowSideMargin);
+        ItsycalGlassHostView *host = [[ItsycalGlassHostView alloc] initWithContentView:aView
+                                                                            edgeInsets:insets
+                                                                           cornerRadius:kCornerRadius
+                                                                           borderWidth:kBorderWidth
+                                                                           arrowHeight:kArrowHeight];
+        host.translatesAutoresizingMaskIntoConstraints = NO;
+        [host setBorderColor:Theme.windowBorderColor];
+        _glassHost = host;
+        [frameView addSubview:host positioned:NSWindowBelow relativeTo:nil];
+        NSDictionary *views = NSDictionaryOfVariableBindings(host);
+        [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[host]|" options:0 metrics:nil views:views]];
+        [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[host]|" options:0 metrics:nil views:views]];
+        return;
+    }
+
     // blur
     if (!_vibrant) {
-        
-        ColorOverlayView *colorView = [ColorOverlayView new];
-        colorView.translatesAutoresizingMaskIntoConstraints = false;
         _vibrant = [[ItsycalWindowVisualView alloc] initWithFrame:NSMakeRect(0, 0, 2, 2)];
         _vibrant.translatesAutoresizingMaskIntoConstraints = NO;
-        if (@available(macOS 15.0, *)) {
-            _vibrant.material = NSVisualEffectMaterialMenu;
-            _vibrant.state = NSVisualEffectStateActive;
-            _vibrant.emphasized = YES;
-            _vibrant.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
-        }
-        else {
-            _vibrant.material = NSVisualEffectMaterialPopover;
-        }
+        _vibrant.material = NSVisualEffectMaterialPopover;
         [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
-        [frameView addSubview:_vibrant];// positioned:NSWindowBelow relativeTo:nil];
+        [frameView addSubview:_vibrant];
         [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_vibrant]|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
         [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_vibrant]|" options:0 metrics:@{ @"tm" : @(kWindowTopMargin), @"bm" : @(kWindowBottomMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
     }
-    
-    
+
     if (_childContentView) {
         [_childContentView removeFromSuperview];
         _childContentView = nil;
@@ -204,8 +219,15 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     frameView.arrowMidX = NSMidX([super convertRectFromScreen:rect]);
     [frameView setNeedsDisplay:YES];
     
-    _vibrant.arrowMidX = frameView.arrowMidX;
-    [_vibrant invalidateCornerImage];
+    if (@available(macOS 15.0, *)) {
+        if ([_glassHost respondsToSelector:@selector(setArrowMidX:)]) {
+            [(ItsycalGlassHostView *)_glassHost setArrowMidX:frameView.arrowMidX];
+        }
+    }
+    else {
+        _vibrant.arrowMidX = frameView.arrowMidX;
+        [_vibrant invalidateCornerImage];
+    }
     
     [self invalidateShadow];
 }
@@ -223,6 +245,12 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    if (@available(macOS 15.0, *)) {
+        [[NSColor clearColor] set];
+        NSRectFill(dirtyRect);
+        return;
+    }
+
     [super drawRect:dirtyRect];
     [[NSColor clearColor] set];
     NSRectFill(dirtyRect);
@@ -262,12 +290,21 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     
     // ❺ 玻璃渐变与描边
     [rectPath setLineWidth:kBorderWidth];
-    NSColor *accentColor = NSColor.controlAccentColor ?: [NSColor systemBlueColor];
-    NSColor *topBlend = [[NSColor whiteColor] blendedColorWithFraction:0.35 ofColor:accentColor];
-    NSColor *midBlend = [[NSColor whiteColor] blendedColorWithFraction:0.20 ofColor:accentColor];
-    NSColor *topTint = [[topBlend ?: accentColor] colorWithAlphaComponent:0.32];
-    NSColor *midTint = [[midBlend ?: accentColor] colorWithAlphaComponent:0.18];
-    NSColor *lowTint = [accentColor colorWithAlphaComponent:0.10];
+
+    // Use a proper Objective‑C conditional to coalesce colors
+    NSColor *accent = [NSColor controlAccentColor];
+    if (accent == nil) {
+        accent = [NSColor systemBlueColor];
+    }
+    NSColor *topBlend = [[NSColor whiteColor] blendedColorWithFraction:0.35 ofColor:accent];
+    NSColor *midBlend = [[NSColor whiteColor] blendedColorWithFraction:0.20 ofColor:accent];
+
+    NSColor *topBase = (topBlend != nil) ? topBlend : accent;
+    NSColor *midBase = (midBlend != nil) ? midBlend : accent;
+
+    NSColor *topTint = [topBase colorWithAlphaComponent:0.32];
+    NSColor *midTint = [midBase colorWithAlphaComponent:0.18];
+    NSColor *lowTint = [accent colorWithAlphaComponent:0.10];
     NSColor *baseTint = [NSColor colorWithCalibratedWhite:1 alpha:0.05];
 
     NSGradient *glassGradient = [[NSGradient alloc] initWithColorsAndLocations:
@@ -348,16 +385,3 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 
 @end
 
-
-@implementation ColorOverlayView
-
-- (void)drawRect:(NSRect)dirtyRect {
-    [NSColor.clearColor setFill];
-    NSRectFill(dirtyRect);
-}
-
-- (BOOL)allowsVibrancy {
-    return  true;
-}
-
-@end
