@@ -89,17 +89,20 @@
       [MSACCrashes class]
     ]];
 
+    BOOL useSwiftUIApp = NO;
     if (@available(macOS 26.0, *)) {
-        return;
+        useSwiftUIApp = YES;
     }
 
-    // Ensure the user has moved Itsycal to the /Applications folder.
-    // Having the user manually move Itsycal to /Applications turns off
-    // Gatekeeper Path Randomization (introduced in 10.12) and allows
-    // Itsycal to be updated with Sparkle. :P
+    if (!useSwiftUIApp) {
+        // Ensure the user has moved Itsycal to the /Applications folder.
+        // Having the user manually move Itsycal to /Applications turns off
+        // Gatekeeper Path Randomization (introduced in 10.12) and allows
+        // Itsycal to be updated with Sparkle. :P
 //#ifndef DEBUG
 //    [self checkIfRunFromApplicationsFolder];
 //#endif
+    }
 
     // Initialize the 'Theme' global variable which can be
     // used throught the app instead of '[Themer shared]'.
@@ -113,32 +116,36 @@
     // the system's appearance.
     [self themeFixup];
 
-    // Register keyboard shortcut.
-    [[MASShortcutBinder sharedBinder] bindShortcutWithDefaultsKey:kKeyboardShortcut toAction:^{
-         [(ViewController *)self->_wc.contentViewController keyboardShortcutActivated];
-     }];
+    if (!useSwiftUIApp) {
+        // Register keyboard shortcut.
+        [[MASShortcutBinder sharedBinder] bindShortcutWithDefaultsKey:kKeyboardShortcut toAction:^{
+             [(ViewController *)self->_wc.contentViewController keyboardShortcutActivated];
+         }];
 
-    // This call instantiates the Sizer shared object and then
-    // establishes the binding to NSUserDefaultsController. This call
-    // must be made BEFORE the window is created because sizes are
-    // used when initializing views.
-    [[Sizer shared] bind:@"sizePreference" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kSizePreference] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
+        // This call instantiates the Sizer shared object and then
+        // establishes the binding to NSUserDefaultsController. This call
+        // must be made BEFORE the window is created because sizes are
+        // used when initializing views.
+        [[Sizer shared] bind:@"sizePreference" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kSizePreference] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
 
-    ViewController *vc = [ViewController new];
-    _wc = [[NSWindowController alloc] initWithWindow:[ItsycalWindow  new]];
-    _wc.contentViewController = vc;
-    _wc.window.delegate = vc;
-    
-    // Establish the binding to NSUserDefaultsController. On macOS
-    // 10.14+, it is crucial for this call to be made AFTER the window
-    // is created because Theme instantiation relies on checking a
-    // property on the window to determine its appearance.
-    [Theme bind:@"themePreference" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kThemePreference] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
+        ViewController *vc = [ViewController new];
+        _wc = [[NSWindowController alloc] initWithWindow:[ItsycalWindow  new]];
+        _wc.contentViewController = vc;
+        _wc.window.delegate = vc;
+        
+        // Establish the binding to NSUserDefaultsController. On macOS
+        // 10.14+, it is crucial for this call to be made AFTER the window
+        // is created because Theme instantiation relies on checking a
+        // property on the window to determine its appearance.
+        [Theme bind:@"themePreference" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kThemePreference] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
+    }
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification
 {
-    [(ViewController *)_wc.contentViewController removeStatusItem];
+    if (_wc) {
+        [(ViewController *)_wc.contentViewController removeStatusItem];
+    }
     [[MASShortcutMonitor sharedMonitor] unregisterAllShortcuts];
 }
 

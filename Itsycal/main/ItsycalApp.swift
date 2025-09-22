@@ -1,9 +1,10 @@
 import SwiftUI
+import Cocoa
 
 @main
 struct ItsycalApp: App {
 
-    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+    @NSApplicationDelegateAdaptor(AppDelegateAdapter.self) private var appDelegate
 
     var body: some Scene {
         if #available(macOS 26.0, *) {
@@ -13,10 +14,25 @@ struct ItsycalApp: App {
             }
             .menuBarExtraStyle(.window)
         }
-        // Legacy fallback scene to satisfy App protocol while AppDelegate drives AppKit UI.
-        Settings {
-            Text("")
-        }
+
+        Settings { EmptyView() }
     }
 }
 
+@objcMembers
+final class AppDelegateAdapter: NSObject, NSApplicationDelegate {
+
+    private let legacyDelegate = AppDelegate()
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        if #available(macOS 26.0, *) {
+            legacyDelegate.applicationDidFinishLaunching(notification)
+            return;
+        }
+        legacyDelegate.applicationDidFinishLaunching(notification)
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        legacyDelegate.applicationWillTerminate(notification)
+    }
+}

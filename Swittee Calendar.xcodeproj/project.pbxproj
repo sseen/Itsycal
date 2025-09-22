@@ -137,6 +137,7 @@
 		D6CF80032C9A5E8E00AA1234 /* ItsycalMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsycalMenuView.swift; sourceTree = "<group>"; };
 		D6CF80062C9A5ED600AA1234 /* ItsycalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsycalViewModel.swift; sourceTree = "<group>"; };
 		D6CF800B2C9A615600AA1234 /* ItsycalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsycalApp.swift; sourceTree = "<group>"; };
+		D6CF800D2C9A64C300AA1234 /* Itsycal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Itsycal-Bridging-Header.h"; sourceTree = "<group>"; };
 		9242A5881A82A40B005AA4B3 /* MoDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoDate.h; sourceTree = "<group>"; };
 		9242A5891A82A40B005AA4B3 /* MoDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoDate.m; sourceTree = "<group>"; };
 		9242A58A1A82A40B005AA4B3 /* MoCalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoCalCell.h; sourceTree = "<group>"; };
@@ -361,6 +362,7 @@
 				D6CF80032C9A5E8E00AA1234 /* ItsycalMenuView.swift */,
 				D6CF80062C9A5ED600AA1234 /* ItsycalViewModel.swift */,
 				D6CF800B2C9A615600AA1234 /* ItsycalApp.swift */,
+				D6CF800D2C9A64C300AA1234 /* Itsycal-Bridging-Header.h */,
 				922B6B911A856A7D00DEA9CD /* SBCalendar.h */,
 				9242A5611A82A136005AA4B3 /* AppDelegate.h */,
 				9242A5621A82A136005AA4B3 /* AppDelegate.m */,
@@ -734,6 +736,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Itsycal/main/Itsycal-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = NO;
 				VALIDATE_WORKSPACE = NO;
@@ -767,6 +770,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Itsycal/main/Itsycal-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = NO;
 				VALIDATE_WORKSPACE = NO;
