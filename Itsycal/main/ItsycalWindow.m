@@ -8,7 +8,9 @@
 
 #import "ItsycalWindow.h"
 #import "Themer.h"
-#if __has_include("Itsycal-Swift.h")
+#if __has_include("Swittee_Calendar-Swift.h")
+#import "Swittee_Calendar-Swift.h"
+#elif __has_include("Itsycal-Swift.h")
 #import "Itsycal-Swift.h"
 #endif
 
@@ -384,4 +386,3 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 }
 
 @end
-

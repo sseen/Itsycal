@@ -156,12 +156,18 @@ private struct ItsycalGlassShell: View {
     let contentView: NSView
     let edgeInsets: EdgeInsets
 
+    @ViewBuilder
     var body: some View {
-        GlassEffectContainer {
+        if #available(macOS 26.0, *) {
+            GlassEffectContainer {
+                LegacyAppKitContent(contentView: contentView)
+                    .glassEffect()
+            }
+            .padding(edgeInsets)
+        } else {
             LegacyAppKitContent(contentView: contentView)
-                .glassEffect()
+                .padding(edgeInsets)
         }
-        .padding(edgeInsets)
     }
 }
 
