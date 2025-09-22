@@ -5,44 +5,9 @@ import Glass
 #endif
 
 @available(macOS 26.0, *)
-struct MenuBubbleShape: Shape {
-    var cornerRadius: CGFloat = 22
-    var arrowHeight: CGFloat = 12
-    var arrowWidth: CGFloat = 28
-
-    func path(in rect: CGRect) -> Path {
-        let arrowHalfWidth = max(arrowWidth / 2, 8)
-        let arrowBaseY = arrowHeight
-        let topY = arrowBaseY
-        let bottomY = rect.maxY
-        let leftX = rect.minX
-        let rightX = rect.maxX
-        let arrowMidX = rect.midX
-
-        var path = Path()
-        path.move(to: CGPoint(x: leftX + cornerRadius, y: topY))
-        path.addLine(to: CGPoint(x: arrowMidX - arrowHalfWidth, y: topY))
-        path.addQuadCurve(to: CGPoint(x: arrowMidX, y: 0), control: CGPoint(x: arrowMidX - arrowHalfWidth * 0.4, y: topY * 0.3))
-        path.addQuadCurve(to: CGPoint(x: arrowMidX + arrowHalfWidth, y: topY), control: CGPoint(x: arrowMidX + arrowHalfWidth * 0.4, y: topY * 0.3))
-        path.addLine(to: CGPoint(x: rightX - cornerRadius, y: topY))
-        path.addQuadCurve(to: CGPoint(x: rightX, y: topY + cornerRadius), control: CGPoint(x: rightX, y: topY))
-        path.addLine(to: CGPoint(x: rightX, y: bottomY - cornerRadius))
-        path.addQuadCurve(to: CGPoint(x: rightX - cornerRadius, y: bottomY), control: CGPoint(x: rightX, y: bottomY))
-        path.addLine(to: CGPoint(x: leftX + cornerRadius, y: bottomY))
-        path.addQuadCurve(to: CGPoint(x: leftX, y: bottomY - cornerRadius), control: CGPoint(x: leftX, y: bottomY))
-        path.addLine(to: CGPoint(x: leftX, y: topY + cornerRadius))
-        path.addQuadCurve(to: CGPoint(x: leftX + cornerRadius, y: topY), control: CGPoint(x: leftX, y: topY))
-        path.closeSubpath()
-        return path
-    }
-}
-
-@available(macOS 26.0, *)
 struct LiquidGlassBackdrop<Content: View>: View {
 
     private let content: Content
-    private let arrowHeight: CGFloat = 12
-    private let arrowWidth: CGFloat = 28
     private let cornerRadius: CGFloat = 22
 
     init(@ViewBuilder content: () -> Content) {
@@ -50,28 +15,23 @@ struct LiquidGlassBackdrop<Content: View>: View {
     }
 
     var body: some View {
-        let shape = MenuBubbleShape(cornerRadius: cornerRadius, arrowHeight: arrowHeight, arrowWidth: arrowWidth)
-
         Group {
 #if canImport(Glass)
             GlassEffectContainer {
                 content
                     .glassEffect(.group)
-                    .padding(.top, arrowHeight + 14)
                     .padding(.horizontal, 16)
-                    .padding(.bottom, 18)
+                    .padding(.vertical, 18)
             }
             .glassBackground(material: .thin, blurRadius: 28)
 #else
             content
-                .padding(.top, arrowHeight + 14)
                 .padding(.horizontal, 16)
-                .padding(.bottom, 18)
+                .padding(.vertical, 18)
                 .background(.ultraThinMaterial)
 #endif
         }
-        .clipShape(shape)
-        .shadow(color: Color.black.opacity(0.18), radius: 22, y: 6)
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
     }
 }
 
