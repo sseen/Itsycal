@@ -27,6 +27,7 @@ final class AppDelegateAdapter: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         if #available(macOS 26.0, *) {
             legacyDelegate.applicationDidFinishLaunching(notification)
+            ItsycalViewModel.sharedInstance().updateBaseDate(Date() as NSDate)
             return;
         }
         legacyDelegate.applicationDidFinishLaunching(notification)

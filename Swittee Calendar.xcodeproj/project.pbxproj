@@ -205,6 +205,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6CF80112C9A6AF100AA1234 /* Glass.framework in Frameworks */,
 				F80B46F42412010900A72DCF /* AppCenter.framework in Frameworks */,
 				F80B46F32412010900A72DCF /* AppCenterCrashes.framework in Frameworks */,
 				F8CEDE6025B5A37700EB14DE /* MASShortcut.framework in Frameworks */,
