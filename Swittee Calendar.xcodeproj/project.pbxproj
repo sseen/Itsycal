@@ -24,10 +24,6 @@
 		9242A56A1A82A136005AA4B3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9242A5681A82A136005AA4B3 /* MainMenu.xib */; };
 		9242A5841A82A189005AA4B3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9242A5831A82A189005AA4B3 /* ViewController.m */; };
 		9242A5871A82A1A1005AA4B3 /* ItsycalWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9242A5861A82A1A1005AA4B3 /* ItsycalWindow.m */; };
-		D6CF80012C9A5A7100AA1234 /* ItsycalLiquidShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF80002C9A5A7100AA1234 /* ItsycalLiquidShell.swift */; };
-		D6CF80042C9A5E8E00AA1234 /* ItsycalMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF80032C9A5E8E00AA1234 /* ItsycalMenuView.swift */; };
-		D6CF80072C9A5ED600AA1234 /* ItsycalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF80062C9A5ED600AA1234 /* ItsycalViewModel.swift */; };
-		D6CF800C2C9A636500AA1234 /* ItsycalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF800B2C9A615600AA1234 /* ItsycalApp.swift */; };
 		9242A5901A82A40B005AA4B3 /* MoDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9242A5891A82A40B005AA4B3 /* MoDate.m */; };
 		9242A5911A82A40B005AA4B3 /* MoCalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9242A58B1A82A40B005AA4B3 /* MoCalCell.m */; };
 		9242A5921A82A40B005AA4B3 /* MoCalGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 9242A58D1A82A40B005AA4B3 /* MoCalGrid.m */; };
@@ -43,6 +39,10 @@
 		929223EB1E2D6E0900F1A119 /* HighlightPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 929223EA1E2D6E0800F1A119 /* HighlightPicker.m */; };
 		92B28CCF210BD17500485AE2 /* Sizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B28CCE210BD17500485AE2 /* Sizer.m */; };
 		92CDDE7B1A955D7F00D7675C /* AgendaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CDDE7A1A955D7F00D7675C /* AgendaViewController.m */; };
+		D6CF80012C9A5A7100AA1234 /* ItsycalLiquidShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF80002C9A5A7100AA1234 /* ItsycalLiquidShell.swift */; };
+		D6CF80042C9A5E8E00AA1234 /* ItsycalMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF80032C9A5E8E00AA1234 /* ItsycalMenuView.swift */; };
+		D6CF80072C9A5ED600AA1234 /* ItsycalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF80062C9A5ED600AA1234 /* ItsycalViewModel.swift */; };
+		D6CF800C2C9A636500AA1234 /* ItsycalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF800B2C9A615600AA1234 /* ItsycalApp.swift */; };
 		F80B46F32412010900A72DCF /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80B46EF2412010900A72DCF /* AppCenterCrashes.framework */; };
 		F80B46F42412010900A72DCF /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80B46F02412010900A72DCF /* AppCenter.framework */; };
 		F80B46F52412010900A72DCF /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80B46F12412010900A72DCF /* AppCenterAnalytics.framework */; };
@@ -133,11 +133,6 @@
 		9242A5831A82A189005AA4B3 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9242A5851A82A1A1005AA4B3 /* ItsycalWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItsycalWindow.h; sourceTree = "<group>"; };
 		9242A5861A82A1A1005AA4B3 /* ItsycalWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItsycalWindow.m; sourceTree = "<group>"; };
-		D6CF80002C9A5A7100AA1234 /* ItsycalLiquidShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsycalLiquidShell.swift; sourceTree = "<group>"; };
-		D6CF80032C9A5E8E00AA1234 /* ItsycalMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsycalMenuView.swift; sourceTree = "<group>"; };
-		D6CF80062C9A5ED600AA1234 /* ItsycalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsycalViewModel.swift; sourceTree = "<group>"; };
-		D6CF800B2C9A615600AA1234 /* ItsycalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsycalApp.swift; sourceTree = "<group>"; };
-		D6CF800D2C9A64C300AA1234 /* Itsycal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Itsycal-Bridging-Header.h"; sourceTree = "<group>"; };
 		9242A5881A82A40B005AA4B3 /* MoDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoDate.h; sourceTree = "<group>"; };
 		9242A5891A82A40B005AA4B3 /* MoDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoDate.m; sourceTree = "<group>"; };
 		9242A58A1A82A40B005AA4B3 /* MoCalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoCalCell.h; sourceTree = "<group>"; };
@@ -169,6 +164,11 @@
 		92B28CCE210BD17500485AE2 /* Sizer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Sizer.m; sourceTree = "<group>"; };
 		92CDDE791A955D7F00D7675C /* AgendaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgendaViewController.h; sourceTree = "<group>"; };
 		92CDDE7A1A955D7F00D7675C /* AgendaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AgendaViewController.m; sourceTree = "<group>"; };
+		D6CF80002C9A5A7100AA1234 /* ItsycalLiquidShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsycalLiquidShell.swift; sourceTree = "<group>"; };
+		D6CF80032C9A5E8E00AA1234 /* ItsycalMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsycalMenuView.swift; sourceTree = "<group>"; };
+		D6CF80062C9A5ED600AA1234 /* ItsycalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsycalViewModel.swift; sourceTree = "<group>"; };
+		D6CF800B2C9A615600AA1234 /* ItsycalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItsycalApp.swift; sourceTree = "<group>"; };
+		D6CF800D2C9A64C300AA1234 /* Itsycal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Itsycal-Bridging-Header.h"; sourceTree = "<group>"; };
 		F80B46EF2412010900A72DCF /* AppCenterCrashes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterCrashes.framework; path = _frameworks/AppCenterCrashes.framework; sourceTree = "<group>"; };
 		F80B46F02412010900A72DCF /* AppCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenter.framework; path = _frameworks/AppCenter.framework; sourceTree = "<group>"; };
 		F80B46F12412010900A72DCF /* AppCenterAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterAnalytics.framework; path = _frameworks/AppCenterAnalytics.framework; sourceTree = "<group>"; };
@@ -205,7 +205,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6CF80112C9A6AF100AA1234 /* Glass.framework in Frameworks */,
 				F80B46F42412010900A72DCF /* AppCenter.framework in Frameworks */,
 				F80B46F32412010900A72DCF /* AppCenterCrashes.framework in Frameworks */,
 				F8CEDE6025B5A37700EB14DE /* MASShortcut.framework in Frameworks */,
@@ -737,6 +736,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx26.0;
 				SWIFT_OBJC_BRIDGING_HEADER = "Itsycal/main/Itsycal-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = NO;
@@ -771,6 +771,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx26.0;
 				SWIFT_OBJC_BRIDGING_HEADER = "Itsycal/main/Itsycal-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = NO;
