@@ -18,9 +18,6 @@
 
 #import "SNPlister.h"
 
-@import AppCenter;
-@import AppCenterAnalytics;
-@import AppCenterCrashes;
 
 @implementation AppDelegate
 {
@@ -83,11 +80,6 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // app center init
-    [MSACAppCenter start:@"28ac792f-9fcb-42ec-b902-8c44a4511602" withServices:@[
-      [MSACAnalytics class],
-      [MSACCrashes class]
-    ]];
     
     // Ensure the user has moved Itsycal to the /Applications folder.
     // Having the user manually move Itsycal to /Applications turns off
