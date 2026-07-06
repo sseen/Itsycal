@@ -11,6 +11,7 @@
 
 static const CGFloat kMinimumSpaceBetweenWindowAndScreenEdge = 10;
 static const CGFloat kArrowHeight  = 8;
+static const CGFloat kArrowCurveOffset = 5;
 static const CGFloat kCornerRadius = 8;
 static const CGFloat kBorderWidth  = 1;
 static const CGFloat kMarginWidth  = 2;
@@ -18,13 +19,55 @@ static const CGFloat kWindowTopMargin    = kCornerRadius + kBorderWidth + kArrow
 static const CGFloat kWindowSideMargin   = kMarginWidth  + kBorderWidth;
 static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 
+static CGFloat ItsycalWindowArrowMidXForBounds(NSRect bounds, CGFloat arrowMidX, BOOL arrowMidXIsSet)
+{
+    CGFloat preferredMidX = arrowMidXIsSet ? arrowMidX : NSMidX(bounds);
+    CGFloat arrowHalfWidth = kArrowHeight + kArrowCurveOffset;
+    CGFloat minMidX = kBorderWidth + kCornerRadius + arrowHalfWidth;
+    CGFloat maxMidX = NSWidth(bounds) - kBorderWidth - kCornerRadius - arrowHalfWidth;
+    
+    if (minMidX > maxMidX) {
+        return NSMidX(bounds);
+    }
+    
+    return MIN(MAX(preferredMidX, minMidX), maxMidX);
+}
+
+static NSBezierPath *ItsycalWindowFramePathForBounds(NSRect bounds, CGFloat arrowMidX, BOOL arrowMidXIsSet)
+{
+    NSRect rect = NSInsetRect(bounds, kBorderWidth, kBorderWidth);
+    rect.size.height -= kArrowHeight;
+    
+    NSBezierPath *path = [NSBezierPath
+                          bezierPathWithRoundedRect:rect
+                          xRadius:kCornerRadius
+                          yRadius:kCornerRadius];
+    
+    CGFloat resolvedArrowMidX = ItsycalWindowArrowMidXForBounds(bounds, arrowMidX, arrowMidXIsSet);
+    CGFloat arrowBaseY = NSMaxY(rect);
+    CGFloat x = resolvedArrowMidX - (kArrowHeight + kArrowCurveOffset);
+    
+    NSBezierPath *arrowPath = [NSBezierPath bezierPath];
+    [arrowPath moveToPoint:NSMakePoint(x, arrowBaseY)];
+    [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + kArrowCurveOffset, kArrowHeight)
+                      controlPoint1:NSMakePoint(kArrowCurveOffset, 0)
+                      controlPoint2:NSMakePoint(kArrowHeight, kArrowHeight)];
+    [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight + kArrowCurveOffset, -kArrowHeight)
+                      controlPoint1:NSMakePoint(kArrowCurveOffset, 0)
+                      controlPoint2:NSMakePoint(kArrowHeight, -kArrowHeight)];
+    [path appendBezierPath:arrowPath];
+    
+    return path;
+}
+
 @interface ItsycalWindowFrameView : NSView
 @property (nonatomic, assign) CGFloat arrowMidX;
+@property (nonatomic, assign) BOOL arrowMidXIsSet;
 @end
 
 @interface ItsycalWindowVisualView : NSVisualEffectView
 @property (nonatomic, assign) CGFloat arrowMidX;
-@property (nonatomic, strong) NSImage *cornerImage;
+@property (nonatomic, assign) BOOL arrowMidXIsSet;
 - (void)invalidateCornerImage ;
 @end
 
@@ -119,17 +162,14 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     
     // blur
     if (!_vibrant) {
-        
-        ColorOverlayView *colorView = [ColorOverlayView new];
-        colorView.translatesAutoresizingMaskIntoConstraints = false;
         _vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSMakeRect(0, 0, 2, 2)];
         _vibrant.translatesAutoresizingMaskIntoConstraints = NO;
         // _vibrant.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
         _vibrant.material = NSVisualEffectMaterialPopover;
         [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
         [frameView addSubview:_vibrant];// positioned:NSWindowBelow relativeTo:nil];
-        [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_vibrant]|" options:0 metrics:@{ @"m" : @(kWindowSideMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
-        [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_vibrant]|" options:0 metrics:@{ @"tm" : @(kWindowTopMargin), @"bm" : @(kWindowBottomMargin) } views:NSDictionaryOfVariableBindings(_vibrant)]];
+        [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_vibrant]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_vibrant)]];
+        [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_vibrant]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_vibrant)]];
     }
     
     
@@ -194,9 +234,11 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     // not the _childContentView, since we use the midX to draw
     // the frame view.
     frameView.arrowMidX = NSMidX([super convertRectFromScreen:rect]);
+    frameView.arrowMidXIsSet = YES;
     [frameView setNeedsDisplay:YES];
     
     _vibrant.arrowMidX = frameView.arrowMidX;
+    _vibrant.arrowMidXIsSet = frameView.arrowMidXIsSet;
     [_vibrant invalidateCornerImage];
     
     [self invalidateShadow];
@@ -219,40 +261,7 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
     [[NSColor clearColor] set];
     NSRectFill(dirtyRect);
     
-    // ❶ 从 self.bounds 减去边框 & 箭头
-    NSRect rect = NSInsetRect(self.bounds, kBorderWidth, kBorderWidth);
-    rect.size.height -= kArrowHeight; // 让主体腾出箭头高度
-    
-    // ❷ 先做一个圆角矩形
-    NSBezierPath *rectPath = [NSBezierPath
-                              bezierPathWithRoundedRect:rect
-                              xRadius:kCornerRadius
-                              yRadius:kCornerRadius];
-    
-    // ❸ 在顶部追加箭头路径
-    CGFloat arrowMidX = (_arrowMidX == 0) ? NSMidX(self.bounds) : _arrowMidX;
-    CGFloat curveOffset = 5.0;
-    
-    // 箭头的“基线”就在主体 rect 的顶部
-    CGFloat arrowBaseY = NSMaxY(rect);
-    // 箭头左端 x 坐标 = (箭头中点) - (箭头宽度/2)
-    // 箭头宽度大约是 (kArrowHeight + curveOffset) * 2
-    CGFloat x = arrowMidX - (kArrowHeight + curveOffset);
-    
-    // 创建箭头的 BezierPath
-    NSBezierPath *arrowPath = [NSBezierPath bezierPath];
-    [arrowPath moveToPoint:NSMakePoint(x, arrowBaseY)];
-    [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight+curveOffset, kArrowHeight)
-                      controlPoint1:NSMakePoint(curveOffset, 0)
-                      controlPoint2:NSMakePoint(kArrowHeight, kArrowHeight)];
-    [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight+curveOffset, -kArrowHeight)
-                      controlPoint1:NSMakePoint(curveOffset, 0)
-                      controlPoint2:NSMakePoint(kArrowHeight, -kArrowHeight)];
-    
-    // ❹ 把箭头 append 到原先圆角矩形的路径里
-    [rectPath appendBezierPath:arrowPath];
-    
-    // ❺ 描边 & 填充
+    NSBezierPath *rectPath = ItsycalWindowFramePathForBounds(self.bounds, self.arrowMidX, self.arrowMidXIsSet);
     [rectPath setLineWidth:kBorderWidth];
     [Theme.windowBorderColor setStroke];
     [Theme.windowBorderColor setFill];
@@ -272,41 +281,19 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 @implementation ItsycalWindowVisualView
 
 - (void)invalidateCornerImage {
-    if (self.bounds.size.height == 0) return;
+    if (self.bounds.size.width == 0 || self.bounds.size.height == 0) return;
     
-    // 跟 FrameView 同样的算法：
-    NSRect rect = NSInsetRect(self.bounds, kBorderWidth, kBorderWidth);
-    rect.size.height -= kArrowHeight;
+    NSSize imageSize = self.bounds.size;
+    CGFloat arrowMidX = self.arrowMidX;
+    BOOL arrowMidXIsSet = self.arrowMidXIsSet;
     
-    NSImage *img = [[NSImage alloc] initWithSize:self.bounds.size];
-    [img lockFocus];
-    
-    // 注意：保证跟上面的箭头曲线参数完全一致
-    NSBezierPath *rectPath =
-    [NSBezierPath bezierPathWithRoundedRect:rect
-                                    xRadius:kCornerRadius
-                                    yRadius:kCornerRadius];
-    
-    CGFloat arrowMidX = (_arrowMidX == 0) ? NSMidX(self.bounds) : _arrowMidX;
-    CGFloat curveOffset = 5.0;
-    CGFloat arrowBaseY = NSMaxY(rect);
-    
-    NSBezierPath *arrowPath = [NSBezierPath bezierPath];
-    CGFloat x = arrowMidX - (kArrowHeight + curveOffset);
-    [arrowPath moveToPoint:NSMakePoint(x, arrowBaseY)];
-    [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight+curveOffset, kArrowHeight)
-                      controlPoint1:NSMakePoint(curveOffset, 0)
-                      controlPoint2:NSMakePoint(kArrowHeight, kArrowHeight)];
-    [arrowPath relativeCurveToPoint:NSMakePoint(kArrowHeight+curveOffset, -kArrowHeight)
-                      controlPoint1:NSMakePoint(curveOffset, 0)
-                      controlPoint2:NSMakePoint(kArrowHeight, -kArrowHeight)];
-    [rectPath appendBezierPath:arrowPath];
-    
-    [rectPath addClip];
-    [rectPath fill]; // 用透明色填充，表示可见区域
-    
-    [img unlockFocus];
-    self.maskImage = img;
+    self.maskImage = [NSImage imageWithSize:imageSize flipped:NO drawingHandler:^BOOL(NSRect dstRect) {
+        NSRect bounds = NSMakeRect(0, 0, NSWidth(dstRect), NSHeight(dstRect));
+        NSBezierPath *path = ItsycalWindowFramePathForBounds(bounds, arrowMidX, arrowMidXIsSet);
+        [[NSColor blackColor] setFill];
+        [path fill];
+        return YES;
+    }];
 }
 
 - (void)viewDidMoveToSuperview {
@@ -318,7 +305,6 @@ static const CGFloat kWindowBottomMargin = kCornerRadius + kBorderWidth;
 - (void)setFrameSize:(NSSize)newSize {
     // NSLog(@"** %@,%@", NSStringFromRect(self.bounds),NSStringFromSize(newSize));
     [super setFrameSize: newSize];
-    self.translatesAutoresizingMaskIntoConstraints = false;
 //    self.maskImage = [NSImage imageWithSystemSymbolName:@"hammer.fill" accessibilityDescription:nil];
     [self invalidateCornerImage];
 }

@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Itsycal 顶部箭头实现分析</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #1e2329;
+      --muted: #69717d;
+      --line: #d7dce3;
+      --accent: #0b6e69;
+      --accent-2: #8b4d00;
+      --code: #f0f2f5;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111418;
+        --panel: #1a1f25;
+        --text: #edf1f5;
+        --muted: #a7b0ba;
+        --line: #323a45;
+        --accent: #67c7bd;
+        --accent-2: #f0b15c;
+        --code: #242a32;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    main {
+      width: min(1120px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    header {
+      margin-bottom: 24px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.25;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 32px;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    code {
+      background: var(--code);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.92em;
+    }
+
+    .subtitle {
+      max-width: 820px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .card,
+    .section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .section {
+      margin-top: 18px;
+    }
+
+    .diagram {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .legend {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .legend span::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      margin-right: 8px;
+      vertical-align: -1px;
+      background: var(--accent);
+    }
+
+    .legend span:nth-child(2)::before {
+      background: var(--accent-2);
+    }
+
+    .steps {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .steps li {
+      border-left: 3px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    .ranked {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .ranked li {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    .tag {
+      display: inline-block;
+      color: var(--accent);
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    @media (max-width: 820px) {
+      main {
+        width: min(100vw - 20px, 680px);
+        padding-top: 22px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Itsycal 顶部三角箭头实现分析</h1>
+      <p class="subtitle">
+        实现集中在 <code>Itsycal/main/ItsycalWindow.m</code>：
+        透明无边框 <code>NSPanel</code> 负责窗口行为，
+        自绘 frame view 负责外形，<code>NSVisualEffectView</code>
+        通过 maskImage 获得同样的圆角和箭头裁剪。
+      </p>
+    </header>
+
+    <section class="grid">
+      <div class="card">
+        <h2>三层结构</h2>
+        <svg class="diagram" viewBox="0 0 760 440" role="img"
+             aria-label="Itsycal 窗口三层结构图">
+          <defs>
+            <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="8" stdDeviation="8"
+                            flood-color="#000" flood-opacity="0.16"/>
+            </filter>
+          </defs>
+          <rect x="20" y="20" width="720" height="400" rx="20"
+                fill="none" stroke="currentColor" opacity="0.16"/>
+          <rect x="80" y="70" width="600" height="300" rx="22"
+                fill="#c8d8ff" opacity="0.34" stroke="#6078b8"
+                filter="url(#shadow)"/>
+          <path d="M350 70 C360 70 368 48 380 48 C392 48 400 70 410 70"
+                fill="#c8d8ff" stroke="#6078b8"/>
+          <rect x="112" y="104" width="536" height="234" rx="18"
+                fill="#b9eadf" opacity="0.62" stroke="#0b6e69"/>
+          <rect x="145" y="145" width="470" height="150" rx="8"
+                fill="#fff4d8" opacity="0.92" stroke="#8b4d00"/>
+          <text x="380" y="91" text-anchor="middle" font-size="18"
+                fill="currentColor">ItsycalWindowFrameView</text>
+          <text x="380" y="225" text-anchor="middle" font-size="18"
+                fill="currentColor">ItsycalWindowVisualView</text>
+          <text x="380" y="225" dy="28" text-anchor="middle" font-size="14"
+                fill="currentColor" opacity="0.65">maskImage 裁出圆角与箭头</text>
+          <text x="380" y="222" dy="70" text-anchor="middle" font-size="18"
+                fill="currentColor">用户 contentView</text>
+          <line x1="410" y1="48" x2="560" y2="34" stroke="#0b6e69"
+                stroke-width="2"/>
+          <text x="570" y="38" font-size="15" fill="currentColor">
+            顶部预留 17pt
+          </text>
+        </svg>
+        <div class="legend">
+          <span>Frame view 画边框和箭头轮廓</span>
+          <span>Content view 内嵌在带 margin 的安全区域</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>实现机制</h2>
+        <ol class="steps">
+          <li>
+            <strong>窗口层：</strong>
+            <code>ItsycalWindow</code> 是透明、无边框的
+            <code>NSPanel</code>，真正内容被嵌入自绘 frame view。
+          </li>
+          <li>
+            <strong>形状绘制：</strong>
+            主体是圆角矩形，顶部箭头由两段三次贝塞尔曲线拼出，
+            所以观感接近系统 popover。
+          </li>
+          <li>
+            <strong>箭头定位：</strong>
+            窗口可为避开屏幕边缘整体左移，箭头使用转换后的
+            frame 坐标继续指向状态栏图标。
+          </li>
+          <li>
+            <strong>毛玻璃裁剪：</strong>
+            <code>NSVisualEffectView</code> 铺满 frame view，
+            再用与绘制路径一致的 <code>maskImage</code> 裁剪。
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>箭头路径</h2>
+      <svg class="diagram" viewBox="0 0 980 300" role="img"
+           aria-label="箭头贝塞尔曲线参数示意图">
+        <rect x="190" y="116" width="600" height="130" rx="28"
+              fill="#b9eadf" opacity="0.28" stroke="#0b6e69"
+              stroke-width="3"/>
+        <path d="M451 116 C456 116 464 92 477 92 C490 92 498 116 503 116"
+              fill="#b9eadf" stroke="#0b6e69" stroke-width="3"/>
+        <line x1="477" y1="54" x2="477" y2="245"
+              stroke="#8b4d00" stroke-width="2" stroke-dasharray="8 6"/>
+        <line x1="451" y1="82" x2="503" y2="82"
+              stroke="#8b4d00" stroke-width="2"/>
+        <text x="477" y="42" text-anchor="middle" font-size="18"
+              fill="currentColor">arrowMidX</text>
+        <text x="477" y="77" text-anchor="middle" font-size="15"
+              fill="currentColor">约 26pt 宽</text>
+        <text x="600" y="104" font-size="15" fill="currentColor">
+          两段 relativeCurveToPoint 组成柔和三角
+        </text>
+        <text x="600" y="136" font-size="15" fill="currentColor">
+          主体高度先减去 kArrowHeight
+        </text>
+        <text x="600" y="168" font-size="15" fill="currentColor">
+          同一路径用于 drawRect 和 maskImage
+        </text>
+      </svg>
+    </section>
+
+    <section class="section">
+      <h2>可优化点</h2>
+      <ol class="ranked">
+        <li>
+          <span class="tag">1.</span>
+          抽出路径构造函数，让 <code>drawRect:</code> 和
+          <code>invalidateCornerImage</code> 共享同一份
+          “圆角矩形 + 箭头”路径。
+        </li>
+        <li>
+          <span class="tag">2.</span>
+          将废弃的 <code>lockFocus</code> 改为
+          <code>imageWithSize:flipped:drawingHandler:</code>，
+          让蒙版按目标环境绘制，减少 Retina/非 Retina 切换时的边缘风险。
+        </li>
+        <li>
+          <span class="tag">3.</span>
+          移除重复 mask 生成的脆弱点和无效的 VFL metrics，
+          减少维护噪声。
+        </li>
+        <li>
+          <span class="tag">4.</span>
+          给箭头位置加显式 “已设置” 状态，并钳制到可绘制范围，
+          避免使用 <code>0</code> 当哨兵值以及箭头贴近圆角。
+        </li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2>结论</h2>
+      <p>
+        当前架构方向正确：不用换成 <code>NSPopover</code>，
+        因为现有窗口还承担非激活面板、菜单窗口层级、pin 住不消失等行为。
+        这次实现应保持架构不变，只收敛路径来源、更新蒙版生成方式，
+        并补上箭头坐标健壮性。
+      </p>
+    </section>
+  </main>
+</body>
+</html>
