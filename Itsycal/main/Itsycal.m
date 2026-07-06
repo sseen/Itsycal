@@ -30,3 +30,4 @@ NSString * const kShowCnLunar = @"showCnLunar";
 NSString * const kshowCnNationDays = @"showCnNationDays";
 NSString * const kUseBigMenuFont = @"UseBigMenuFont";
 NSString * const kShowCnLunarInIcon = @"ShowCnLunarInIcon";
+NSString * const kHolidayHintDismissed = @"HolidayHintDismissed";

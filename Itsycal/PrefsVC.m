@@ -4,6 +4,7 @@
 //
 
 #import "PrefsVC.h"
+#import "PrefsGeneralVC.h"
 #import "NSImage+TintColor.h"
 #import "SNToolbarItem.h"
 #import <CoreImage/CoreImage.h>
@@ -35,7 +36,7 @@
 
 
 - (void)makeWindowBlur {
-    
+
     // 这里可以不设置
     // 打开后就是可以使window的背景透明
     // self.view.window.contentView.wantsLayer = true;
@@ -43,17 +44,17 @@
     // self.view.window.opaque = false;
     // [self.view.window makeKeyAndOrderFront:nil];
     // [self.view.window makeKeyWindow];
-    
+
 //    self.view.window.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
     self.view.window.styleMask |= NSWindowStyleMaskFullSizeContentView;
-    
+
     self.view.window.titlebarAppearsTransparent = true;
     NSVisualEffectView *visualView = [[NSVisualEffectView alloc] initWithFrame:NSMakeRect(0, 0, self.view.window.contentView.frame.size.width, self.view.window.contentView.frame.size.height)];
     [visualView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
     visualView.material = NSVisualEffectMaterialUnderWindowBackground;
     visualView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
     visualView.state = NSVisualEffectStateActive;
-    
+
     // 空白view
     // 加上这个view 放在 visualeffect 后面
     // 使 effect 起作用
@@ -66,7 +67,7 @@
 - (void)viewDidAppear
 {
     [super viewDidAppear];
-    
+
     if (self.view.window.toolbar == nil) {
         self.view.window.toolbar = _toolbar;
         if (@available(macOS 11.0, *)) {
@@ -117,6 +118,35 @@
         item.tag = 0; // 0 == index of General panel.
         _toolbar.selectedItemIdentifier = identifier;
         [self switchToTabForToolbarItem:item animated:NO];
+    }
+}
+
+- (void)showGeneralTabWithHolidayHint:(NSString *)calendarIdentifier
+{
+    PrefsGeneralVC *generalVC = nil;
+    if (self.childViewControllers.count > 0 &&
+        [self.childViewControllers[0] isKindOfClass:[PrefsGeneralVC class]]) {
+        generalVC = (PrefsGeneralVC *)self.childViewControllers[0];
+    }
+    generalVC.holidayHintCalendarIdentifier = calendarIdentifier;
+
+    NSString *identifier = NSLocalizedString(@"General", @"General prefs tab label");
+    NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:identifier];
+    item.tag = 0; // 0 == index of General panel.
+    _toolbar.selectedItemIdentifier = identifier;
+
+    if (_selectedItemTag == 0) {
+        if (self.view.window.isVisible) {
+            [generalVC showPendingHolidayHintIfPossible];
+        }
+    }
+    else {
+        [self switchToTabForToolbarItem:item animated:NO];
+        if (self.view.window.isVisible) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [generalVC showPendingHolidayHintIfPossible];
+            });
+        }
     }
 }
 
@@ -225,19 +255,19 @@
 {
     NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
     item.label = itemIdentifier;
-    
+
     NSImage *img = [NSImage imageNamed:NSStringFromClass([[self viewControllerForItemIdentifier:itemIdentifier] class])];
     [img setTemplate:true];
-    
+
     NSColor *color = NSColor.secondaryLabelColor;
     NSImage *newImage = [img imageWith:color];
     [newImage setTemplate:true];
-    
+
     item.image = newImage;
     item.target = self;
     item.action = @selector(toolbarItemClicked:);
     item.tag = [_toolbarIdentifiers indexOfObject:itemIdentifier];
-    
+
     return item;
 }
 

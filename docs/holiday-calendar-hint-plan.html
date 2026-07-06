@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>节假日日历提示方案</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --text: #20252b;
+      --muted: #66717f;
+      --line: #d8dde5;
+      --accent: #0b6e69;
+      --warn: #9a5a00;
+      --code: #eef1f4;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #101418;
+        --panel: #1b2027;
+        --text: #edf1f5;
+        --muted: #a8b1bc;
+        --line: #313a45;
+        --accent: #62c8bd;
+        --warn: #f0b35e;
+        --code: #252b33;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    main {
+      width: min(1120px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    h1, h2, h3 { margin: 0; line-height: 1.25; }
+    h1 { font-size: 32px; letter-spacing: 0; }
+    h2 { font-size: 22px; margin-bottom: 14px; }
+    h3 { font-size: 16px; margin-bottom: 8px; }
+    p { margin: 0 0 12px; }
+    code {
+      background: var(--code);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.92em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      max-width: 860px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      gap: 18px;
+      margin-top: 24px;
+      align-items: start;
+    }
+
+    .section, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .section { margin-top: 18px; }
+    .diagram { width: 100%; height: auto; display: block; }
+
+    .steps, .files {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .steps li {
+      border-left: 3px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    .files li {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px 12px;
+    }
+
+    .tag {
+      color: var(--accent);
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 820px) {
+      main {
+        width: min(100vw - 20px, 680px);
+        padding-top: 22px;
+      }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>节假日日历提示方案</h1>
+      <p class="subtitle">
+        目标是不改变默认行为，只在用户当前地区存在可匹配的系统节假日日历、
+        但该日历没有被 Itsycal 勾选时，给一个可关闭的轻量提示。
+        实现由 <code>EventCenter</code> 检测、主窗口横幅、设置页一次性高亮三部分组成。
+      </p>
+    </header>
+
+    <section class="grid">
+      <div class="card">
+        <h2>整体流程</h2>
+        <svg class="diagram" viewBox="0 0 780 430" role="img" aria-label="节假日日历提示流程">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                    markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#0b6e69"/>
+            </marker>
+          </defs>
+          <rect x="42" y="50" width="220" height="76" rx="8"
+                fill="#b9eadf" opacity="0.5" stroke="#0b6e69"/>
+          <text x="152" y="82" text-anchor="middle" font-size="17" fill="currentColor">打开主窗口</text>
+          <text x="152" y="106" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.68">或 EventKit 更新</text>
+
+          <rect x="310" y="50" width="220" height="76" rx="8"
+                fill="#fff1cf" opacity="0.88" stroke="#9a5a00"/>
+          <text x="420" y="82" text-anchor="middle" font-size="17" fill="currentColor">EventCenter 检测</text>
+          <text x="420" y="106" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.68">地区 + 标题关键词 + 未勾选</text>
+
+          <rect x="580" y="50" width="160" height="76" rx="8"
+                fill="#b9eadf" opacity="0.5" stroke="#0b6e69"/>
+          <text x="660" y="82" text-anchor="middle" font-size="17" fill="currentColor">显示横幅</text>
+          <text x="660" y="106" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.68">可关闭</text>
+
+          <rect x="580" y="184" width="160" height="76" rx="8"
+                fill="#c8d8ff" opacity="0.5" stroke="#6078b8"/>
+          <text x="660" y="216" text-anchor="middle" font-size="17" fill="currentColor">跳到设置</text>
+          <text x="660" y="240" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.68">General tab</text>
+
+          <rect x="310" y="184" width="220" height="76" rx="8"
+                fill="#c8d8ff" opacity="0.5" stroke="#6078b8"/>
+          <text x="420" y="216" text-anchor="middle" font-size="17" fill="currentColor">滚动到目标行</text>
+          <text x="420" y="240" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.68">只处理横幅传入的 identifier</text>
+
+          <rect x="42" y="184" width="220" height="76" rx="8"
+                fill="#c8d8ff" opacity="0.5" stroke="#6078b8"/>
+          <text x="152" y="216" text-anchor="middle" font-size="17" fill="currentColor">显示 transient popover</text>
+          <text x="152" y="240" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.68">显示后清空 pending 标记</text>
+
+          <rect x="236" y="324" width="308" height="64" rx="8"
+                fill="none" stroke="currentColor" opacity="0.28"/>
+          <text x="390" y="352" text-anchor="middle" font-size="16" fill="currentColor">用户勾选任意匹配节假日日历</text>
+          <text x="390" y="374" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.68">下次检测不再显示横幅</text>
+
+          <line x1="262" y1="88" x2="310" y2="88" stroke="#0b6e69" stroke-width="2" marker-end="url(#arrow)"/>
+          <line x1="530" y1="88" x2="580" y2="88" stroke="#0b6e69" stroke-width="2" marker-end="url(#arrow)"/>
+          <line x1="660" y1="126" x2="660" y2="184" stroke="#0b6e69" stroke-width="2" marker-end="url(#arrow)"/>
+          <line x1="580" y1="222" x2="530" y2="222" stroke="#0b6e69" stroke-width="2" marker-end="url(#arrow)"/>
+          <line x1="310" y1="222" x2="262" y2="222" stroke="#0b6e69" stroke-width="2" marker-end="url(#arrow)"/>
+          <line x1="152" y1="260" x2="312" y2="324" stroke="#0b6e69" stroke-width="2" marker-end="url(#arrow)"/>
+        </svg>
+      </div>
+
+      <div class="card">
+        <h2>显示条件</h2>
+        <ol class="steps">
+          <li><strong>未关闭：</strong><code>kHolidayHintDismissed</code> 不是 <code>YES</code>。</li>
+          <li><strong>已授权：</strong>EventKit 日历权限可用；未授权时不显示。</li>
+          <li><strong>本地匹配：</strong>当前地区为 CN 或 JP，并存在标题关键词匹配的订阅日历。</li>
+          <li><strong>尚未勾选：</strong>任何匹配的节假日日历已勾选时，都不再提示。</li>
+        </ol>
+        <p class="note">
+          第一版只提示系统中已经存在的订阅日历，不负责引导用户新增订阅。
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>主窗口横幅</h2>
+      <svg class="diagram" viewBox="0 0 940 300" role="img" aria-label="主窗口横幅位置示意">
+        <rect x="260" y="18" width="420" height="260" rx="22"
+              fill="none" stroke="currentColor" opacity="0.22"/>
+        <path d="M450 18 C458 18 466 0 470 0 C474 0 482 18 490 18"
+              fill="none" stroke="currentColor" opacity="0.22"/>
+        <rect x="292" y="42" width="356" height="120" rx="8"
+              fill="#b9eadf" opacity="0.36" stroke="#0b6e69"/>
+        <text x="470" y="108" text-anchor="middle" font-size="18" fill="currentColor">月历</text>
+        <circle cx="340" cy="184" r="10" fill="#66717f" opacity="0.5"/>
+        <circle cx="390" cy="184" r="10" fill="#66717f" opacity="0.5"/>
+        <circle cx="440" cy="184" r="10" fill="#66717f" opacity="0.5"/>
+        <text x="540" y="190" font-size="14" fill="currentColor" opacity="0.7">底部工具按钮</text>
+        <rect x="292" y="206" width="356" height="40" rx="6"
+              fill="#fff1cf" stroke="#9a5a00"/>
+        <text x="316" y="231" font-size="15" fill="currentColor">节假日日历未显示，点击前往设置</text>
+        <text x="626" y="231" font-size="18" text-anchor="middle" fill="currentColor">×</text>
+        <line x1="650" y1="226" x2="770" y2="226" stroke="#9a5a00" stroke-width="2"/>
+        <text x="780" y="231" font-size="14" fill="currentColor">可关闭，关闭后持久不提示</text>
+      </svg>
+    </section>
+
+    <section class="section">
+      <h2>改动清单</h2>
+      <ul class="files">
+        <li><span class="tag">EventCenter.h/m</span>新增检测方法、地区关键词表、可测试标题匹配函数。</li>
+        <li><span class="tag">ViewController.m</span>新增横幅视图、显隐刷新、关闭和跳转处理。</li>
+        <li><span class="tag">PrefsVC.h/m</span>新增切到 General tab 并转发 pending hint 的入口。</li>
+        <li><span class="tag">PrefsGeneralVC.h/m</span>按 calendar identifier 滚动到目标行并显示一次性 transient popover。</li>
+        <li><span class="tag">Itsycal.h/m</span>新增 <code>kHolidayHintDismissed</code> 用户默认键。</li>
+        <li><span class="tag">Localizable.strings</span>补横幅、关闭按钮和 popover 文案。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

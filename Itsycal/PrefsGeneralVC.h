@@ -10,5 +10,8 @@
 @interface PrefsGeneralVC : NSViewController <NSTableViewDataSource, NSTableViewDelegate>
 
 @property (nonatomic, weak) EventCenter *ec;
+@property (nonatomic, copy) NSString *holidayHintCalendarIdentifier;
+
+- (void)showPendingHolidayHintIfPossible;
 
 @end

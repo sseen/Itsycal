@@ -15,7 +15,10 @@
 // Provide calendar and event data.
 // =========================================================================
 
+@class CalendarInfo;
 @protocol EventCenterDelegate;
+
+BOOL ItsycalHolidayCalendarTitleMatchesRegion(NSString *title, NSString *regionCode);
 
 @interface EventCenter : NSObject
 
@@ -43,6 +46,10 @@
 // Alphabetical by source, then calendar title. Each source is
 // followed by its calendars. Datasource for Prefs tableview.
 - (NSArray *)sourcesAndCalendars;
+
+// Returns a matching local holiday subscription calendar that is not selected.
+// If any matching local holiday calendar is already selected, returns nil.
+- (CalendarInfo *)unselectedLocalHolidayCalendarInfo;
 
 // A dict that maps dates to an array of EventInfo objects.
 // Only contains events for user's selected (i.e. filtered) calendars.

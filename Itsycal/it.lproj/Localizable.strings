@@ -80,6 +80,15 @@
 "Calendar" = "Calendario";
 
 /* No comment provided by engineer. */
+"Holiday calendar is hidden. Open settings" = "Il calendario delle festività è nascosto. Apri impostazioni";
+
+/* No comment provided by engineer. */
+"Hide holiday calendar hint" = "Nascondi suggerimento calendario festività";
+
+/* No comment provided by engineer. */
+"Select this calendar to show holidays." = "Seleziona questo calendario per mostrare le festività.";
+
+/* No comment provided by engineer. */
 "Calendar access denied.
 
 Swittee Calendar is more useful when it can display events from your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy" = "L'accesso al calendario negato.
@@ -313,4 +322,3 @@ Si prega di esci da Swittee Calendar, spostarlo nella cartella Applicazioni, e r
 
 /* Spanning event ends */
 "ends" = "termina il";
-

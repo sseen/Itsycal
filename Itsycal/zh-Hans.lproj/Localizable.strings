@@ -80,6 +80,15 @@
 "Calendar" = "日历";
 
 /* No comment provided by engineer. */
+"Holiday calendar is hidden. Open settings" = "节假日日历未显示，前往设置";
+
+/* No comment provided by engineer. */
+"Hide holiday calendar hint" = "隐藏节假日日历提示";
+
+/* No comment provided by engineer. */
+"Select this calendar to show holidays." = "勾选此日历以显示节假日。";
+
+/* No comment provided by engineer. */
 "Calendar access denied.
 
 Swittee Calendar is more useful when it can display events from your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy" = "日历访问被拒绝。

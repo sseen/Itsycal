@@ -39,6 +39,7 @@ static NSString * const kCalendarCellId = @"CalendarCell";
     NSTableView *_calendarsTV;
     NSPopUpButton *_agendaDaysPopup;
     NSArray *_sourcesAndCalendars;
+    NSPopover *_holidayHintPopover;
 }
 
 #pragma mark -
@@ -62,7 +63,7 @@ static NSString * const kCalendarCellId = @"CalendarCell";
         [v addSubview:chkbx];
         return chkbx;
     };
-    
+
     // Checkboxes
     _login = chkbx(NSLocalizedString(@"Launch at login", @""));
     _login.action = @selector(launchAtLogin:);
@@ -81,15 +82,15 @@ static NSString * const kCalendarCellId = @"CalendarCell";
                                          NSLocalizedString(@"Friday", @""),
                                          NSLocalizedString(@"Saturday", @"")]];
     [v addSubview:_firstDayPopup];
-    
+
     // Shortcut label
     NSTextField *shortcutLabel = label(NSLocalizedString(@"Keyboard shortcut:", @""));
-    
+
     // Shortcut view
     MASShortcutView *shortcutView = [MASShortcutView new];
     shortcutView.associatedUserDefaultsKey = kKeyboardShortcut;
     [v addSubview:shortcutView];
-    
+
     // Calendars table view
     _calendarsTV = [NSTableView new];
     // _calendarsTV.backgroundColor = NSColor.clearColor;
@@ -102,14 +103,14 @@ static NSString * const kCalendarCellId = @"CalendarCell";
 
     // Calendars enclosing scrollview
     NSScrollView *tvContainer = [NSScrollView new];
-    
+
     // 1/2 drawsbackground false
     // 2/2 set background clear
     // 3/3 set tableview background clear
     // will make the visual effect show
     // tvContainer.backgroundColor = NSColor.clearColor;
     // tvContainer.drawsBackground = false;
-    
+
     // Give the NSScrollView a backing layer and set it's corner radius.
     [tvContainer setWantsLayer:YES];
     [tvContainer.layer setCornerRadius:8.0f];
@@ -117,17 +118,17 @@ static NSString * const kCalendarCellId = @"CalendarCell";
     // Give the NSScrollView's internal clip view a backing layer and set it's corner radius.
     [tvContainer.contentView setWantsLayer:YES];
     [tvContainer.contentView.layer setCornerRadius:8.0f];
-    
+
     tvContainer.scrollerStyle = NSScrollerStyleLegacy;
     tvContainer.hasVerticalScroller = YES;
     tvContainer.documentView = _calendarsTV;
     [v addSubview:tvContainer];
-    
+
     // agenda event label
     NSTextField *agendaEventLabel = label(NSLocalizedString(@"Event list:", @""));
     // Agenda days label
     NSTextField *agendaDaysLabel = label(NSLocalizedString(@"Event list shows:", @""));
-    
+
     // Agenda days popup
     _agendaDaysPopup = [NSPopUpButton new];
     [_agendaDaysPopup addItemsWithTitles:@[NSLocalizedString(@"No events", @""),
@@ -148,7 +149,7 @@ static NSString * const kCalendarCellId = @"CalendarCell";
     btQuit.title = NSLocalizedString(@"Quit", @"");
     btQuit.action = @selector(ckExit);
     [v addSubview:btQuit];
-    
+
     MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:@{@"m": @25,@"top": @100} views:NSDictionaryOfVariableBindings(_login, firstDayLabel,shortcutLabel, _firstDayPopup, tvContainer, agendaDaysLabel, _agendaDaysPopup, shortcutView, agendaEventLabel, btQuit)];
     [vfl :@"V:|-top-[_login]-20-[shortcutView]-10-[_firstDayPopup]-20-[tvContainer(170)]-[_agendaDaysPopup]-m-[btQuit]-m-|"];
     [vfl :@"H:|-m-[shortcutLabel]-[shortcutView]-|" : NSLayoutFormatAlignAllCenterY];
@@ -163,10 +164,10 @@ static NSString * const kCalendarCellId = @"CalendarCell";
 
     // Binding for Sparkle automatic update checks
 //    [_checkUpdates bind:@"value" toObject:[SUUpdater sharedUpdater] withKeyPath:@"automaticallyChecksForUpdates" options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
-    
+
     // Bindings for first day of week
     [_firstDayPopup bind:@"selectedIndex" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kWeekStartDOW] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
-    
+
     // Bindings for agenda days
     [_agendaDaysPopup bind:@"selectedIndex" toObject:[NSUserDefaultsController sharedUserDefaultsController] withKeyPath:[@"values." stringByAppendingString:kShowEventDays] options:@{NSContinuouslyUpdatesValueBindingOption: @(YES)}];
 
@@ -180,9 +181,9 @@ static NSString * const kCalendarCellId = @"CalendarCell";
 - (void)viewWillAppear
 {
     [super viewWillAppear];
-    
+
     _sourcesAndCalendars = [self.ec sourcesAndCalendars];
-    
+
     [_calendarsTV reloadData];
 
     // The API used to check the login item's state (LSSharedFileList) causes
@@ -196,9 +197,76 @@ static NSString * const kCalendarCellId = @"CalendarCell";
     else {
         _login.hidden = YES;
     }
-    
+
     _calendarsTV.enabled = self.ec.calendarAccessGranted;
     _agendaDaysPopup.enabled = self.ec.calendarAccessGranted;
+    [self showPendingHolidayHintIfPossible];
+}
+
+- (NSInteger)rowForCalendarIdentifier:(NSString *)calendarIdentifier
+{
+    if (calendarIdentifier.length == 0) {
+        return -1;
+    }
+
+    for (NSInteger row = 0; row < _sourcesAndCalendars.count; row++) {
+        id obj = _sourcesAndCalendars[row];
+        if (![obj isKindOfClass:[CalendarInfo class]]) {
+            continue;
+        }
+
+        CalendarInfo *info = obj;
+        if ([info.calendar.calendarIdentifier isEqualToString:calendarIdentifier]) {
+            return row;
+        }
+    }
+
+    return -1;
+}
+
+- (void)showPendingHolidayHintIfPossible
+{
+    NSString *calendarIdentifier = self.holidayHintCalendarIdentifier;
+    if (calendarIdentifier.length == 0) {
+        return;
+    }
+
+    self.holidayHintCalendarIdentifier = nil;
+    if (!self.ec.calendarAccessGranted) {
+        return;
+    }
+
+    NSInteger row = [self rowForCalendarIdentifier:calendarIdentifier];
+    if (row < 0) {
+        return;
+    }
+
+    [_calendarsTV scrollRowToVisible:row];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSView *rowView = [self->_calendarsTV viewAtColumn:0 row:row makeIfNecessary:NO];
+        if (!rowView) {
+            rowView = [self->_calendarsTV rowViewAtRow:row makeIfNecessary:NO];
+        }
+        if (!rowView) {
+            return;
+        }
+
+        NSTextField *message = [NSTextField labelWithString:NSLocalizedString(@"Select this calendar to show holidays.", @"")];
+        message.translatesAutoresizingMaskIntoConstraints = NO;
+        message.font = [NSFont systemFontOfSize:12];
+        message.lineBreakMode = NSLineBreakByWordWrapping;
+        NSViewController *contentVC = [NSViewController new];
+        contentVC.view = [NSView new];
+        [contentVC.view addSubview:message];
+        [contentVC.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-12-[message]-12-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(message)]];
+        [contentVC.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[message]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(message)]];
+        contentVC.preferredContentSize = NSMakeSize(220, 44);
+
+        self->_holidayHintPopover = [NSPopover new];
+        self->_holidayHintPopover.behavior = NSPopoverBehaviorTransient;
+        self->_holidayHintPopover.contentViewController = contentVC;
+        [self->_holidayHintPopover showRelativeToRect:rowView.bounds ofView:rowView preferredEdge:NSMaxYEdge];
+    });
 }
 
 #pragma mark -
@@ -219,7 +287,7 @@ static NSString * const kCalendarCellId = @"CalendarCell";
     CalendarInfo *info = _sourcesAndCalendars[row];
     NSString *calendarIdentifier = info.calendar.calendarIdentifier;
     [self.ec updateSelectedCalendarsForIdentifier:calendarIdentifier selected:selected];
-    
+
     _sourcesAndCalendars = [self.ec sourcesAndCalendars];
     [_calendarsTV reloadData];
 }
@@ -256,12 +324,12 @@ static NSString * const kCalendarCellId = @"CalendarCell";
         message.textField.stringValue = NSLocalizedString(@"Calendar access denied.\n\nSwittee Calendar is more useful when it can display events from your calendars. You can change this setting in System Preferences › Security & Privacy › Privacy", @"");
         return message;
     }
-    
+
     // Show a list of sources and calendars with checkboxes.
-    
+
     NSView *v = nil;
     id obj = _sourcesAndCalendars[row];
-    
+
     if ([obj isKindOfClass:[NSString class]]) {
         SourceCellView *source = [tableView makeViewWithIdentifier:kSourceCellId owner:self];
         if (!source) source = [SourceCellView new];

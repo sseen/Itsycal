@@ -13,4 +13,7 @@
 // Show General panel if About panel is showing.
 - (void)showPrefs;
 
+// Show General panel and ask it to point at a holiday calendar once.
+- (void)showGeneralTabWithHolidayHint:(NSString *)calendarIdentifier;
+
 @end

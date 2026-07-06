@@ -36,6 +36,9 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     NSWindowController    *_prefsWC;
     AgendaViewController  *_agendaVC;
     NSLayoutConstraint    *_bottomMargin;
+    NSView                *_holidayHintBanner;
+    NSLayoutConstraint    *_holidayHintBannerHeight;
+    NSString              *_holidayHintCalendarIdentifier;
     NSDateFormatter       *_iconDateFormatter;
     NSTimeInterval         _inactiveTime;
     NSDictionary          *_filteredEventsForDate;
@@ -69,14 +72,14 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     // View controller content view
     NSView *v = [NSView new];
     v.translatesAutoresizingMaskIntoConstraints = NO;
-    
+
     // MoCalendar
     _moCal = [MoCalendar new];
     _moCal.delegate = self;
     _moCal.target = self;
     _moCal.doubleAction = @selector(addCalendarEvent:);
     [v addSubview:_moCal];
-    
+
     // Convenience function to config buttons.
     MoButton* (^btn)(NSString*, NSString*, NSString*, SEL) = ^MoButton* (NSString *imageName, NSString *tip, NSString *key, SEL action) {
         MoButton *btn = [MoButton new];
@@ -102,20 +105,53 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     _btnPin.keyEquivalentModifierMask = 0;
     _btnPin.alternateImage = [NSImage imageNamed:@"btnPinAlt"];
     [_btnPin setButtonType:NSButtonTypeToggle];
-    
+
     _btnPin.hidden = true;
 #ifdef DEBUG
     _btnPin.hidden = false;
 #endif
-    
-    
+
+
     // Agenda
     _agendaVC = [AgendaViewController new];
     _agendaVC.delegate = self;
     _agendaVC.identifier = @"AgendaVC";
     NSView *agenda = _agendaVC.view;
     [v addSubview:agenda];
-    
+
+    _holidayHintBanner = [NSView new];
+    _holidayHintBanner.wantsLayer = YES;
+    _holidayHintBanner.layer.backgroundColor = [[NSColor controlAccentColor] colorWithAlphaComponent:0.10].CGColor;
+    _holidayHintBanner.layer.cornerRadius = 5;
+    _holidayHintBanner.hidden = YES;
+    [v addSubview:_holidayHintBanner];
+
+    NSButton *holidayHintButton = [NSButton buttonWithTitle:NSLocalizedString(@"Holiday calendar is hidden. Open settings", @"")
+                                                     target:self
+                                                     action:@selector(showHolidayHintPrefs:)];
+    holidayHintButton.bezelStyle = NSBezelStyleInline;
+    holidayHintButton.bordered = NO;
+    holidayHintButton.alignment = NSTextAlignmentLeft;
+    holidayHintButton.font = [NSFont systemFontOfSize:11];
+    holidayHintButton.contentTintColor = NSColor.secondaryLabelColor;
+    [_holidayHintBanner addSubview:holidayHintButton];
+
+    NSButton *holidayHintDismissButton = [NSButton buttonWithTitle:@"×"
+                                                            target:self
+                                                            action:@selector(dismissHolidayHint:)];
+    holidayHintDismissButton.bezelStyle = NSBezelStyleInline;
+    holidayHintDismissButton.bordered = NO;
+    holidayHintDismissButton.font = [NSFont systemFontOfSize:14 weight:NSFontWeightMedium];
+    holidayHintDismissButton.contentTintColor = NSColor.secondaryLabelColor;
+    holidayHintDismissButton.toolTip = NSLocalizedString(@"Hide holiday calendar hint", @"");
+    [_holidayHintBanner addSubview:holidayHintDismissButton];
+
+    holidayHintButton.translatesAutoresizingMaskIntoConstraints = NO;
+    holidayHintDismissButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [_holidayHintBanner addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[holidayHintButton]-(>=4)-[holidayHintDismissButton(18)]-6-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(holidayHintButton, holidayHintDismissButton)]];
+    [_holidayHintBanner addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[holidayHintButton]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(holidayHintButton)]];
+    [_holidayHintBanner addConstraint:[NSLayoutConstraint constraintWithItem:holidayHintDismissButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_holidayHintBanner attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+
     ///
     /// new style quit button
     /// 还是两个button放在一起，不然审核不通过
@@ -128,7 +164,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     //[btQuit setImage:[NSImage imageNamed:@"btnExit"]];
     //[btQuit.image setTemplate:true];
     //btQuit.imagePosition = NSImageLeft;
-    
+
     [btQuit setBordered:false];
     [btQuit setAction:@selector(exitApp:)];
     [btQuit.effectiveAppearance bestMatchFromAppearancesWithNames:@[NSAppearanceNameVibrantDark, NSAppearanceNameVibrantLight]];
@@ -136,20 +172,23 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     [v addSubview:btQuit];
 
     // Constraints
-    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:nil views:NSDictionaryOfVariableBindings(_moCal, _btnAdd, _btnCal, _btnOpt, _btnPin, agenda, btQuit, _btnExit)];
+    MoVFLHelper *vfl = [[MoVFLHelper alloc] initWithSuperview:v metrics:nil views:NSDictionaryOfVariableBindings(_moCal, _btnAdd, _btnCal, _btnOpt, _btnPin, agenda, _holidayHintBanner, btQuit, _btnExit)];
     //[vfl :@"H:|-(>=0)-[btQuit]-10-|"];
     [vfl :@"H:|[_moCal]|"];
     [vfl :@"H:|-4-[agenda]-4-|"];
     [vfl :@"H:|-10-[_btnExit(==18)]-2-[btQuit]-(>=0)-[_btnPin]-10-[_btnAdd]-10-[_btnCal]-10-[_btnOpt]-10-|" :NSLayoutFormatAlignAllCenterY];
     [vfl :@"V:|-6-[_moCal]-6-[_btnOpt]"];
-    [vfl :@"V:[agenda]-(-1)-|"];
-    
+    [vfl :@"H:|-4-[_holidayHintBanner]-4-|"];
+    [vfl :@"V:[agenda]-0-[_holidayHintBanner]-(-1)-|"];
+    _holidayHintBannerHeight = [NSLayoutConstraint constraintWithItem:_holidayHintBanner attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:0];
+    [v addConstraint:_holidayHintBannerHeight];
+
     // Margin between bottom of _moCal and top of agenda. When the agenda
     // has no items, we reduce this space so that the bottom of the window
     // is a bit closer to the buttons. This eliminates the chin.
     _bottomMargin = [NSLayoutConstraint constraintWithItem:agenda attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_moCal attribute:NSLayoutAttributeBottom multiplier:1 constant:30];
     [v addConstraint:_bottomMargin];
-    
+
     self.view = v;
 }
 
@@ -157,28 +196,28 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 {
     // The order of the statements is important! Subsequent statments
     // depend on previous ones.
-    
+
     _iconDateFormatter = [NSDateFormatter new];
     _inactiveTime = 0;
 
     // Calendar is 'autoupdating' so it handles timezone changes properly.
     _nsCal = [NSCalendar autoupdatingCurrentCalendar];
     _agendaVC.nsCal = _nsCal;
-    
+
     MoDate today = [self todayDate];
     _moCal.todayDate = today;
     _moCal.selectedDate = today;
-    
+
     [self createStatusItem];
-    
+
     _ec = [[EventCenter alloc] initWithCalendar:_nsCal delegate:self];
-    
+
     TooltipViewController *tooltipVC = [TooltipViewController new];
     tooltipVC.tooltipDelegate = self;
     _moCal.tooltipVC = tooltipVC;
 
     [self updateTimer];
-    
+
     // Now that everything else is set up, we file for notifications.
     // Some of the notification handlers rely on stuff we just set up.
     [self fileNotifications];
@@ -207,7 +246,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 - (void)viewWillAppear
 {
     [super viewWillAppear];
-    
+
 //    self.view.window.opaque = false;
 //    self.view.window.alphaValue = 0.99;
 
@@ -230,7 +269,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     BOOL cmdFlag = (flags & NSEventModifierFlagCommand) &&  !(flags & (NSEventModifierFlagShift | NSEventModifierFlagOption | NSEventModifierFlagControl));
     BOOL cmdOptFlag = (flags & NSEventModifierFlagCommand) && (flags & NSEventModifierFlagOption) &&  !(flags & (NSEventModifierFlagShift | NSEventModifierFlagControl));
     unichar keyChar = [charsIgnoringModifiers characterAtIndex:0];
-    
+
     if (keyChar == 'w' && noFlags) {
         [[NSUserDefaults standardUserDefaults] setBool:!_moCal.showWeeks forKey:kShowWeeks];
     }
@@ -264,13 +303,13 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
         //  already open, we close it and return.
         if (sender != _moCal) return;
     }
-    
+
     // Was prefs window open in the past and then hidden when
     // app became inactive? This prevents it from reappearing.
     [self.prefsWC close];
-    
+
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
-    
+
     if (_ec.calendarAccessGranted == NO) {
         NSAlert *alert = [NSAlert new];
         alert.messageText = NSLocalizedString(@"Calendar access was denied.", @"");
@@ -278,11 +317,11 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
         [alert runModal];
         return;
     }
-    
+
     // Confirm that there are calendars which can be modified.
     BOOL atLeastOneModifiableCalendar = NO;
     for (id obj in [_ec sourcesAndCalendars]) {
-        if ([obj isKindOfClass:[CalendarInfo class]] && 
+        if ([obj isKindOfClass:[CalendarInfo class]] &&
             ((CalendarInfo *)obj).calendar.allowsContentModifications) {
             atLeastOneModifiableCalendar = YES;
             break;
@@ -307,7 +346,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     eventVC.cal = _nsCal;
     eventVC.title = @"";
     eventVC.calSelectedDate = MakeNSDateWithDate(_moCal.selectedDate, _nsCal);
-    
+
     _newEventPopover.contentViewController = eventVC;
     _newEventPopover.appearance = NSApp.effectiveAppearance;
     [_newEventPopover showRelativeToRect:NSZeroRect ofView:_btnAdd preferredEdge:NSRectEdgeMinX];
@@ -317,15 +356,15 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 {
     // Determine the default calendar app.
     // See: support.busymac.com/help/21535-busycal-url-handler
-    
+
     CFStringRef strRef = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, CFSTR("ics"), kUTTypeData);
     CFStringRef bundleID = LSCopyDefaultRoleHandlerForContentType(strRef, kLSRolesEditor);
     CFRelease(strRef);
     NSString *defaultCalendarAppBundleID = CFBridgingRelease(bundleID);
-    
+
     // Use URL scheme to open BusyCal or Fantastical2 on the
     // date selected in our calendar.
-    
+
     if ([defaultCalendarAppBundleID isEqualToString:@"com.busymac.busycal2"] ||
         [defaultCalendarAppBundleID isEqualToString:@"com.busymac.busycal3"]) {
         [self showCalendarAppWithURLScheme:@"busycalevent://date"];
@@ -335,10 +374,10 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
         [self showCalendarAppWithURLScheme:@"x-fantastical2://show/calendar"];
         return;
     }
-    
+
     // Use the Scripting Bridge to open Calendar.app on the
     // date selected in our calendar.
-    
+
     SBCalendarApplication *calendarApp = [SBApplication applicationWithBundleIdentifier:@"com.apple.iCal"];
     if (calendarApp == nil) {
         NSString *message = NSLocalizedString(@"The Calendar application could not be found.", @"Alert box message when we fail to launch the Calendar application");
@@ -367,7 +406,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 - (void)showOptionsMenu:(id)sender
 {
     [self showPrefs:sender];
-    
+
 //    NSMenu *optMenu = [[NSMenu alloc] initWithTitle:@"Options Menu"];
 //    NSInteger i = 0;
 //
@@ -388,6 +427,40 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 {
     BOOL pin = _btnPin.state == NSControlStateValueOn;
     [[NSUserDefaults standardUserDefaults] setBool:pin forKey:kPinItsycal];
+}
+
+- (void)refreshHolidayHintBanner
+{
+    if (!_ec || [[NSUserDefaults standardUserDefaults] boolForKey:kHolidayHintDismissed]) {
+        _holidayHintCalendarIdentifier = nil;
+        _holidayHintBanner.hidden = YES;
+        _holidayHintBannerHeight.constant = 0;
+        return;
+    }
+
+    CalendarInfo *info = [_ec unselectedLocalHolidayCalendarInfo];
+    _holidayHintCalendarIdentifier = info.calendar.calendarIdentifier;
+    BOOL shouldShow = _holidayHintCalendarIdentifier.length > 0;
+    _holidayHintBanner.hidden = !shouldShow;
+    _holidayHintBannerHeight.constant = shouldShow ? 24 : 0;
+}
+
+- (void)dismissHolidayHint:(id)sender
+{
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHolidayHintDismissed];
+    [self refreshHolidayHintBanner];
+}
+
+- (void)showHolidayHintPrefs:(id)sender
+{
+    if (_holidayHintCalendarIdentifier.length == 0) {
+        return;
+    }
+
+    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+    [_newEventPopover close];
+    [self.prefsVC showGeneralTabWithHolidayHint:_holidayHintCalendarIdentifier];
+    [self.prefsWC showWindow:self];
 }
 
 - (NSWindowController *)prefsWC
@@ -515,11 +588,11 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 - (NSString *)iconText
 {
     NSString *iconText;
-    
+
     NSCalendar *calendar    = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];//指定日历的算法
     NSDateComponents *comps = [calendar components:NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitWeekday
                                           fromDate:[NSDate date]];//NSDateComponents可以获取日期的详细信息，所有的信息获取是可配置的
-    
+
     // emoji
     NSMutableString *templateEmoji = [NSMutableString string];
     Boolean isEmoji = [[NSUserDefaults standardUserDefaults] boolForKey:kUseEmojiIcon];
@@ -536,10 +609,10 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
             [templateEmoji appendFormat:@"%@",(NSString *)emojiNumber[comps.day]];
         }
     }
-    
+
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kShowMonthInIcon] ||
         [[NSUserDefaults standardUserDefaults] boolForKey:kShowDayOfWeekInIcon]) {
-        
+
         NSMutableString *template = @"d".mutableCopy;
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kShowMonthInIcon]) {
             [template appendString:@"MMM"];
@@ -567,11 +640,11 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     } else {
         iconText = [NSString stringWithFormat:@"%zd", _moCal.todayDate.day];
     }
-    
+
     if (isEmoji) {
         iconText = templateEmoji;
     }
-    
+
     if (iconText == nil) {
         iconText = @"!!";
     }
@@ -653,7 +726,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 
     // Does user want outline icon or solid icon?
     BOOL useOutlineIcon = [[NSUserDefaults standardUserDefaults] boolForKey:kUseOutlineIcon];
-    
+
     // Does want big menu font ?
     BOOL useBigMenuFont = [[NSUserDefaults standardUserDefaults] boolForKey:kUseBigMenuFont];
     CGFloat menuTitleSize = useBigMenuFont ? 13 : 11.5;
@@ -790,7 +863,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     // shown clipped at the top. Prevent that by constraining the
     // top of the menu item to be at most the top of the screen.
     statusItemFrame.origin.y = MIN(statusItemFrame.origin.y, NSMaxY(statusItemScreen.frame));
-    
+
     // So that agenda height can adjust to fit screen if needed.
     [_agendaVC.view setNeedsLayout:YES];
 
@@ -863,6 +936,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 - (void)showItsycalWindow
 {
     [[NSApplication sharedApplication] unhideWithoutActivation];
+    [self refreshHolidayHintBanner];
     [self positionItsycalWindow];
     [self.itsycalWindow makeKeyAndOrderFront:self];
     [self.itsycalWindow makeFirstResponder:_moCal];
@@ -942,9 +1016,9 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     // Was prefs window open in the past and then hidden when
     // app became inactive? This prevents it from reappearing.
     [self.prefsWC close];
-    
+
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
-    
+
     // Make a string showing the event title and duration.
     static NSDateIntervalFormatter *durationFormatter = nil;
     static dispatch_once_t onceToken;
@@ -970,7 +1044,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     NSString *eventString = [NSString stringWithFormat:@"%@\n%@", title, duration];
 
     BOOL eventRepeats = event.hasRecurrenceRules;
-    
+
     // Ask the user to confirm they want to delete this event (or future events).
     NSAlert *alert = [NSAlert new];
     if (eventRepeats == YES) {
@@ -986,13 +1060,13 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     }
     [alert addButtonWithTitle:NSLocalizedString(@"Cancel", @"")];
     NSModalResponse response = [alert runModal];
-    
+
     // Return if the user chose 'Cancel'.
     if ((eventRepeats == YES && response == NSAlertThirdButtonReturn) ||
         (eventRepeats == NO && response == NSAlertSecondButtonReturn)) {
         return;
     }
-    
+
     // Delete this event (or future events).
     NSError *error = NULL;
     EKSpan span = (eventRepeats && response == NSAlertSecondButtonReturn) ? EKSpanFutureEvents : EKSpanThisEvent;
@@ -1004,7 +1078,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 
 - (CGFloat)agendaMaxPossibleHeight
 {
-    return NSHeight(_screenFrame) - NSHeight(_moCal.frame) - 140;
+    return NSHeight(_screenFrame) - NSHeight(_moCal.frame) - 140 - _holidayHintBannerHeight.constant;
 }
 
 #pragma mark -
@@ -1074,6 +1148,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     _filteredEventsForDate = [_ec filteredEventsForDate];
     [_moCal reloadData];
     [self updateAgenda];
+    [self refreshHolidayHintBanner];
 }
 
 - (MoDate)fetchStartDate
@@ -1102,12 +1177,12 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
 {
     NSInteger days = [self daysToShowInAgenda];
     _agendaVC.events = [self datesAndEventsForDate:_moCal.selectedDate days:days];
-    
+
     /// 所有日程的入口
     /// 在这里获得所有日程数据
     /// 新加上是否当天有中国法定节假日的标志，如果有也添加到最上面
     _agendaVC.events = [SCUtils tansformCnholidayToEvents:_agendaVC.events date:_moCal.selectedDate];
-    
+
     [_agendaVC reloadData];
     _bottomMargin.constant = _agendaVC.events.count == 0 ? 25 : 30;
 }
@@ -1143,7 +1218,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     [_timer invalidate];
     _timer = [[NSTimer alloc] initWithFireDate:fireDate interval:0 target:self selector:@selector(updateTimer) userInfo:nil repeats:NO];
     [NSRunLoop.mainRunLoop addTimer:_timer forMode:NSRunLoopCommonModes];
-    
+
     // Check if past events should be dimmed each minute.
     static NSTimeInterval dimEventsTime = 0;
     NSTimeInterval currentTime = MonotonicClockTime();
@@ -1202,7 +1277,7 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
     // string is delimited by single-quote chars.
 
     NSString *timeSpecifiers = @"aHhKkjms";
-    
+
     __block BOOL timeSpecifierFound = NO;
     __block BOOL secondsSpecifierFound = NO;
     __block BOOL insideQuotedString = NO;
@@ -1245,20 +1320,20 @@ static NSString const *emojiNumber[10] = {@"0️⃣",@"1️⃣",@"2️⃣",@"3�
         [self updateMenubarIcon];
         [self updateTimer];
     }];
-    
+
     // Timezone changed notification
     [[NSNotificationCenter defaultCenter] addObserverForName:NSSystemTimeZoneDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [self updateMenubarIcon];
         [self updateTimer];
         [self->_ec refetchAll];
     }];
-    
+
     // Locale notifications
     [[NSNotificationCenter defaultCenter] addObserverForName:NSCurrentLocaleDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [self updateMenubarIcon];
         [self updateTimer];
     }];
-    
+
     // System clock notification
     [[NSNotificationCenter defaultCenter] addObserverForName:NSSystemClockDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [self updateMenubarIcon];

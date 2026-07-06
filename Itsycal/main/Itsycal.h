@@ -31,3 +31,4 @@ extern NSString * const kShowCnLunar;
 extern NSString * const kshowCnNationDays;
 extern NSString * const kUseBigMenuFont;
 extern NSString * const kShowCnLunarInIcon;
+extern NSString * const kHolidayHintDismissed;

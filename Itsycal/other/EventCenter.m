@@ -12,6 +12,39 @@
 // NSUserDefaults key for array of selected calendar IDs.
 static NSString *kSelectedCalendars = @"SelectedCalendars";
 
+static NSDictionary<NSString *, NSArray<NSString *> *> *ItsycalHolidayCalendarTitleKeywordsByRegion(void)
+{
+    static NSDictionary<NSString *, NSArray<NSString *> *> *keywordsByRegion;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        keywordsByRegion = @{
+            @"CN": @[@"节假日", @"Chinese Holidays", @"中国大陆"],
+            @"JP": @[@"祝日", @"Japanese Holidays", @"日本の"]
+        };
+    });
+    return keywordsByRegion;
+}
+
+BOOL ItsycalHolidayCalendarTitleMatchesRegion(NSString *title, NSString *regionCode)
+{
+    if (title.length == 0 || regionCode.length == 0) {
+        return NO;
+    }
+
+    NSString *normalizedRegionCode = [regionCode uppercaseString];
+    NSArray<NSString *> *keywords = ItsycalHolidayCalendarTitleKeywordsByRegion()[normalizedRegionCode];
+    if (keywords.count == 0) {
+        return NO;
+    }
+
+    for (NSString *keyword in keywords) {
+        if ([title rangeOfString:keyword options:(NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch)].location != NSNotFound) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 // Properties auto-synthesized.
 @implementation CalendarInfo @end
 @implementation EventInfo    @end
@@ -112,7 +145,7 @@ static NSString *kSelectedCalendars = @"SelectedCalendars";
         }
     });
     [[NSUserDefaults standardUserDefaults] setObject:selectedCalendars forKey:kSelectedCalendars];
-    
+
     // Filter events based on new calendar selection.
     dispatch_async(_queueWork, ^{
         [self _filterEvents];
@@ -126,6 +159,46 @@ static NSString *kSelectedCalendars = @"SelectedCalendars";
         sourcesAndCalendars = [self->_sourcesAndCalendars copy];
     });
     return sourcesAndCalendars;
+}
+
+- (CalendarInfo *)unselectedLocalHolidayCalendarInfo
+{
+    if (!self.calendarAccessGranted) {
+        return nil;
+    }
+
+    NSString *regionCode = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
+    __block CalendarInfo *firstUnselectedMatch = nil;
+    __block BOOL hasSelectedMatch = NO;
+
+    dispatch_sync(_queueIsol2, ^{
+        for (id obj in self->_sourcesAndCalendars) {
+            if (![obj isKindOfClass:[CalendarInfo class]]) {
+                continue;
+            }
+
+            CalendarInfo *info = obj;
+            EKCalendar *calendar = info.calendar;
+            if (calendar.type != EKCalendarTypeSubscription) {
+                continue;
+            }
+
+            if (!ItsycalHolidayCalendarTitleMatchesRegion(calendar.title, regionCode)) {
+                continue;
+            }
+
+            if (info.selected) {
+                hasSelectedMatch = YES;
+                break;
+            }
+
+            if (!firstUnselectedMatch) {
+                firstUnselectedMatch = info;
+            }
+        }
+    });
+
+    return hasSelectedMatch ? nil : firstUnselectedMatch;
 }
 
 - (NSDictionary *)filteredEventsForDate {
@@ -184,10 +257,10 @@ static NSString *kSelectedCalendars = @"SelectedCalendars";
             return [cal1.source.title compare:cal2.source.title];
         }
     }];
-    
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSSet *selectedCalendars = [NSSet setWithArray:[defaults arrayForKey:kSelectedCalendars]];
-    
+
     // Make an array of source titles and calendar info.
     NSMutableArray *sourcesAndCalendars = [NSMutableArray new];
     NSString *currentSourceTitle = @"";
@@ -243,7 +316,7 @@ static NSString *kSelectedCalendars = @"SelectedCalendars";
         os_log(OS_LOG_DEFAULT, "SKIPPING: %@ - %@", NSStringFromMoDate(startMoDate), NSStringFromMoDate(endMoDate));
         return;
     }
-    
+
     // Reduce the range [startMoDate, endMoDate] based on dates previously fetched.
     NSMutableIndexSet *notYetFetchedDates = [NSMutableIndexSet new];
     for (NSInteger julian = startMoDate.julian; julian <= endMoDate.julian; julian++) {
@@ -255,22 +328,22 @@ static NSString *kSelectedCalendars = @"SelectedCalendars";
         startMoDate = MakeGregorian(notYetFetchedDates.firstIndex);
         endMoDate   = MakeGregorian(notYetFetchedDates.lastIndex);
     }
-    
+
     // Update _previouslyFetchedDates for this fetch.
     [_previouslyFetchedDates addIndexesInRange:dateRange];
-    
+
     NSDate *startDate = MakeNSDateWithDate(startMoDate, _cal);
     NSDate *endDate   = MakeNSDateWithDate(endMoDate,   _cal);
     NSArray *cals = [self _validCalendars];
     NSPredicate *predicate = [_store predicateForEventsWithStartDate:startDate endDate:endDate calendars:cals];
     NSArray *events = [_store eventsMatchingPredicate:predicate];
     NSMutableDictionary *eventsForDate = [NSMutableDictionary new];
-    
+
     // Iterate over events matching startDate/endDate. We will
     // populate a dictionary, eventsForDate, that maps each date
     // to an array of events that fall on that date.
     for (EKEvent *event in events) {
-        
+
         // Skip events the current user has declined.
         // Use 'valueForKey' to get private 'participationStatus' property.
         // This is much faster than accessing the 'attendees' property
@@ -280,17 +353,17 @@ static NSString *kSelectedCalendars = @"SelectedCalendars";
             [[event valueForKey:@"participationStatus"] integerValue] == EKParticipantStatusDeclined) {
             continue;
         }
-        
+
         // Iterate through the days this event spans. We only care about
         // days for this event that are between startDate and endDate.
         NSDate *date  = [event.startDate laterDate:startDate];
         NSDate *final = [event.endDate earlierDate:endDate];
         date  = [_cal startOfDayForDate:date];
         while ([date compare:final] == NSOrderedAscending) {
-            
+
             NSDate *nextDate = [_cal dateByAddingUnit:NSCalendarUnitDay value:1 toDate:date options:0];
             nextDate = [_cal startOfDayForDate:nextDate];
-            
+
             // Make an EventInfo object...
             EventInfo *info = [EventInfo new];
             info.event       = event;
@@ -309,11 +382,11 @@ static NSString *kSelectedCalendars = @"SelectedCalendars";
                 eventsForDate[date] = [NSMutableArray new];
             }
             [eventsForDate[date] addObject:info];
-            
+
             date = nextDate;
         }
     }
-    
+
     // eventsForDate is a dict that maps dates to an array of EventInfo objects.
     // Sort those arrays so that AllDay events are first, the sort by startTime.
     // AllDay events are sorted by calendar title.
@@ -325,7 +398,7 @@ static NSString *kSelectedCalendars = @"SelectedCalendars";
             else { return [e1.event.startDate compare:e2.event.startDate]; }
         }];
     }
-    
+
     [_eventsForDate addEntriesFromDictionary:eventsForDate];
     [self _filterEvents];
 }
