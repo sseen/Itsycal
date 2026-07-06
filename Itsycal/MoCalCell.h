@@ -27,6 +27,7 @@ typedef enum: NSInteger {
 @property (nonatomic) BOOL isInCurrentMonth;
 @property (nonatomic) BOOL isHovered;
 @property (nonatomic) BOOL isSelected;
+@property (nonatomic) BOOL usesLunarTextLayout;
 @property (nonatomic) CALayer *lineLayer;
 @property (nonatomic,assign) KCNATIONSTATUS cstatus;
 

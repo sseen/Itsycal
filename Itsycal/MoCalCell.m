@@ -13,6 +13,7 @@
 @implementation MoCalCell
 {
     NSLayoutConstraint *_textFieldVerticalSpace;
+    NSLayoutConstraint *_textFieldCenterYConstraint;
 }
 
 - (instancetype)init
@@ -28,7 +29,8 @@
         [_textField setTranslatesAutoresizingMaskIntoConstraints:NO];
 
         [self addSubview:_textField];
-        [_textField.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = true;
+        _textFieldCenterYConstraint = [_textField.centerYAnchor constraintEqualToAnchor:self.centerYAnchor];
+        _textFieldCenterYConstraint.active = true;
         [_textField.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = true;
         
         ///
@@ -45,9 +47,9 @@
         _lineLayer = [CALayer layer];
         _lineLayer.borderColor = NSColor.clearColor.CGColor;
         _lineLayer.borderWidth = 0;
-        _lineLayer.frame = NSMakeRect(5, 1, CGRectGetWidth(self.bounds) - 10, 1);
-        _lineLayer.backgroundColor = NSColor.redColor.CGColor;
+        _lineLayer.backgroundColor = NSColor.systemRedColor.CGColor;
         [self.layer addSublayer:_lineLayer];
+        [self updateMonthStartIndicatorFrame];
         _lineLayer.hidden = true;
         
         _cstatus = KCNATIONSTATUSnormal;
@@ -61,6 +63,38 @@
 {
     [_textField setFont:[NSFont systemFontOfSize:[[Sizer shared] fontSize] weight:NSFontWeightMedium]];
     _textFieldVerticalSpace.constant = [[Sizer shared] cellTextFieldVerticalSpace];
+    [self updateTextFieldCenterYOffset];
+    [self updateMonthStartIndicatorFrame];
+}
+
+- (void)layout
+{
+    [super layout];
+    [self updateMonthStartIndicatorFrame];
+}
+
+- (void)setUsesLunarTextLayout:(BOOL)usesLunarTextLayout
+{
+    if (_usesLunarTextLayout != usesLunarTextLayout) {
+        _usesLunarTextLayout = usesLunarTextLayout;
+        [self updateTextFieldCenterYOffset];
+    }
+}
+
+- (void)updateTextFieldCenterYOffset
+{
+    _textFieldCenterYConstraint.constant = self.usesLunarTextLayout ? [[Sizer shared] cellLunarTextCenterYOffset] : 0;
+}
+
+- (void)updateMonthStartIndicatorFrame
+{
+    CGFloat x = [[Sizer shared] cellMonthStartIndicatorX];
+    CGFloat width = [[Sizer shared] cellMonthStartIndicatorWidth];
+    CGFloat inset = [[Sizer shared] cellMonthStartIndicatorVerticalInset];
+    CGFloat height = MAX(0, NSHeight(self.bounds) - (2 * inset));
+    _lineLayer.frame = NSMakeRect(x, inset, width, height);
+    _lineLayer.cornerRadius = width / 2.0;
+    _lineLayer.backgroundColor = NSColor.systemRedColor.CGColor;
 }
 
 - (void)setCstatus:(KCNATIONSTATUS)cstatus {
@@ -141,110 +175,48 @@
         [p stroke];
     }
     if (self.dotColors) {
-        CGFloat sz = [[Sizer shared] cellSize];
         CGFloat dotWidth = [[Sizer shared] cellDotWidth];
-        CGFloat dotSpacing = 1.5*dotWidth;
+        CGFloat dotSpacing = 1.5 * dotWidth;
+        NSUInteger dotCount = self.dotColors.count == 0 ? 1 : MIN(self.dotColors.count, 3);
+        CGFloat firstCenterX = NSMidX(self.bounds) - (dotSpacing * (dotCount - 1) / 2.0);
         NSRect r = NSMakeRect(0, 0, dotWidth, dotWidth);
-        r.origin.y = self.bounds.origin.y + 1;//+ dotWidth - 4;
-        if (self.dotColors.count == 0) {
-            [self.textField.textColor set];
-            r.origin.x = self.bounds.origin.x + sz/2.0 - dotWidth/2.0;
-            [[NSBezierPath bezierPathWithOvalInRect:r] fill];
-        }
-        else if (self.dotColors.count == 1) {
-            r.origin.x = self.bounds.origin.x + sz/2.0 - dotWidth/2.0;
-            [self dotColorShadow:_dotColors[0] rect:r];
-        }
-        else if (self.dotColors.count == 2) {
-            [self.dotColors[0] set];
-            r.origin.x = self.bounds.origin.x + sz/2.0 - dotSpacing/2 - dotWidth/2.0;
-            [[NSBezierPath bezierPathWithOvalInRect:r] fill];
-            
-            [self.dotColors[1] set];
-            r.origin.x = self.bounds.origin.x + sz/2.0 + dotSpacing/2 - dotWidth/2.0;
-            [[NSBezierPath bezierPathWithOvalInRect:r] fill];
-        }
-        else if (self.dotColors.count == 3) {
-            [self.dotColors[0] set];
-            r.origin.x = self.bounds.origin.x + sz/2.0 - dotSpacing - dotWidth/2.0;
-            [[NSBezierPath bezierPathWithOvalInRect:r] fill];
-            
-            [self.dotColors[1] set];
-            r.origin.x = self.bounds.origin.x + sz/2.0 - dotWidth/2.0;
-            [[NSBezierPath bezierPathWithOvalInRect:r] fill];
-            
-            [self.dotColors[2] set];
-            r.origin.x = self.bounds.origin.x + sz/2.0 + dotSpacing - dotWidth/2.0;
-            [[NSBezierPath bezierPathWithOvalInRect:r] fill];
+        r.origin.y = self.bounds.origin.y + [[Sizer shared] cellDotOriginY];
+        for (NSUInteger i = 0; i < dotCount; i++) {
+            NSColor *dotColor = self.dotColors.count == 0 ? self.textField.textColor : self.dotColors[i];
+            r.origin.x = round(firstCenterX + (dotSpacing * i) - dotWidth / 2.0);
+            [self dotColor:dotColor rect:r];
         }
     }
-    
+
     if (self.cstatus != KCNATIONSTATUSnormal) {
-        
-        NSRect r = NSInsetRect(self.bounds, 0, 0);
+
+        CGFloat badgeInset = [[Sizer shared] cellHolidayBadgeInset];
+        NSRect r = NSInsetRect(self.bounds, badgeInset, badgeInset);
         NSBezierPath* ovalPath = [NSBezierPath bezierPath];
-        
+
         NSColor *nationColor = _cstatus == KCNATIONSTATUSwork ? Theme.cnWork : Theme.cnRelax;
-        NSColor *nationBoderColor = nationColor;
-        
-        CGFloat holidayRadius = 8;
-        CGFloat holidayHalfR = 4;
-        CGFloat frameWidth = r.size.width + 1;
-        CGFloat frameHeight = r.size.height + 1;
-        CGFloat xStart = frameWidth - holidayRadius;
-        CGFloat yEnd = frameHeight - holidayRadius;
-        [ovalPath moveToPoint: NSMakePoint(xStart, frameHeight)];
-        [ovalPath lineToPoint: NSMakePoint(frameWidth, frameHeight)];
-        [ovalPath lineToPoint: NSMakePoint(frameWidth, yEnd)];
-        [ovalPath curveToPoint: NSMakePoint(xStart, frameHeight) controlPoint1: NSMakePoint(frameWidth - holidayHalfR, yEnd)  controlPoint2: NSMakePoint(xStart,frameHeight-holidayHalfR)];
+
+        CGFloat holidayRadius = [[Sizer shared] cellHolidayBadgeRadius];
+        CGFloat holidayHalfR = holidayRadius / 2.0;
+        CGFloat maxX = NSMaxX(r);
+        CGFloat maxY = NSMaxY(r);
+        CGFloat xStart = maxX - holidayRadius;
+        CGFloat yEnd = maxY - holidayRadius;
+        [ovalPath moveToPoint:NSMakePoint(xStart, maxY)];
+        [ovalPath lineToPoint:NSMakePoint(maxX, maxY)];
+        [ovalPath lineToPoint:NSMakePoint(maxX, yEnd)];
+        [ovalPath curveToPoint:NSMakePoint(xStart, maxY)
+                 controlPoint1:NSMakePoint(maxX - holidayHalfR, yEnd)
+                 controlPoint2:NSMakePoint(xStart, maxY - holidayHalfR)];
         [ovalPath closePath];
         [nationColor setFill];
         [ovalPath fill];
-        [nationBoderColor setStroke];
-        ovalPath.lineWidth = 1;
-        [ovalPath stroke];
     }
-        
-    
-    
 }
 
 - (void)dotColor:(NSColor *)dotColor rect:(NSRect)r {
     [dotColor set];
     [[NSBezierPath bezierPathWithOvalInRect:r] fill];
-}
-
-/// 添加阴影
-/// 或者添加 border
-- (void)dotColorShadow:(NSColor *)dotColor rect:(NSRect)r {
-//    NSColor *shadowColor = [dotColor colorWithAlphaComponent:0.5];
-    
-    [dotColor set];
-    NSBezierPath *path = [NSBezierPath bezierPathWithOvalInRect:r];
-    [path fill];
-
-    
-    // Save the graphics state for shadow
-    [NSGraphicsContext saveGraphicsState];
-
-    // Set the shown path as the clip
-    [path setClip];
-
-    // Create and stroke the shadow
-//    NSShadow * shadow = [[NSShadow alloc] init];
-//    [shadow setShadowColor:shadowColor];
-//    [shadow setShadowOffset: CGSizeMake(0.1, -0.1)]; //
-//    [shadow setShadowBlurRadius: 1]; // 10
-//    [shadow set];
-//    [path stroke];
-
-    // Restore the graphics state
-    [NSGraphicsContext restoreGraphicsState];
-
-    // Add a nice stroke for a border
-//    [path setLineWidth:1.0];
-//    [shadowColor set];
-//    [path stroke];
 }
 
 @end

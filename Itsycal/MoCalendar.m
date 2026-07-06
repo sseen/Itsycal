@@ -384,6 +384,7 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             NSString *todayDateStr = NSStringFromMoDateWithoutJulian(date);
             Boolean isShowCnLunar = [[NSUserDefaults standardUserDefaults] boolForKey:kShowCnLunar];
             Boolean isShowCnNaitonDays = [[NSUserDefaults standardUserDefaults] boolForKey:kshowCnNationDays];
+            cell.usesLunarTextLayout = isShowCnLunar;
             if (isShowCnLunar) {
                 lunarWithNewLine = [NSString stringWithFormat:@"%@\n%@", dateString, lunarContent];
                 /// 只有农历显示的时候才打开，默认关闭
@@ -401,6 +402,9 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
             // date number big font, lunar string small font
             NSMutableParagraphStyle *pstyle = [NSMutableParagraphStyle new];
             pstyle.alignment = NSTextAlignmentCenter;
+            if (isShowCnLunar) {
+                pstyle.lineHeightMultiple = [[Sizer shared] cellLunarLineHeightMultiple];
+            }
             
             NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithString: lunarWithNewLine attributes:@{NSParagraphStyleAttributeName:pstyle}];
             // weekend color

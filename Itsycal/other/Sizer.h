@@ -36,7 +36,15 @@ typedef enum : NSInteger {
 @property (nonatomic, readonly) CGFloat cellSize;
 @property (nonatomic, readonly) CGFloat cellTextFieldVerticalSpace;
 @property (nonatomic, readonly) CGFloat cellDotWidth;
+@property (nonatomic, readonly) CGFloat cellDotOriginY;
 @property (nonatomic, readonly) CGFloat cellRadius;
+@property (nonatomic, readonly) CGFloat cellHolidayBadgeRadius;
+@property (nonatomic, readonly) CGFloat cellHolidayBadgeInset;
+@property (nonatomic, readonly) CGFloat cellMonthStartIndicatorX;
+@property (nonatomic, readonly) CGFloat cellMonthStartIndicatorWidth;
+@property (nonatomic, readonly) CGFloat cellMonthStartIndicatorVerticalInset;
+@property (nonatomic, readonly) CGFloat cellLunarLineHeightMultiple;
+@property (nonatomic, readonly) CGFloat cellLunarTextCenterYOffset;
 @property (nonatomic, readonly) CGFloat agendaEventLeadingMargin;
 @property (nonatomic, readonly) CGFloat agendaDotWidth;
 

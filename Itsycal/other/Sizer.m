@@ -57,11 +57,43 @@ NSString * const kSizeDidChangeNotification = @"SizeDidChangeNotification";
 }
 
 - (CGFloat)cellDotWidth {
-    return SMALL_OR_BIG(4, 4);
+    return SMALL_OR_BIG(4, 5);
+}
+
+- (CGFloat)cellDotOriginY {
+    return SMALL_OR_BIG(2, 2);
 }
 
 - (CGFloat)cellRadius {
     return SMALL_OR_BIG(8, 10);
+}
+
+- (CGFloat)cellHolidayBadgeRadius {
+    return SMALL_OR_BIG(8, 10);
+}
+
+- (CGFloat)cellHolidayBadgeInset {
+    return SMALL_OR_BIG(2, 3);
+}
+
+- (CGFloat)cellMonthStartIndicatorX {
+    return SMALL_OR_BIG(2, 2);
+}
+
+- (CGFloat)cellMonthStartIndicatorWidth {
+    return SMALL_OR_BIG(2, 2);
+}
+
+- (CGFloat)cellMonthStartIndicatorVerticalInset {
+    return SMALL_OR_BIG(10, 11);
+}
+
+- (CGFloat)cellLunarLineHeightMultiple {
+    return SMALL_OR_BIG(0.85, 0.85);
+}
+
+- (CGFloat)cellLunarTextCenterYOffset {
+    return SMALL_OR_BIG(1.5, 1.5);
 }
 
 - (CGFloat)agendaDotWidth {
