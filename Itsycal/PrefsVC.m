@@ -164,6 +164,7 @@
 
 - (void)toolbarItemClicked:(NSToolbarItem *)item
 {
+    _toolbar.selectedItemIdentifier = item.itemIdentifier;
     [self switchToTabForToolbarItem:item animated:YES];
 }
 
@@ -248,6 +249,15 @@
     return nil;
 }
 
+// tab 图标使用模板图，选中态的图标和文字由系统统一用
+// 应用强调色（Colors.xcassets 里的 AccentColor，红）渲染。
+- (NSImage *)toolbarImageForItemIdentifier:(NSString *)itemIdentifier
+{
+    NSImage *img = [NSImage imageNamed:NSStringFromClass([[self viewControllerForItemIdentifier:itemIdentifier] class])];
+    [img setTemplate:true];
+    return img;
+}
+
 #pragma mark -
 #pragma mark NSToolbarDelegate
 
@@ -255,15 +265,7 @@
 {
     NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
     item.label = itemIdentifier;
-
-    NSImage *img = [NSImage imageNamed:NSStringFromClass([[self viewControllerForItemIdentifier:itemIdentifier] class])];
-    [img setTemplate:true];
-
-    NSColor *color = NSColor.secondaryLabelColor;
-    NSImage *newImage = [img imageWith:color];
-    [newImage setTemplate:true];
-
-    item.image = newImage;
+    item.image = [self toolbarImageForItemIdentifier:itemIdentifier];
     item.target = self;
     item.action = @selector(toolbarItemClicked:);
     item.tag = [_toolbarIdentifiers indexOfObject:itemIdentifier];
