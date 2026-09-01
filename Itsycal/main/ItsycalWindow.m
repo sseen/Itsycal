@@ -264,8 +264,6 @@ static NSBezierPath *ItsycalWindowFramePathForBounds(NSRect bounds, CGFloat arro
     NSBezierPath *rectPath = ItsycalWindowFramePathForBounds(self.bounds, self.arrowMidX, self.arrowMidXIsSet);
     [rectPath setLineWidth:kBorderWidth];
     [Theme.windowBorderColor setStroke];
-    [Theme.windowBorderColor setFill];
-    [rectPath fill];
     [rectPath stroke];
 }
 
