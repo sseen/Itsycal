@@ -165,7 +165,8 @@ static NSBezierPath *ItsycalWindowFramePathForBounds(NSRect bounds, CGFloat arro
         _vibrant=[[ItsycalWindowVisualView alloc] initWithFrame:NSMakeRect(0, 0, 2, 2)];
         _vibrant.translatesAutoresizingMaskIntoConstraints = NO;
         // _vibrant.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
-        _vibrant.material = NSVisualEffectMaterialPopover;
+        _vibrant.material = NSVisualEffectMaterialMenu;
+        _vibrant.state = NSVisualEffectStateActive;
         [_vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
         [frameView addSubview:_vibrant];// positioned:NSWindowBelow relativeTo:nil];
         [frameView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_vibrant]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_vibrant)]];
@@ -260,11 +261,6 @@ static NSBezierPath *ItsycalWindowFramePathForBounds(NSRect bounds, CGFloat arro
     [super drawRect:dirtyRect];
     [[NSColor clearColor] set];
     NSRectFill(dirtyRect);
-    
-    NSBezierPath *rectPath = ItsycalWindowFramePathForBounds(self.bounds, self.arrowMidX, self.arrowMidXIsSet);
-    [rectPath setLineWidth:kBorderWidth];
-    [Theme.windowBorderColor setStroke];
-    [rectPath stroke];
 }
 
 @end
