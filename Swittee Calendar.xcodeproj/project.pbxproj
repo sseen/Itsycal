@@ -40,7 +40,6 @@
 		929223EB1E2D6E0900F1A119 /* HighlightPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 929223EA1E2D6E0800F1A119 /* HighlightPicker.m */; };
 		92B28CCF210BD17500485AE2 /* Sizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B28CCE210BD17500485AE2 /* Sizer.m */; };
 		92CDDE7B1A955D7F00D7675C /* AgendaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CDDE7A1A955D7F00D7675C /* AgendaViewController.m */; };
-
 		F80FAABE24FA87C5007AFC84 /* NSDiyMenuTipsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F80FAABC24FA87C5007AFC84 /* NSDiyMenuTipsViewController.m */; };
 		F80FAABF24FA87C5007AFC84 /* NSDiyMenuTipsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F80FAABD24FA87C5007AFC84 /* NSDiyMenuTipsViewController.xib */; };
 		F845758224ECCA1D007921D0 /* SNToolbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F845758124ECCA1D007921D0 /* SNToolbarItem.m */; };
@@ -159,7 +158,6 @@
 		92B28CCE210BD17500485AE2 /* Sizer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Sizer.m; sourceTree = "<group>"; };
 		92CDDE791A955D7F00D7675C /* AgendaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgendaViewController.h; sourceTree = "<group>"; };
 		92CDDE7A1A955D7F00D7675C /* AgendaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AgendaViewController.m; sourceTree = "<group>"; };
-
 		F80FAABB24FA87C5007AFC84 /* NSDiyMenuTipsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSDiyMenuTipsViewController.h; sourceTree = "<group>"; };
 		F80FAABC24FA87C5007AFC84 /* NSDiyMenuTipsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSDiyMenuTipsViewController.m; sourceTree = "<group>"; };
 		F80FAABD24FA87C5007AFC84 /* NSDiyMenuTipsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NSDiyMenuTipsViewController.xib; sourceTree = "<group>"; };
@@ -705,7 +703,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte;
@@ -738,7 +736,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.oeoly.calentte;
